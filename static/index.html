@@ -1,4 +1,4 @@
-<!doctype html>
+﻿<!doctype html>
 <html lang="es">
 <head>
   <meta charset="utf-8" />
@@ -34,7 +34,18 @@
       text-align: center;
       letter-spacing: 0.4px;
     }
-    .card {
+        .connectionBanner {
+      margin: 0 auto 12px;
+      max-width: 700px;
+      text-align: center;
+      background: #dcfce7;
+      border: 1px solid #86efac;
+      color: #166534;
+      font-weight: 800;
+      padding: 10px 12px;
+      border-radius: 10px;
+    }
+.card {
       border: 1px solid var(--line);
       border-radius: 14px;
       background: var(--card);
@@ -303,8 +314,8 @@
       list-style: none;
     }
     .adv summary::-webkit-details-marker { display: none; }
-    .adv summary::before { content: "▶ "; font-size: 10px; }
-    .adv[open] summary::before { content: "▼ "; }
+    .adv summary::before { content: "â–¶ "; font-size: 10px; }
+    .adv[open] summary::before { content: "â–¼ "; }
     @media (max-width: 980px){
       .board { grid-template-columns: 1fr; }
       .board > .card { aspect-ratio: 3 / 4.5; }
@@ -314,10 +325,10 @@
 </head>
 <body>
   <div class="app">
-    <h1>Cotizador EKOZOOM</h1>
+    <h1>Cotizador EKOZOOM</h1>`r`n    <div class="connectionBanner">PRUEBA DE CONEXION CORRECTA</div>
 
     <div class="card topForm">
-      <h3>Datos de cotización (arriba)</h3>
+      <h3>Datos de cotizaciÃ³n (arriba)</h3>
 
       <div class="row">
         <div>
@@ -332,7 +343,7 @@
           <label>Material</label>
           <select id="material_code">
             <option value="CAMBREL_70">Cambrel 70gr</option>
-            <option value="CAMBREL_80">Cambrel 80gr (+$100/m²)</option>
+            <option value="CAMBREL_80">Cambrel 80gr (+$100/mÂ²)</option>
           </select>
         </div>
 
@@ -380,7 +391,7 @@
       </div>
 
       <details class="adv">
-        <summary>Opciones avanzadas (logo y producción)</summary>
+        <summary>Opciones avanzadas (logo y producciÃ³n)</summary>
         <div class="subTitle">Logo por cara</div>
 
         <div class="row">
@@ -434,8 +445,8 @@
         </div>
 
         <div class="row">
-          <div><label>Tintas (info cálculo)</label><input id="tintas" type="number" value="1" min="0" max="6"></div>
-          <div><label>Cola producción (P2)</label><input id="cola_produccion" type="number" value="25000"></div>
+          <div><label>Tintas (info cÃ¡lculo)</label><input id="tintas" type="number" value="1" min="0" max="6"></div>
+          <div><label>Cola producciÃ³n (P2)</label><input id="cola_produccion" type="number" value="25000"></div>
         </div>
       </details>
 
@@ -445,7 +456,7 @@
     <div class="board">
       <div class="card">
         <div class="posterTitle" id="posterTitle">BOLSA PLANA TROQUEL</div>
-        <div class="posterSub" id="posterSub">Tamaño: 40 cm Ancho x 45 Alto · Material: Cambrel 70 gramos</div>
+        <div class="posterSub" id="posterSub">TamaÃ±o: 40 cm Ancho x 45 Alto Â· Material: Cambrel 70 gramos</div>
         <div class="logoLegend" id="posterLegend">INCLUYE LOGO A 1 CARA A 1 TINTA</div>
         <div class="priceHighlight" id="priceDesde">DESDE $0 + IVA</div>
         <div class="miniList" id="miniBands"></div>
@@ -581,7 +592,7 @@ function initColorSwatches(selectId){
   select.addEventListener("change", () => setActive(normalizeHex(select.value)));
 }
 
-/** Mostrar/ocultar selectores según Caras y #colores */
+/** Mostrar/ocultar selectores segÃºn Caras y #colores */
 function syncLogoControlsUI(){
   const caras = Math.max(1, Math.min(2, n("caras") || 1));
   const k = Math.max(1, Math.min(2, Number(v("logo_colors_count")) || 1));
@@ -598,7 +609,7 @@ function syncLogoControlsUI(){
  * Logo placeholder:
  * - 1 color => TU/LOGO/AQUI en ese color
  * - 2 colores => COLOR 1 (color A) y COLOR 2 (color B) en esos colores
- *   + usando “halo” suave para que se lea en telas claras u oscuras
+ *   + usando â€œhaloâ€ suave para que se lea en telas claras u oscuras
  */
 function buildLogoSVGBlock(x, y, w, h, logoColors){
   const tx = x + w/2;
@@ -654,7 +665,7 @@ function cleanAndStyleSVG(svgString, fabricHex, logoColors, bagType, anchoCm, al
   const multicolor = Array.isArray(logoColors) && logoColors.length >= 2;
   const isWhiteFabric = normalizeHex(fabricHex) === "#FFFFFF";
 
-  // Si el logo es multicolor, usamos líneas neutrales para no “crear” un 3er color visual.
+  // Si el logo es multicolor, usamos lÃ­neas neutrales para no â€œcrearâ€ un 3er color visual.
   const strokeHex = multicolor ? "rgba(0,0,0,0.55)" : darken(fabricHex, 0.55);
   const strokeWidth = 1;
   const strokeOpacity = multicolor ? 0.55 : 0.9;
@@ -666,7 +677,7 @@ function cleanAndStyleSVG(svgString, fabricHex, logoColors, bagType, anchoCm, al
   s = s.replace(/<rect[^>]*fill="white"[^>]*\/>\s*/i, "");
 
   // 2) quitar textos inferiores conflictivos
-  s = s.replace(/<text[^>]*>[^<]*Preview orientaci[oó]n[^<]*<\/text>\s*/gi, "");
+  s = s.replace(/<text[^>]*>[^<]*Preview orientaci[oÃ³]n[^<]*<\/text>\s*/gi, "");
   s = s.replace(/<text[^>]*>[^<]*fuelle[^<]*<\/text>\s*/gi, "");
   if (!showMeasures){
     s = s.replace(/<!--\s*Flecha ancho\s*-->[\s\S]*?(?=<!--\s*Flecha alto\s*-->|<\/svg>)/i, "");
@@ -675,7 +686,7 @@ function cleanAndStyleSVG(svgString, fabricHex, logoColors, bagType, anchoCm, al
     s = s.replace(/<text[^>]*>[^<]*ALTO[^<]*<\/text>\s*/gi, "");
   }
 
-  // 3) estilizar rect principal (toma el rect que tenía stroke-width="2")
+  // 3) estilizar rect principal (toma el rect que tenÃ­a stroke-width="2")
   s = s.replace(
     /<rect([^>]*stroke-width=")2(".*?)(\/?>)/,
     (m, p1, p2, end) => {
@@ -710,7 +721,7 @@ function cleanAndStyleSVG(svgString, fabricHex, logoColors, bagType, anchoCm, al
       const slotStroke = isWhiteFabric ? "rgba(55,65,81,0.55)" : "rgba(255,255,255,0.9)";
       const slotFill = isWhiteFabric ? "rgba(241,245,249,0.95)" : "rgba(255,255,255,0.96)";
 
-      // Troquel tipo "cápsula" (rectángulo con semicirculos en extremos).
+      // Troquel tipo "cÃ¡psula" (rectÃ¡ngulo con semicirculos en extremos).
       extraShape = `
         <rect x="${slotX.toFixed(2)}" y="${slotY.toFixed(2)}"
           width="${slotW.toFixed(2)}" height="${slotH.toFixed(2)}"
@@ -720,7 +731,7 @@ function cleanAndStyleSVG(svgString, fabricHex, logoColors, bagType, anchoCm, al
     }
   }
 
-  // 5) Reencuadre del viewBox para que ambas caras tengan el mismo tamaño
+  // 5) Reencuadre del viewBox para que ambas caras tengan el mismo tamaÃ±o
   // visual, tomando como referencia solo el recuadro de la bolsa.
   const mainRect = s.match(/<rect[^>]*x="([\d.]+)"[^>]*y="([\d.]+)"[^>]*width="([\d.]+)"[^>]*height="([\d.]+)"/i);
   if (mainRect){
@@ -746,7 +757,7 @@ let lastRawSVG = "";
 let lastQuoteData = null;
 
 /**
- * Renderiza 1 o 2 previews según "caras"
+ * Renderiza 1 o 2 previews segÃºn "caras"
  * - Si 2 caras: dims solo en Cara 1 (ANCHO/ALTO)
  * - Si 1 cara: dims completas (incluye fuelle)
  */
@@ -775,8 +786,8 @@ function renderPreviewInstant(){
 
   const k = Math.max(1, Math.min(2, Number(v("logo_colors_count")) || 1));
 
-  const dimsTextCara1_2Caras = `ANCHO ${ancho} cm · ALTO ${alto} cm`;
-  const dimsText1Cara = `ANCHO ${ancho} cm · ALTO ${alto} cm · FUELLE ${fuelle} cm`;
+  const dimsTextCara1_2Caras = `ANCHO ${ancho} cm Â· ALTO ${alto} cm`;
+  const dimsText1Cara = `ANCHO ${ancho} cm Â· ALTO ${alto} cm Â· FUELLE ${fuelle} cm`;
 
   const getLogoColors = (caraIdx) => {
     const aId = (caraIdx === 1) ? "logo_c1_a" : "logo_c2_a";
@@ -849,7 +860,7 @@ function renderDesignSummary(data){
   const legend = `INCLUYE LOGO A ${caras} ${txtCara} A ${tintas} ${txtTinta}`;
 
   document.getElementById("posterTitle").textContent = bagTypeLabel;
-  document.getElementById("posterSub").textContent = `Tamaño: ${ancho} cm Ancho x ${alto} Alto · Material: ${materialText}`;
+  document.getElementById("posterSub").textContent = `TamaÃ±o: ${ancho} cm Ancho x ${alto} Alto Â· Material: ${materialText}`;
   document.getElementById("posterLegend").textContent = legend;
   document.getElementById("orderLegend").textContent = legend;
   document.getElementById("sumCantidad").textContent = `${cantidad} bolsas`;
@@ -937,7 +948,7 @@ async function cotizarAuto(){
 
   const data = await res.json();
   lastQuoteData = data;
-  setStatus("<span class='ok'>OK</span> Cotización actualizada");
+  setStatus("<span class='ok'>OK</span> CotizaciÃ³n actualizada");
 
   lastRawSVG = data.svg_preview || "";
   renderPreviewInstant();
@@ -983,7 +994,7 @@ backendIds.forEach(id=>{
   el.addEventListener("change", scheduleAutoQuote);
 });
 
-// Preview instantáneo (sin backend): tela, caras, colores
+// Preview instantÃ¡neo (sin backend): tela, caras, colores
 [
   "color_hex","caras","logo_colors_count",
   "logo_c1_a","logo_c1_b","logo_c2_a","logo_c2_b"
