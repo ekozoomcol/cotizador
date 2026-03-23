@@ -1,0 +1,557 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Cotizador EKOZOOM</title>
+  <style>
+    body { font-family: Arial, sans-serif; margin: 16px; max-width: 1000px; }
+    .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+    .card { border: 1px solid #ddd; border-radius: 10px; padding: 12px; }
+    label { display:block; font-size: 12px; color:#444; margin-bottom: 4px;}
+    input, select { width: 100%; padding: 8px; border:1px solid #ccc; border-radius:8px; }
+    .row { display:flex; gap: 10px; align-items: end; flex-wrap: wrap; }
+    .row > div { flex: 1; min-width: 140px; }
+    table { width:100%; border-collapse: collapse; }
+    th, td { border-bottom: 1px solid #eee; padding: 8px; text-align:left; font-size: 13px; }
+    .mono { font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas; font-size: 12px; white-space: pre-wrap; }
+    .ok { color: #0a7; font-weight: 700; }
+    .warn { color: #c60; font-weight: 700; }
+    .muted { color:#666; font-size: 12px; }
+
+    #previewWrap {
+      border-radius: 12px;
+      border: 1px solid #eee;
+      background: #ffffff;
+      padding: 14px;
+      height: 320px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+    }
+
+    #previewGrid{
+      width: 100%;
+      height: 100%;
+      display: flex;
+      gap: 6px;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .previewItem{
+      width: 100%;
+      max-width: 300px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 4px;
+    }
+
+    .previewSvg{
+      width: 100%;
+      height: 260px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .previewSvg svg{
+      width: 100%;
+      height: 100%;
+      display: block;
+    }
+
+    .previewLabel{ font-weight: 700; font-size: 13px; }
+    .previewDims{ font-size: 12px; color: #666; text-align: center; }
+
+    .subTitle { font-weight: 700; font-size: 12px; color:#333; margin: 6px 0 2px; }
+    .inlineHint { font-size: 12px; color:#666; margin-top: 4px; }
+  </style>
+</head>
+<body>
+  <h2>Cotizador EKOZOOM (modo espejo)</h2>
+
+  <div class="grid">
+    <div class="card">
+      <h3>Datos de cotización</h3>
+
+      <div class="row">
+        <div>
+          <label>Tipo de bolsa</label>
+          <select id="bag_type">
+            <option value="PLANA_MANIJA">Bolsa Plana Manija</option>
+            <option value="PLANA_TROQUEL">Bolsa Plana Troquel</option>
+          </select>
+        </div>
+
+        <div>
+          <label>Material</label>
+          <select id="material_code">
+            <option value="CAMBREL_70">Cambrel 70gr</option>
+            <option value="CAMBREL_80">Cambrel 80gr (+$100/m²)</option>
+          </select>
+        </div>
+
+        <div>
+          <label>Color tela</label>
+          <select id="color_hex">
+            <option value="#FFFFFF">Blanco</option>
+            <option value="#000000">Negro</option>
+            <option value="#0833A2">Azul Rey (0833A2)</option>
+            <option value="#F2E6D8">Marfil</option>
+            <option value="#D9C3A5">Beige</option>
+            <option value="#8A2BE2">Lila</option>
+            <option value="#FF00AA">Fucsia</option>
+            <option value="#FF7A00">Naranja</option>
+            <option value="#00A7A7">Turquesa</option>
+          </select>
+          <div class="inlineHint">* La tela cambia preview al instante.</div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div><label>Ancho (cm)</label><input id="ancho_cm" type="number" value="30"></div>
+        <div><label>Alto (cm)</label><input id="alto_cm" type="number" value="40"></div>
+        <div><label>Fuelle (cm)</label><input id="fuelle_cm" type="number" value="20"></div>
+      </div>
+
+      <div class="row" id="row_manijas">
+        <div><label>Manija 1 (cm)</label><input id="manija1_cm" type="number" value="60"></div>
+        <div><label>Manija 2 (cm)</label><input id="manija2_cm" type="number" value="60"></div>
+        <div><label>Ancho manijas (cm)</label><input id="ancho_manijas_cm" type="number" value="5"></div>
+      </div>
+
+      <div class="row">
+        <div><label>Dobles (cm)</label><input id="dobles_cm" type="number" value="3"></div>
+        <div><label>Caras</label><input id="caras" type="number" value="2" min="1" max="2"></div>
+        <div>
+          <label>Colores del logo</label>
+          <select id="logo_colors_count">
+            <option value="1">1 color</option>
+            <option value="2" selected>2 colores</option>
+          </select>
+          <div class="inlineHint">* Define si el logo se ve en 1 o 2 colores.</div>
+        </div>
+      </div>
+
+      <div class="subTitle">Logo por cara</div>
+
+      <!-- Cara 1 -->
+      <div class="row">
+        <div>
+          <label>Cara 1 - Color 1</label>
+          <select id="logo_c1_a">
+            <option value="#000000">Negro</option>
+            <option value="#FFFFFF">Blanco</option>
+            <option value="#0833A2">Azul Rey</option>
+            <option value="#FF7A00">Naranja</option>
+            <option value="#FF00AA">Fucsia</option>
+            <option value="#2B2B2B">Gris Oscuro</option>
+          </select>
+        </div>
+        <div id="wrap_logo_c1_b">
+          <label>Cara 1 - Color 2</label>
+          <select id="logo_c1_b">
+            <option value="#0833A2">Azul Rey</option>
+            <option value="#FF7A00">Naranja</option>
+            <option value="#FF00AA">Fucsia</option>
+            <option value="#000000">Negro</option>
+            <option value="#FFFFFF">Blanco</option>
+            <option value="#2B2B2B">Gris Oscuro</option>
+          </select>
+        </div>
+      </div>
+
+      <!-- Cara 2 -->
+      <div class="row" id="row_logo_cara2">
+        <div>
+          <label>Cara 2 - Color 1</label>
+          <select id="logo_c2_a">
+            <option value="#000000">Negro</option>
+            <option value="#FFFFFF">Blanco</option>
+            <option value="#0833A2">Azul Rey</option>
+            <option value="#FF7A00">Naranja</option>
+            <option value="#FF00AA">Fucsia</option>
+            <option value="#2B2B2B">Gris Oscuro</option>
+          </select>
+        </div>
+        <div id="wrap_logo_c2_b">
+          <label>Cara 2 - Color 2</label>
+          <select id="logo_c2_b">
+            <option value="#FF7A00">Naranja</option>
+            <option value="#0833A2">Azul Rey</option>
+            <option value="#FF00AA">Fucsia</option>
+            <option value="#000000">Negro</option>
+            <option value="#FFFFFF">Blanco</option>
+            <option value="#2B2B2B">Gris Oscuro</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="row">
+        <div><label>Tintas (info cálculo)</label><input id="tintas" type="number" value="1" min="0" max="6"></div>
+        <div><label>Cola producción (P2)</label><input id="cola_produccion" type="number" value="25000"></div>
+      </div>
+
+      <p id="status" class="muted">Listo.</p>
+    </div>
+
+    <div class="card">
+      <h3>Preview (anti error 40x30)</h3>
+
+      <div id="previewWrap">
+        <div id="previewGrid"></div>
+      </div>
+
+      <h4>Variables clave</h4>
+      <div class="mono" id="vars"></div>
+    </div>
+  </div>
+
+  <div class="card" style="margin-top:12px;">
+    <h3>Precios por tramo</h3>
+    <table>
+      <thead>
+        <tr>
+          <th>Tramo</th><th>Margen base</th><th>DTO L49</th><th>Margen real</th><th>Precio sin IVA</th><th>Precio con IVA</th>
+        </tr>
+      </thead>
+      <tbody id="prices"></tbody>
+    </table>
+  </div>
+
+<script>
+function v(id){ return document.getElementById(id).value; }
+function n(id){ return Number(v(id)); }
+function setStatus(html){ document.getElementById("status").innerHTML = html; }
+
+function hexToRgb(hex){
+  const h = (hex || "").replace("#","").trim();
+  if (h.length !== 6) return {r:0,g:0,b:0};
+  return { r: parseInt(h.slice(0,2),16), g: parseInt(h.slice(2,4),16), b: parseInt(h.slice(4,6),16) };
+}
+function rgbToHex(r,g,b){
+  const to2 = (x)=> Math.max(0, Math.min(255, Math.round(x))).toString(16).padStart(2,"0");
+  return "#" + to2(r) + to2(g) + to2(b);
+}
+function darken(hex, factor=0.60){
+  const {r,g,b} = hexToRgb(hex);
+  return rgbToHex(r*factor, g*factor, b*factor);
+}
+
+/** Fondo oscuro SOLO para tela blanca */
+function updatePreviewBackground(colorHex){
+  const wrap = document.getElementById("previewWrap");
+  if ((colorHex || "").toUpperCase() === "#FFFFFF") {
+    wrap.style.background = "#2b2b2b";
+    wrap.style.borderColor = "#3a3a3a";
+  } else {
+    wrap.style.background = "#ffffff";
+    wrap.style.borderColor = "#eee";
+  }
+}
+
+/** Mostrar/ocultar selectores según Caras y #colores */
+function syncLogoControlsUI(){
+  const caras = Math.max(1, Math.min(2, n("caras") || 1));
+  const k = Math.max(1, Math.min(2, Number(v("logo_colors_count")) || 1));
+
+  // Cara 2
+  document.getElementById("row_logo_cara2").style.display = (caras === 2) ? "flex" : "none";
+
+  // Color 2 por cara
+  document.getElementById("wrap_logo_c1_b").style.display = (k === 2) ? "block" : "none";
+  document.getElementById("wrap_logo_c2_b").style.display = (k === 2 && caras === 2) ? "block" : "none";
+}
+
+/**
+ * Logo placeholder:
+ * - 1 color => TU/LOGO/AQUI en ese color
+ * - 2 colores => COLOR 1 (color A) y COLOR 2 (color B) en esos colores
+ *   + usando “halo” suave para que se lea en telas claras u oscuras
+ */
+function buildLogoSVGBlock(x, y, w, h, logoColors){
+  const tx = x + w/2;
+
+  const textWithHalo = (text, yPos, fill) => `
+    <text x="${tx}" y="${yPos}" text-anchor="middle"
+      font-size="18" font-weight="900"
+      fill="${fill}" fill-opacity="0.98"
+      style="letter-spacing:0.6px"
+      stroke="rgba(0,0,0,0.25)" stroke-width="1.2" paint-order="stroke">
+      ${text}
+    </text>
+  `;
+
+  if (Array.isArray(logoColors) && logoColors.length >= 2){
+    const c1 = logoColors[0] || "#000000";
+    const c2 = logoColors[1] || "#000000";
+    const y1 = y + h/2 - 10;
+    const y2 = y + h/2 + 18;
+    return `
+      ${textWithHalo("COLOR 1", y1, c1)}
+      ${textWithHalo("COLOR 2", y2, c2)}
+    `;
+  }
+
+  const c1 = (Array.isArray(logoColors) && logoColors.length) ? logoColors[0] : "#000000";
+  const y0 = y + h/2 - 18;
+
+  return `
+    <text x="${tx}" y="${y0}" text-anchor="middle"
+      font-size="18" font-weight="900"
+      fill="${c1}" fill-opacity="0.98"
+      style="letter-spacing:0.6px"
+      stroke="rgba(0,0,0,0.18)" stroke-width="1.1" paint-order="stroke">
+      <tspan x="${tx}" dy="0">TU</tspan>
+      <tspan x="${tx}" dy="22">LOGO</tspan>
+      <tspan x="${tx}" dy="22">AQUI</tspan>
+    </text>
+  `;
+}
+
+/**
+ * Limpia y estiliza el SVG:
+ * - Quita fondo blanco interno
+ * - Estiliza borde acorde a la tela (pero neutro si el logo es multicolor)
+ * - Quita textos inferiores conflictivos
+ * - Inserta bloque de logo por cara
+ */
+function cleanAndStyleSVG(svgString, fabricHex, logoColors){
+  let s = svgString || "";
+  if (!s) return "";
+
+  const multicolor = Array.isArray(logoColors) && logoColors.length >= 2;
+
+  // Si el logo es multicolor, usamos líneas neutrales para no “crear” un 3er color visual.
+  const strokeHex = multicolor ? "rgba(0,0,0,0.55)" : darken(fabricHex, 0.55);
+  const strokeWidth = 1;
+  const strokeOpacity = multicolor ? 0.55 : 0.9;
+
+  const fillOpacity = 0.22;
+
+  // 1) quitar fondo blanco interno
+  s = s.replace(/<rect[^>]*fill="white"[^>]*\/>\s*/i, "");
+
+  // 2) quitar textos inferiores conflictivos
+  s = s.replace(/<text[^>]*>[^<]*ANCHO[^<]*<\/text>\s*/gi, "");
+  s = s.replace(/<text[^>]*>[^<]*fuelle[^<]*<\/text>\s*/gi, "");
+
+  // 3) estilizar rect principal (toma el rect que tenía stroke-width="2")
+  s = s.replace(
+    /<rect([^>]*stroke-width=")2(".*?)(\/?>)/,
+    (m, p1, p2, end) => {
+      let body = (p1 + strokeWidth + p2)
+        .replace(/\sfill="[^"]*"/g, "")
+        .replace(/\sfill-opacity="[^"]*"/g, "")
+        .replace(/\sstroke="[^"]*"/g, "")
+        .replace(/\sstroke-opacity="[^"]*"/g, "");
+      return `<rect${body} stroke="${strokeHex}" stroke-opacity="${strokeOpacity}" fill="${fabricHex}" fill-opacity="${fillOpacity}"${end}`;
+    }
+  );
+
+  // 4) Insertar logo centrado (coordenadas viewBox 0 0 300 260)
+  const logo = buildLogoSVGBlock(95, 78, 110, 110, logoColors);
+  s = s.replace(/<\/svg>\s*$/i, `${logo}\n</svg>`);
+
+  return s;
+}
+
+let debounceTimer = null;
+let lastPayloadKey = "";
+let lastRawSVG = "";
+
+/**
+ * Renderiza 1 o 2 previews según "caras"
+ * - Si 2 caras: dims solo en Cara 1 (ANCHO/ALTO)
+ * - Si 1 cara: dims completas (incluye fuelle)
+ */
+function renderPreviewInstant(){
+  const fabricHex = v("color_hex");
+  updatePreviewBackground(fabricHex);
+  syncLogoControlsUI();
+
+  const grid = document.getElementById("previewGrid");
+  grid.innerHTML = "";
+
+  if (!lastRawSVG) return;
+
+  const ancho = n("ancho_cm");
+  const alto = n("alto_cm");
+  const fuelle = n("fuelle_cm");
+  const caras = Math.max(1, Math.min(2, n("caras") || 1));
+  const k = Math.max(1, Math.min(2, Number(v("logo_colors_count")) || 1));
+
+  const dimsTextCara1_2Caras = `ANCHO ${ancho} cm · ALTO ${alto} cm`;
+  const dimsText1Cara = `ANCHO ${ancho} cm · ALTO ${alto} cm · FUELLE ${fuelle} cm`;
+
+  const getLogoColors = (caraIdx) => {
+    const aId = (caraIdx === 1) ? "logo_c1_a" : "logo_c2_a";
+    const bId = (caraIdx === 1) ? "logo_c1_b" : "logo_c2_b";
+
+    const a = document.getElementById(aId)?.value || "#000000";
+    const b = document.getElementById(bId)?.value || "#000000";
+    return (k === 2) ? [a, b] : [a];
+  };
+
+  const makeItem = (label, showDims, dimsText, logoColors) => {
+    const wrap = document.createElement("div");
+    wrap.className = "previewItem";
+
+    const svgBox = document.createElement("div");
+    svgBox.className = "previewSvg";
+    svgBox.innerHTML = cleanAndStyleSVG(lastRawSVG, fabricHex, logoColors);
+
+    const lbl = document.createElement("div");
+    lbl.className = "previewLabel";
+    lbl.textContent = label;
+
+    wrap.appendChild(svgBox);
+    wrap.appendChild(lbl);
+
+    if (showDims){
+      const dims = document.createElement("div");
+      dims.className = "previewDims";
+      dims.textContent = dimsText;
+      wrap.appendChild(dims);
+    }
+    return wrap;
+  };
+
+  if (caras === 1){
+    grid.appendChild(makeItem("Cara 1", true, dimsText1Cara, getLogoColors(1)));
+  } else {
+    grid.appendChild(makeItem("Cara 1", true, dimsTextCara1_2Caras, getLogoColors(1)));
+    grid.appendChild(makeItem("Cara 2", false, "", getLogoColors(2)));
+  }
+}
+
+async function cotizarAuto(){
+  const bagType = v("bag_type");
+  document.getElementById("row_manijas").style.display = (bagType === "PLANA_TROQUEL") ? "none" : "flex";
+
+  const ancho = n("ancho_cm");
+  const alto = n("alto_cm");
+  if (!ancho || !alto || ancho <= 0 || alto <= 0){
+    setStatus("<span class='warn'>Faltan medidas</span>");
+    return;
+  }
+
+  const payload = {
+    bag_type: bagType,
+    inputs: {
+      ancho_cm: ancho,
+      alto_cm: alto,
+      fuelle_cm: n("fuelle_cm"),
+      manija1_cm: n("manija1_cm"),
+      manija2_cm: n("manija2_cm"),
+      ancho_manijas_cm: n("ancho_manijas_cm"),
+      dobles_cm: n("dobles_cm"),
+      caras: n("caras"),
+      tintas: n("tintas"),
+      cola_produccion: n("cola_produccion"),
+      material_code: v("material_code")
+    }
+  };
+
+  const payloadKey = JSON.stringify(payload);
+  if (payloadKey === lastPayloadKey) return;
+  lastPayloadKey = payloadKey;
+
+  setStatus("Calculando...");
+  document.getElementById("prices").innerHTML = "";
+  document.getElementById("vars").textContent = "";
+
+  let res;
+  try{
+    res = await fetch("/quote", {
+      method: "POST",
+      headers: {"Content-Type":"application/json"},
+      body: payloadKey
+    });
+  }catch(err){
+    setStatus("<span class='warn'>Error</span> No se pudo conectar al backend.");
+    return;
+  }
+
+  if(!res.ok){
+    const t = await res.text();
+    setStatus("<span class='warn'>Error</span> " + t);
+    return;
+  }
+
+  const data = await res.json();
+  setStatus("<span class='ok'>OK</span> Cotización actualizada");
+
+  lastRawSVG = data.svg_preview || "";
+  renderPreviewInstant();
+
+  const b = data.breakdown || {};
+  const lines = [
+    `Área total (C17): ${b.C17_area_total}`,
+    `Tela (C19): ${b.C19_tela}`,
+    `Alto rollo (E5): ${b.E5_alto_rollo_cm}`,
+    `Saldo rollo (F5): ${b.F5_saldo_rollo_cm}`,
+    `DTO final (L49): ${b.L49_dto_final_pct}%`
+  ].filter(x => x && !String(x).includes("undefined"));
+  document.getElementById("vars").textContent = lines.join("\n");
+
+  const tbody = document.getElementById("prices");
+  const before = data.prices_by_band_before_iva || {};
+  const withIva = data.prices_by_band_with_iva || {};
+
+  Object.keys(before).forEach(code=>{
+    const r1 = before[code];
+    const r2 = withIva[code] || {};
+    const tr = document.createElement("tr");
+    tr.innerHTML = `
+      <td>${r1.label ?? ""}</td>
+      <td>${r1.margen_base_pct ?? ""}%</td>
+      <td>${r1.dto_L49_pct ?? ""}%</td>
+      <td>${r1.margen_real_pct ?? ""}%</td>
+      <td>${r1.precio_unitario_sin_iva ?? ""}</td>
+      <td>${r2.precio_unitario_con_iva ?? ""}</td>
+    `;
+    tbody.appendChild(tr);
+  });
+}
+
+function scheduleAutoQuote(){
+  if (debounceTimer) clearTimeout(debounceTimer);
+  debounceTimer = setTimeout(cotizarAuto, 250);
+}
+
+// Inputs que disparan backend (debounced)
+const backendIds = [
+  "bag_type","material_code",
+  "ancho_cm","alto_cm","fuelle_cm",
+  "manija1_cm","manija2_cm","ancho_manijas_cm",
+  "dobles_cm","caras","tintas","cola_produccion"
+];
+backendIds.forEach(id=>{
+  const el = document.getElementById(id);
+  el.addEventListener("input", scheduleAutoQuote);
+  el.addEventListener("change", scheduleAutoQuote);
+});
+
+// Preview instantáneo (sin backend): tela, caras, colores
+[
+  "color_hex","caras","logo_colors_count",
+  "logo_c1_a","logo_c1_b","logo_c2_a","logo_c2_b"
+].forEach(id=>{
+  const el = document.getElementById(id);
+  if (!el) return;
+  el.addEventListener("input", renderPreviewInstant);
+  el.addEventListener("change", renderPreviewInstant);
+});
+
+window.addEventListener("load", () => {
+  syncLogoControlsUI();
+  updatePreviewBackground(v("color_hex"));
+  cotizarAuto();
+});
+</script>
+</body>
+</html>
