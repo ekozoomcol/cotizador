@@ -11,8 +11,8 @@ class Material:
 
 class MaterialCatalog:
 
-    def __init__(self):
-        self.materials: Dict[str, Material] = {
+    def __init__(self, by_code: Dict[str, Material] | None = None):
+        default_map: Dict[str, Material] = {
             "CAMBREL_70": Material(
                 code="CAMBREL_70",
                 name="Cambrel 70g",
@@ -29,6 +29,9 @@ class MaterialCatalog:
                 costo_por_m2=0.55
             ),
         }
+        self.materials: Dict[str, Material] = by_code or default_map
+        # Alias para compatibilidad con código que usa cfg.materials.by_code.
+        self.by_code: Dict[str, Material] = self.materials
 
     def get(self, code: str) -> Material:
 
