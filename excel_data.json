@@ -1,0 +1,3282 @@
+{
+  "sheets": [
+    "BOLSA PLANA MANIJA",
+    "BOLSA PLANA TROQUEL"
+  ],
+  "data": {
+    "BOLSA PLANA MANIJA": [
+      {
+        "cell": "B1",
+        "formula_or_value": "m2",
+        "evaluated_value": "m2"
+      },
+      {
+        "cell": "I1",
+        "formula_or_value": "CARAS",
+        "evaluated_value": "CARAS"
+      },
+      {
+        "cell": "J1",
+        "formula_or_value": "2",
+        "evaluated_value": "2"
+      },
+      {
+        "cell": "B2",
+        "formula_or_value": "1.6",
+        "evaluated_value": "1.6"
+      },
+      {
+        "cell": "C2",
+        "formula_or_value": "1100",
+        "evaluated_value": "1100"
+      },
+      {
+        "cell": "I2",
+        "formula_or_value": " TINTAS",
+        "evaluated_value": " TINTAS"
+      },
+      {
+        "cell": "J2",
+        "formula_or_value": "1",
+        "evaluated_value": "1"
+      },
+      {
+        "cell": "B4",
+        "formula_or_value": "cm",
+        "evaluated_value": "cm"
+      },
+      {
+        "cell": "C4",
+        "formula_or_value": "m",
+        "evaluated_value": "m"
+      },
+      {
+        "cell": "E4",
+        "formula_or_value": "Alto rollo",
+        "evaluated_value": "Alto rollo"
+      },
+      {
+        "cell": "F4",
+        "formula_or_value": "Saldo Rollo",
+        "evaluated_value": "Saldo Rollo"
+      },
+      {
+        "cell": "A5",
+        "formula_or_value": "Ancho",
+        "evaluated_value": "Ancho"
+      },
+      {
+        "cell": "B5",
+        "formula_or_value": "34",
+        "evaluated_value": "34"
+      },
+      {
+        "cell": "C5",
+        "formula_or_value": "=B5/100",
+        "evaluated_value": "0.34"
+      },
+      {
+        "cell": "E5",
+        "formula_or_value": "=B6*2+B7+B11*2",
+        "evaluated_value": "86"
+      },
+      {
+        "cell": "F5",
+        "formula_or_value": "=(160-(E5*2))",
+        "evaluated_value": "-12"
+      },
+      {
+        "cell": "A6",
+        "formula_or_value": "Alto",
+        "evaluated_value": "Alto"
+      },
+      {
+        "cell": "B6",
+        "formula_or_value": "40",
+        "evaluated_value": "40"
+      },
+      {
+        "cell": "C6",
+        "formula_or_value": "=B6/100",
+        "evaluated_value": "0.4"
+      },
+      {
+        "cell": "A7",
+        "formula_or_value": "Fuelle",
+        "evaluated_value": "Fuelle"
+      },
+      {
+        "cell": "B7",
+        "formula_or_value": "0",
+        "evaluated_value": "0"
+      },
+      {
+        "cell": "C7",
+        "formula_or_value": "=B7/100",
+        "evaluated_value": "0"
+      },
+      {
+        "cell": "E7",
+        "formula_or_value": "Sobrantes 1,6",
+        "evaluated_value": "Sobrantes 1,6"
+      },
+      {
+        "cell": "F7",
+        "formula_or_value": "m",
+        "evaluated_value": "m"
+      },
+      {
+        "cell": "G7",
+        "formula_or_value": "m2",
+        "evaluated_value": "m2"
+      },
+      {
+        "cell": "I7",
+        "formula_or_value": "PLANA MANIJA",
+        "evaluated_value": "PLANA MANIJA"
+      },
+      {
+        "cell": "A8",
+        "formula_or_value": "Manija 1",
+        "evaluated_value": "Manija 1"
+      },
+      {
+        "cell": "B8",
+        "formula_or_value": "60",
+        "evaluated_value": "60"
+      },
+      {
+        "cell": "C8",
+        "formula_or_value": "=B8/100",
+        "evaluated_value": "0.6"
+      },
+      {
+        "cell": "E8",
+        "formula_or_value": "=160-E5",
+        "evaluated_value": "74"
+      },
+      {
+        "cell": "F8",
+        "formula_or_value": "=E8/100",
+        "evaluated_value": "0.74"
+      },
+      {
+        "cell": "G8",
+        "formula_or_value": "=F8*C5",
+        "evaluated_value": "0.2516"
+      },
+      {
+        "cell": "I8",
+        "formula_or_value": "=A5",
+        "evaluated_value": "Ancho"
+      },
+      {
+        "cell": "J8",
+        "formula_or_value": "=B5",
+        "evaluated_value": "34"
+      },
+      {
+        "cell": "A9",
+        "formula_or_value": "Manija 2",
+        "evaluated_value": "Manija 2"
+      },
+      {
+        "cell": "B9",
+        "formula_or_value": "60",
+        "evaluated_value": "60"
+      },
+      {
+        "cell": "C9",
+        "formula_or_value": "=B9/100",
+        "evaluated_value": "0.6"
+      },
+      {
+        "cell": "I9",
+        "formula_or_value": "=A6",
+        "evaluated_value": "Alto"
+      },
+      {
+        "cell": "J9",
+        "formula_or_value": "=B6",
+        "evaluated_value": "40"
+      },
+      {
+        "cell": "A10",
+        "formula_or_value": "Ancho manijas",
+        "evaluated_value": "Ancho manijas"
+      },
+      {
+        "cell": "B10",
+        "formula_or_value": "5",
+        "evaluated_value": "5"
+      },
+      {
+        "cell": "C10",
+        "formula_or_value": "=B10/100",
+        "evaluated_value": "0.05"
+      },
+      {
+        "cell": "A11",
+        "formula_or_value": "Dobles",
+        "evaluated_value": "Dobles"
+      },
+      {
+        "cell": "B11",
+        "formula_or_value": "3",
+        "evaluated_value": "3"
+      },
+      {
+        "cell": "C11",
+        "formula_or_value": "=B11/100",
+        "evaluated_value": "0.03"
+      },
+      {
+        "cell": "F11",
+        "formula_or_value": "=G8*C2",
+        "evaluated_value": "276.76"
+      },
+      {
+        "cell": "I12",
+        "formula_or_value": "CANTIDAD",
+        "evaluated_value": "CANTIDAD"
+      },
+      {
+        "cell": "J12",
+        "formula_or_value": "BOLSA",
+        "evaluated_value": "BOLSA"
+      },
+      {
+        "cell": "K12",
+        "formula_or_value": "LOGO",
+        "evaluated_value": "LOGO"
+      },
+      {
+        "cell": "L12",
+        "formula_or_value": "UNIDAD",
+        "evaluated_value": "UNIDAD"
+      },
+      {
+        "cell": "A13",
+        "formula_or_value": "Area 2 Manijas",
+        "evaluated_value": "Area 2 Manijas"
+      },
+      {
+        "cell": "C13",
+        "formula_or_value": "=(C8+C9)*C10",
+        "evaluated_value": "0.06"
+      },
+      {
+        "cell": "I13",
+        "formula_or_value": "200",
+        "evaluated_value": "200"
+      },
+      {
+        "cell": "J13",
+        "formula_or_value": "=B50",
+        "evaluated_value": "1300"
+      },
+      {
+        "cell": "K13",
+        "formula_or_value": "=IF($J$2=0,\"-\",300*$J$2*$J$1)",
+        "evaluated_value": "600"
+      },
+      {
+        "cell": "L13",
+        "formula_or_value": "=IF($J$2>0,K13+J13,J13)",
+        "evaluated_value": "1900"
+      },
+      {
+        "cell": "A14",
+        "formula_or_value": "Area Frente",
+        "evaluated_value": "Area Frente"
+      },
+      {
+        "cell": "C14",
+        "formula_or_value": "=C5*C6",
+        "evaluated_value": "0.136"
+      },
+      {
+        "cell": "I14",
+        "formula_or_value": "300 - 400",
+        "evaluated_value": "300 - 400"
+      },
+      {
+        "cell": "J14",
+        "formula_or_value": "=C50",
+        "evaluated_value": "1210"
+      },
+      {
+        "cell": "K14",
+        "formula_or_value": "=IF($J$2=0,\"-\",250*$J$2*$J$1)",
+        "evaluated_value": "500"
+      },
+      {
+        "cell": "L14",
+        "formula_or_value": "=IF($J$2>0,K14+J14,J14)",
+        "evaluated_value": "1710"
+      },
+      {
+        "cell": "A15",
+        "formula_or_value": "Area Dobles (m^2)",
+        "evaluated_value": "Area Dobles (m^2)"
+      },
+      {
+        "cell": "C15",
+        "formula_or_value": "=C11*C5*2",
+        "evaluated_value": "0.0204"
+      },
+      {
+        "cell": "I15",
+        "formula_or_value": "500 - 1.000",
+        "evaluated_value": "500 - 1.000"
+      },
+      {
+        "cell": "J15",
+        "formula_or_value": "=D50",
+        "evaluated_value": "1100"
+      },
+      {
+        "cell": "K15",
+        "formula_or_value": "=IF($J$2=0,\"-\",250*$J$2*$J$1)",
+        "evaluated_value": "500"
+      },
+      {
+        "cell": "L15",
+        "formula_or_value": "=IF($J$2>0,K15+J15,J15)",
+        "evaluated_value": "1600"
+      },
+      {
+        "cell": "A16",
+        "formula_or_value": "Area Atras",
+        "evaluated_value": "Area Atras"
+      },
+      {
+        "cell": "C16",
+        "formula_or_value": "=C6*C5",
+        "evaluated_value": "0.136"
+      },
+      {
+        "cell": "I16",
+        "formula_or_value": "1.500 - 5.000",
+        "evaluated_value": "1.500 - 5.000"
+      },
+      {
+        "cell": "J16",
+        "formula_or_value": "=E50",
+        "evaluated_value": "1020"
+      },
+      {
+        "cell": "K16",
+        "formula_or_value": "=IF($J$2=0,\"-\",230*$J$2*$J$1)",
+        "evaluated_value": "460"
+      },
+      {
+        "cell": "L16",
+        "formula_or_value": "=IF($J$2>0,K16+J16,J16)",
+        "evaluated_value": "1480"
+      },
+      {
+        "cell": "A17",
+        "formula_or_value": "AREA TOTAL",
+        "evaluated_value": "AREA TOTAL"
+      },
+      {
+        "cell": "C17",
+        "formula_or_value": "=SUM(C13:C16)",
+        "evaluated_value": "0.3524"
+      },
+      {
+        "cell": "I17",
+        "formula_or_value": "5.500 - 15.000",
+        "evaluated_value": "5.500 - 15.000"
+      },
+      {
+        "cell": "J17",
+        "formula_or_value": "=F50",
+        "evaluated_value": "950"
+      },
+      {
+        "cell": "K17",
+        "formula_or_value": "=IF($J$2=0,\"-\",230*$J$2*$J$1)",
+        "evaluated_value": "460"
+      },
+      {
+        "cell": "L17",
+        "formula_or_value": "=IF($J$2>0,K17+J17,J17)",
+        "evaluated_value": "1410"
+      },
+      {
+        "cell": "I18",
+        "formula_or_value": "15000 +",
+        "evaluated_value": "15000 +"
+      },
+      {
+        "cell": "J18",
+        "formula_or_value": "=G50",
+        "evaluated_value": "940"
+      },
+      {
+        "cell": "K18",
+        "formula_or_value": "=IF($J$2=0,\"-\",220*$J$2*$J$1)",
+        "evaluated_value": "440"
+      },
+      {
+        "cell": "L18",
+        "formula_or_value": "=IF($J$2>0,K18+J18,J18)",
+        "evaluated_value": "1380"
+      },
+      {
+        "cell": "A19",
+        "formula_or_value": "TELA",
+        "evaluated_value": "TELA"
+      },
+      {
+        "cell": "C19",
+        "formula_or_value": "=IF(E8<38,((C17*C2/B2)+F11),C17*C2/B2)",
+        "evaluated_value": "242.275"
+      },
+      {
+        "cell": "A20",
+        "formula_or_value": "MAQUILA 1 - BOLSAS",
+        "evaluated_value": "MAQUILA 1 - BOLSAS"
+      },
+      {
+        "cell": "C20",
+        "formula_or_value": "25",
+        "evaluated_value": "25"
+      },
+      {
+        "cell": "H20",
+        "formula_or_value": "1000",
+        "evaluated_value": "1000"
+      },
+      {
+        "cell": "A21",
+        "formula_or_value": "LUZ",
+        "evaluated_value": "LUZ"
+      },
+      {
+        "cell": "C21",
+        "formula_or_value": "50",
+        "evaluated_value": "50"
+      },
+      {
+        "cell": "H21",
+        "formula_or_value": "MIN",
+        "evaluated_value": "MIN"
+      },
+      {
+        "cell": "I21",
+        "formula_or_value": "MAX",
+        "evaluated_value": "MAX"
+      },
+      {
+        "cell": "J21",
+        "formula_or_value": "BOLSA",
+        "evaluated_value": "BOLSA"
+      },
+      {
+        "cell": "K21",
+        "formula_or_value": "LOGO",
+        "evaluated_value": "LOGO"
+      },
+      {
+        "cell": "L21",
+        "formula_or_value": "UNIDAD",
+        "evaluated_value": "UNIDAD"
+      },
+      {
+        "cell": "A22",
+        "formula_or_value": "AGUA",
+        "evaluated_value": "AGUA"
+      },
+      {
+        "cell": "C22",
+        "formula_or_value": "5",
+        "evaluated_value": "5"
+      },
+      {
+        "cell": "H22",
+        "formula_or_value": "100",
+        "evaluated_value": "100"
+      },
+      {
+        "cell": "I22",
+        "formula_or_value": "299",
+        "evaluated_value": "299"
+      },
+      {
+        "cell": "J22",
+        "formula_or_value": "=IF(AND($H$20>=$H22 , $H$20<=$I22),J13,\"\")",
+        "evaluated_value": "None"
+      },
+      {
+        "cell": "K22",
+        "formula_or_value": "=IF(AND($H$20>=$H22 , $H$20<=$I22),K13,\"\")",
+        "evaluated_value": "None"
+      },
+      {
+        "cell": "L22",
+        "formula_or_value": "=IF(AND($H$20>=$H22 , $H$20<=$I22),L13,\"\")",
+        "evaluated_value": "None"
+      },
+      {
+        "cell": "A23",
+        "formula_or_value": "ARRIENDO",
+        "evaluated_value": "ARRIENDO"
+      },
+      {
+        "cell": "C23",
+        "formula_or_value": "100",
+        "evaluated_value": "100"
+      },
+      {
+        "cell": "H23",
+        "formula_or_value": "300",
+        "evaluated_value": "300"
+      },
+      {
+        "cell": "I23",
+        "formula_or_value": "499",
+        "evaluated_value": "499"
+      },
+      {
+        "cell": "J23",
+        "formula_or_value": "=IF(AND($H$20>=$H23 , $H$20<=$I23),J14,\"\")",
+        "evaluated_value": "None"
+      },
+      {
+        "cell": "K23",
+        "formula_or_value": "=IF(AND($H$20>=$H23 , $H$20<=$I23),K14,\"\")",
+        "evaluated_value": "None"
+      },
+      {
+        "cell": "L23",
+        "formula_or_value": "=IF(AND($H$20>=$H23 , $H$20<=$I23),L14,\"\")",
+        "evaluated_value": "None"
+      },
+      {
+        "cell": "A24",
+        "formula_or_value": "GASTOS FIJOS",
+        "evaluated_value": "GASTOS FIJOS"
+      },
+      {
+        "cell": "C24",
+        "formula_or_value": "=SUM(C19:C23)",
+        "evaluated_value": "422.275"
+      },
+      {
+        "cell": "H24",
+        "formula_or_value": "500",
+        "evaluated_value": "500"
+      },
+      {
+        "cell": "I24",
+        "formula_or_value": "1499",
+        "evaluated_value": "1499"
+      },
+      {
+        "cell": "J24",
+        "formula_or_value": "=IF(AND($H$20>=$H24 , $H$20<=$I24),J15,\"\")",
+        "evaluated_value": "1100"
+      },
+      {
+        "cell": "K24",
+        "formula_or_value": "=IF(AND($H$20>=$H24 , $H$20<=$I24),K15,\"\")",
+        "evaluated_value": "500"
+      },
+      {
+        "cell": "L24",
+        "formula_or_value": "=IF(AND($H$20>=$H24 , $H$20<=$I24),L15,\"\")",
+        "evaluated_value": "1600"
+      },
+      {
+        "cell": "H25",
+        "formula_or_value": "1500",
+        "evaluated_value": "1500"
+      },
+      {
+        "cell": "I25",
+        "formula_or_value": "5499",
+        "evaluated_value": "5499"
+      },
+      {
+        "cell": "J25",
+        "formula_or_value": "=IF(AND($H$20>=$H25 , $H$20<=$I25),J16,\"\")",
+        "evaluated_value": "None"
+      },
+      {
+        "cell": "K25",
+        "formula_or_value": "=IF(AND($H$20>=$H25 , $H$20<=$I25),K16,\"\")",
+        "evaluated_value": "None"
+      },
+      {
+        "cell": "L25",
+        "formula_or_value": "=IF(AND($H$20>=$H25 , $H$20<=$I25),L16,\"\")",
+        "evaluated_value": "None"
+      },
+      {
+        "cell": "A26",
+        "formula_or_value": "DESPERDICIO TELA",
+        "evaluated_value": "DESPERDICIO TELA"
+      },
+      {
+        "cell": "B26",
+        "formula_or_value": "=C26*1.15",
+        "evaluated_value": "0.216876775"
+      },
+      {
+        "cell": "C26",
+        "formula_or_value": "=D26*1.15",
+        "evaluated_value": "0.1885885"
+      },
+      {
+        "cell": "D26",
+        "formula_or_value": "=E26*1.15",
+        "evaluated_value": "0.16399"
+      },
+      {
+        "cell": "E26",
+        "formula_or_value": "=F26*1.15",
+        "evaluated_value": "0.1426"
+      },
+      {
+        "cell": "F26",
+        "formula_or_value": "=(18+B5*0.2)/200",
+        "evaluated_value": "0.124"
+      },
+      {
+        "cell": "H26",
+        "formula_or_value": "5500",
+        "evaluated_value": "5500"
+      },
+      {
+        "cell": "I26",
+        "formula_or_value": "10999",
+        "evaluated_value": "10999"
+      },
+      {
+        "cell": "J26",
+        "formula_or_value": "=IF(AND($H$20>=$H26 , $H$20<=$I26),J17,\"\")",
+        "evaluated_value": "None"
+      },
+      {
+        "cell": "K26",
+        "formula_or_value": "=IF(AND($H$20>=$H26 , $H$20<=$I26),K17,\"\")",
+        "evaluated_value": "None"
+      },
+      {
+        "cell": "L26",
+        "formula_or_value": "=IF(AND($H$20>=$H26 , $H$20<=$I26),L17,\"\")",
+        "evaluated_value": "None"
+      },
+      {
+        "cell": "B27",
+        "formula_or_value": "=$C$19*B26",
+        "evaluated_value": "52.543820663125"
+      },
+      {
+        "cell": "C27",
+        "formula_or_value": "=$C$19*C26",
+        "evaluated_value": "45.6902788375"
+      },
+      {
+        "cell": "D27",
+        "formula_or_value": "=$C$19*D26",
+        "evaluated_value": "39.73067725"
+      },
+      {
+        "cell": "E27",
+        "formula_or_value": "=$C$19*E26",
+        "evaluated_value": "34.548415"
+      },
+      {
+        "cell": "F27",
+        "formula_or_value": "=$C$19*F26",
+        "evaluated_value": "30.0421"
+      },
+      {
+        "cell": "H27",
+        "formula_or_value": "11000",
+        "evaluated_value": "11000"
+      },
+      {
+        "cell": "I27",
+        "formula_or_value": "1000000",
+        "evaluated_value": "1000000"
+      },
+      {
+        "cell": "J27",
+        "formula_or_value": "=IF(AND($H$20>=$H27 , $H$20<=$I27),J18,\"\")",
+        "evaluated_value": "None"
+      },
+      {
+        "cell": "K27",
+        "formula_or_value": "=IF(AND($H$20>=$H27 , $H$20<=$I27),K18,\"\")",
+        "evaluated_value": "None"
+      },
+      {
+        "cell": "L27",
+        "formula_or_value": "=IF(AND($H$20>=$H27 , $H$20<=$I27),L18,\"\")",
+        "evaluated_value": "None"
+      },
+      {
+        "cell": "J28",
+        "formula_or_value": "=IFERROR(__xludf.dummyfunction(\"FILTER(J22:J27,J22:J27<>\"\"\"\")\"),1100)",
+        "evaluated_value": "1100"
+      },
+      {
+        "cell": "K28",
+        "formula_or_value": "=IFERROR(__xludf.dummyfunction(\"FILTER(K22:K27,K22:K27<>\"\"\"\")\"),500)",
+        "evaluated_value": "500"
+      },
+      {
+        "cell": "L28",
+        "formula_or_value": "=IFERROR(__xludf.dummyfunction(\"FILTER(L22:L27,L22:L27<>\"\"\"\")\"),1600)",
+        "evaluated_value": "1600"
+      },
+      {
+        "cell": "M28",
+        "formula_or_value": "=L28*H20",
+        "evaluated_value": "1600000"
+      },
+      {
+        "cell": "A29",
+        "formula_or_value": "OPERARIO 1",
+        "evaluated_value": "OPERARIO 1"
+      },
+      {
+        "cell": "B29",
+        "formula_or_value": "=C29*1.2",
+        "evaluated_value": "63.168144"
+      },
+      {
+        "cell": "C29",
+        "formula_or_value": "=D29*1.3",
+        "evaluated_value": "52.64012"
+      },
+      {
+        "cell": "D29",
+        "formula_or_value": "=E29*1.3",
+        "evaluated_value": "40.4924"
+      },
+      {
+        "cell": "E29",
+        "formula_or_value": "=F29*1.3",
+        "evaluated_value": "31.148"
+      },
+      {
+        "cell": "F29",
+        "formula_or_value": "=21+(($B$5+$B$6)/25)",
+        "evaluated_value": "23.96"
+      },
+      {
+        "cell": "M29",
+        "formula_or_value": "TOTAL PEDIDO",
+        "evaluated_value": "TOTAL PEDIDO"
+      },
+      {
+        "cell": "A30",
+        "formula_or_value": "OPERARIO 2",
+        "evaluated_value": "OPERARIO 2"
+      },
+      {
+        "cell": "B30",
+        "formula_or_value": "=C30*1.2",
+        "evaluated_value": "63.168144"
+      },
+      {
+        "cell": "C30",
+        "formula_or_value": "=D30*1.3",
+        "evaluated_value": "52.64012"
+      },
+      {
+        "cell": "D30",
+        "formula_or_value": "=E30*1.3",
+        "evaluated_value": "40.4924"
+      },
+      {
+        "cell": "E30",
+        "formula_or_value": "=F30*1.3",
+        "evaluated_value": "31.148"
+      },
+      {
+        "cell": "F30",
+        "formula_or_value": "=21+(($B$5+$B$6)/25)",
+        "evaluated_value": "23.96"
+      },
+      {
+        "cell": "A31",
+        "formula_or_value": "OPERARIO 3",
+        "evaluated_value": "OPERARIO 3"
+      },
+      {
+        "cell": "B31",
+        "formula_or_value": "=C31*1.2",
+        "evaluated_value": "63.168144"
+      },
+      {
+        "cell": "C31",
+        "formula_or_value": "=D31*1.3",
+        "evaluated_value": "52.64012"
+      },
+      {
+        "cell": "D31",
+        "formula_or_value": "=E31*1.3",
+        "evaluated_value": "40.4924"
+      },
+      {
+        "cell": "E31",
+        "formula_or_value": "=F31*1.3",
+        "evaluated_value": "31.148"
+      },
+      {
+        "cell": "F31",
+        "formula_or_value": "=21+(($B$5+$B$6)/25)",
+        "evaluated_value": "23.96"
+      },
+      {
+        "cell": "A32",
+        "formula_or_value": "OPERARIO 4",
+        "evaluated_value": "OPERARIO 4"
+      },
+      {
+        "cell": "B32",
+        "formula_or_value": "=C32*1.2",
+        "evaluated_value": "63.168144"
+      },
+      {
+        "cell": "C32",
+        "formula_or_value": "=D32*1.3",
+        "evaluated_value": "52.64012"
+      },
+      {
+        "cell": "D32",
+        "formula_or_value": "=E32*1.3",
+        "evaluated_value": "40.4924"
+      },
+      {
+        "cell": "E32",
+        "formula_or_value": "=F32*1.3",
+        "evaluated_value": "31.148"
+      },
+      {
+        "cell": "F32",
+        "formula_or_value": "=21+(($B$5+$B$6)/25)",
+        "evaluated_value": "23.96"
+      },
+      {
+        "cell": "A34",
+        "formula_or_value": "TOTAL COSTOS",
+        "evaluated_value": "TOTAL COSTOS"
+      },
+      {
+        "cell": "B34",
+        "formula_or_value": "=$C$24+SUM(B29:B32)+B27",
+        "evaluated_value": "727.491396663125"
+      },
+      {
+        "cell": "C34",
+        "formula_or_value": "=$C$24+SUM(C29:C32)+C27",
+        "evaluated_value": "678.5257588375"
+      },
+      {
+        "cell": "D34",
+        "formula_or_value": "=$C$24+SUM(D29:D32)+D27",
+        "evaluated_value": "623.97527725"
+      },
+      {
+        "cell": "E34",
+        "formula_or_value": "=$C$24+SUM(E29:E32)+E27",
+        "evaluated_value": "581.415415"
+      },
+      {
+        "cell": "F34",
+        "formula_or_value": "=$C$24+SUM(F29:F32)+F27",
+        "evaluated_value": "548.1571"
+      },
+      {
+        "cell": "G34",
+        "formula_or_value": "=F34",
+        "evaluated_value": "548.1571"
+      },
+      {
+        "cell": "G35",
+        "formula_or_value": "=F35",
+        "evaluated_value": "0"
+      },
+      {
+        "cell": "A36",
+        "formula_or_value": "1 S",
+        "evaluated_value": "1 S"
+      },
+      {
+        "cell": "B36",
+        "formula_or_value": "=C36*1.05",
+        "evaluated_value": "46.5976476"
+      },
+      {
+        "cell": "C36",
+        "formula_or_value": "=D36*1.05",
+        "evaluated_value": "44.378712"
+      },
+      {
+        "cell": "D36",
+        "formula_or_value": "=E36*1.05",
+        "evaluated_value": "42.26544"
+      },
+      {
+        "cell": "E36",
+        "formula_or_value": "=F36*1.05",
+        "evaluated_value": "40.2528"
+      },
+      {
+        "cell": "F36",
+        "formula_or_value": "=MIN(MAX(F29, (($B$5*1 + $B$6*1) - 25)), F29*1.6)",
+        "evaluated_value": "38.336"
+      },
+      {
+        "cell": "G36",
+        "formula_or_value": "=F36",
+        "evaluated_value": "38.336"
+      },
+      {
+        "cell": "A37",
+        "formula_or_value": "5 S",
+        "evaluated_value": "5 S"
+      },
+      {
+        "cell": "B37",
+        "formula_or_value": "=B36*5",
+        "evaluated_value": "232.988238"
+      },
+      {
+        "cell": "C37",
+        "formula_or_value": "=C36*5",
+        "evaluated_value": "221.89356"
+      },
+      {
+        "cell": "D37",
+        "formula_or_value": "=D36*5",
+        "evaluated_value": "211.3272"
+      },
+      {
+        "cell": "E37",
+        "formula_or_value": "=E36*5",
+        "evaluated_value": "201.264"
+      },
+      {
+        "cell": "F37",
+        "formula_or_value": "=F36*5",
+        "evaluated_value": "191.68"
+      },
+      {
+        "cell": "G37",
+        "formula_or_value": "=F37",
+        "evaluated_value": "191.68"
+      },
+      {
+        "cell": "G38",
+        "formula_or_value": "=F38",
+        "evaluated_value": "0"
+      },
+      {
+        "cell": "A39",
+        "formula_or_value": "COSTO REAL",
+        "evaluated_value": "COSTO REAL"
+      },
+      {
+        "cell": "B39",
+        "formula_or_value": "=B34+B37",
+        "evaluated_value": "960.479634663125"
+      },
+      {
+        "cell": "C39",
+        "formula_or_value": "=C34+C37",
+        "evaluated_value": "900.4193188375"
+      },
+      {
+        "cell": "D39",
+        "formula_or_value": "=D34+D37",
+        "evaluated_value": "835.30247725"
+      },
+      {
+        "cell": "E39",
+        "formula_or_value": "=E34+E37",
+        "evaluated_value": "782.679415"
+      },
+      {
+        "cell": "F39",
+        "formula_or_value": "=F34+F37",
+        "evaluated_value": "739.8371"
+      },
+      {
+        "cell": "G39",
+        "formula_or_value": "=F39",
+        "evaluated_value": "739.8371"
+      },
+      {
+        "cell": "B48",
+        "formula_or_value": "100-200",
+        "evaluated_value": "100-200"
+      },
+      {
+        "cell": "C48",
+        "formula_or_value": "300-450",
+        "evaluated_value": "300-450"
+      },
+      {
+        "cell": "D48",
+        "formula_or_value": "500-1.000",
+        "evaluated_value": "500-1.000"
+      },
+      {
+        "cell": "E48",
+        "formula_or_value": "1.100-5.000",
+        "evaluated_value": "1.100-5.000"
+      },
+      {
+        "cell": "F48",
+        "formula_or_value": "5.500-10.000",
+        "evaluated_value": "5.500-10.000"
+      },
+      {
+        "cell": "G48",
+        "formula_or_value": "11000+",
+        "evaluated_value": "11000+"
+      },
+      {
+        "cell": "H48",
+        "formula_or_value": "DTO POR ALTURA ROLLO",
+        "evaluated_value": "DTO POR ALTURA ROLLO"
+      },
+      {
+        "cell": "I48",
+        "formula_or_value": "DTO POR TUCO PQ",
+        "evaluated_value": "DTO POR TUCO PQ"
+      },
+      {
+        "cell": "J48",
+        "formula_or_value": "DTO POR POCO DESPERDICIO",
+        "evaluated_value": "DTO POR POCO DESPERDICIO"
+      },
+      {
+        "cell": "K48",
+        "formula_or_value": "DTO POR COLA DE PRODUCCIÓN",
+        "evaluated_value": "DTO POR COLA DE PRODUCCIÓN"
+      },
+      {
+        "cell": "L48",
+        "formula_or_value": "DTO",
+        "evaluated_value": "DTO"
+      },
+      {
+        "cell": "A49",
+        "formula_or_value": "PRECIO CATALOGO",
+        "evaluated_value": "PRECIO CATALOGO"
+      },
+      {
+        "cell": "B49",
+        "formula_or_value": "=30-$L$49",
+        "evaluated_value": "26"
+      },
+      {
+        "cell": "C49",
+        "formula_or_value": "=29-$L$49",
+        "evaluated_value": "25"
+      },
+      {
+        "cell": "D49",
+        "formula_or_value": "=28-$L$49",
+        "evaluated_value": "24"
+      },
+      {
+        "cell": "E49",
+        "formula_or_value": "=27-$L$49",
+        "evaluated_value": "23"
+      },
+      {
+        "cell": "F49",
+        "formula_or_value": "=25.5-$L$49",
+        "evaluated_value": "21.5"
+      },
+      {
+        "cell": "G49",
+        "formula_or_value": "=IF(H20>19999,24-$L$49-2,25-$L$49)",
+        "evaluated_value": "21"
+      },
+      {
+        "cell": "H49",
+        "formula_or_value": "=IF(AND(E5>=60, E5<=67), 4, 0)",
+        "evaluated_value": "0"
+      },
+      {
+        "cell": "I49",
+        "formula_or_value": "=IF(AND(E5>=0, E5<=59), 6, 0)",
+        "evaluated_value": "0"
+      },
+      {
+        "cell": "J49",
+        "formula_or_value": "=IF(AND(F5>=0,F5<21),4,0)",
+        "evaluated_value": "0"
+      },
+      {
+        "cell": "K49",
+        "formula_or_value": "=IF(P2<50000,4,0)",
+        "evaluated_value": "4"
+      },
+      {
+        "cell": "L49",
+        "formula_or_value": "=MAX(H49:K49)",
+        "evaluated_value": "4"
+      },
+      {
+        "cell": "A50",
+        "formula_or_value": "ANTES DE IVA",
+        "evaluated_value": "ANTES DE IVA"
+      },
+      {
+        "cell": "B50",
+        "formula_or_value": "=CEILING(B39/((1-B49/100)),50)",
+        "evaluated_value": "1300"
+      },
+      {
+        "cell": "C50",
+        "formula_or_value": "=CEILING(C39/((1-C49/100)),10)",
+        "evaluated_value": "1210"
+      },
+      {
+        "cell": "D50",
+        "formula_or_value": "=CEILING(D39/((1-D49/100)),10)",
+        "evaluated_value": "1100"
+      },
+      {
+        "cell": "E50",
+        "formula_or_value": "=CEILING(E39/((1-E49/100)),10)",
+        "evaluated_value": "1020"
+      },
+      {
+        "cell": "F50",
+        "formula_or_value": "=CEILING(F39/((1-F49/100)),10)",
+        "evaluated_value": "950"
+      },
+      {
+        "cell": "G50",
+        "formula_or_value": "=CEILING(G39/((1-G49/100)),5)",
+        "evaluated_value": "940"
+      },
+      {
+        "cell": "A51",
+        "formula_or_value": "CON IVA",
+        "evaluated_value": "CON IVA"
+      },
+      {
+        "cell": "B51",
+        "formula_or_value": "=B50*1.19",
+        "evaluated_value": "1547"
+      },
+      {
+        "cell": "C51",
+        "formula_or_value": "=C50*1.19",
+        "evaluated_value": "1439.9"
+      },
+      {
+        "cell": "D51",
+        "formula_or_value": "=D50*1.19",
+        "evaluated_value": "1309"
+      },
+      {
+        "cell": "E51",
+        "formula_or_value": "=E50*1.19",
+        "evaluated_value": "1213.8"
+      },
+      {
+        "cell": "F51",
+        "formula_or_value": "=F50*1.19",
+        "evaluated_value": "1130.5"
+      },
+      {
+        "cell": "G51",
+        "formula_or_value": "=G50*1.19",
+        "evaluated_value": "1118.6"
+      },
+      {
+        "cell": "G52",
+        "formula_or_value": "=F52",
+        "evaluated_value": "0"
+      },
+      {
+        "cell": "B53",
+        "formula_or_value": "10",
+        "evaluated_value": "10"
+      },
+      {
+        "cell": "C53",
+        "formula_or_value": "10",
+        "evaluated_value": "10"
+      },
+      {
+        "cell": "D53",
+        "formula_or_value": "10",
+        "evaluated_value": "10"
+      },
+      {
+        "cell": "E53",
+        "formula_or_value": "10",
+        "evaluated_value": "10"
+      },
+      {
+        "cell": "F53",
+        "formula_or_value": "10",
+        "evaluated_value": "10"
+      },
+      {
+        "cell": "G53",
+        "formula_or_value": "10",
+        "evaluated_value": "10"
+      },
+      {
+        "cell": "A54",
+        "formula_or_value": "PRECIO VENDEDORES  (15-11%)",
+        "evaluated_value": "PRECIO VENDEDORES  (15-11%)"
+      },
+      {
+        "cell": "B54",
+        "formula_or_value": "=B50-(B50*B53/100)",
+        "evaluated_value": "1170"
+      },
+      {
+        "cell": "C54",
+        "formula_or_value": "=C50-(C50*C53/100)",
+        "evaluated_value": "1089"
+      },
+      {
+        "cell": "D54",
+        "formula_or_value": "=D50-(D50*D53/100)",
+        "evaluated_value": "990"
+      },
+      {
+        "cell": "E54",
+        "formula_or_value": "=E50-(E50*E53/100)",
+        "evaluated_value": "918"
+      },
+      {
+        "cell": "F54",
+        "formula_or_value": "=F50-(F50*F53/100)",
+        "evaluated_value": "855"
+      },
+      {
+        "cell": "G54",
+        "formula_or_value": "=G50-(G50*G53/100)",
+        "evaluated_value": "846"
+      },
+      {
+        "cell": "B57",
+        "formula_or_value": "1200",
+        "evaluated_value": "1200"
+      },
+      {
+        "cell": "C57",
+        "formula_or_value": "2000",
+        "evaluated_value": "2000"
+      },
+      {
+        "cell": "D57",
+        "formula_or_value": "3000",
+        "evaluated_value": "3000"
+      },
+      {
+        "cell": "E57",
+        "formula_or_value": "5000",
+        "evaluated_value": "5000"
+      },
+      {
+        "cell": "F57",
+        "formula_or_value": "7000",
+        "evaluated_value": "7000"
+      },
+      {
+        "cell": "B59",
+        "formula_or_value": "=B57*SUM(B29:B32)",
+        "evaluated_value": "303207.0912"
+      },
+      {
+        "cell": "C59",
+        "formula_or_value": "=C57*SUM(C29:C32)",
+        "evaluated_value": "421120.96"
+      },
+      {
+        "cell": "D59",
+        "formula_or_value": "=D57*SUM(D29:D32)",
+        "evaluated_value": "485908.8"
+      },
+      {
+        "cell": "E59",
+        "formula_or_value": "=E57*SUM(E29:E32)",
+        "evaluated_value": "622960"
+      },
+      {
+        "cell": "F59",
+        "formula_or_value": "=F57*SUM(F29:F32)",
+        "evaluated_value": "670880"
+      },
+      {
+        "cell": "B60",
+        "formula_or_value": "=4*80000",
+        "evaluated_value": "320000"
+      },
+      {
+        "cell": "C60",
+        "formula_or_value": "=4*80000",
+        "evaluated_value": "320000"
+      },
+      {
+        "cell": "D60",
+        "formula_or_value": "=4*80000",
+        "evaluated_value": "320000"
+      },
+      {
+        "cell": "E60",
+        "formula_or_value": "=4*80000",
+        "evaluated_value": "320000"
+      },
+      {
+        "cell": "F60",
+        "formula_or_value": "=4*80000",
+        "evaluated_value": "320000"
+      },
+      {
+        "cell": "B61",
+        "formula_or_value": "=B59-B60",
+        "evaluated_value": "-16792.9088"
+      },
+      {
+        "cell": "C61",
+        "formula_or_value": "=C59-C60",
+        "evaluated_value": "101120.96"
+      },
+      {
+        "cell": "D61",
+        "formula_or_value": "=D59-D60",
+        "evaluated_value": "165908.8"
+      },
+      {
+        "cell": "E61",
+        "formula_or_value": "=E59-E60",
+        "evaluated_value": "302960"
+      },
+      {
+        "cell": "F61",
+        "formula_or_value": "=F59-F60",
+        "evaluated_value": "350880"
+      },
+      {
+        "cell": "B63",
+        "formula_or_value": "=B39*B57",
+        "evaluated_value": "1152575.56159575"
+      },
+      {
+        "cell": "C63",
+        "formula_or_value": "=C39*C57",
+        "evaluated_value": "1800838.637675"
+      },
+      {
+        "cell": "D63",
+        "formula_or_value": "=D39*D57",
+        "evaluated_value": "2505907.43175"
+      },
+      {
+        "cell": "E63",
+        "formula_or_value": "=E39*E57",
+        "evaluated_value": "3913397.075"
+      },
+      {
+        "cell": "F63",
+        "formula_or_value": "=F39*F57",
+        "evaluated_value": "5178859.7"
+      },
+      {
+        "cell": "B64",
+        "formula_or_value": "=B50*$B57",
+        "evaluated_value": "1560000"
+      },
+      {
+        "cell": "C64",
+        "formula_or_value": "=C50*$C57",
+        "evaluated_value": "2420000"
+      },
+      {
+        "cell": "D64",
+        "formula_or_value": "=D50*$D57",
+        "evaluated_value": "3300000"
+      },
+      {
+        "cell": "E64",
+        "formula_or_value": "=E50*$E57",
+        "evaluated_value": "5100000"
+      },
+      {
+        "cell": "F64",
+        "formula_or_value": "=F50*$F57",
+        "evaluated_value": "6650000"
+      },
+      {
+        "cell": "B65",
+        "formula_or_value": "=B64-B63",
+        "evaluated_value": "407424.43840425"
+      },
+      {
+        "cell": "C65",
+        "formula_or_value": "=C64-C63",
+        "evaluated_value": "619161.362325"
+      },
+      {
+        "cell": "D65",
+        "formula_or_value": "=D64-D63",
+        "evaluated_value": "794092.56825"
+      },
+      {
+        "cell": "E65",
+        "formula_or_value": "=E64-E63",
+        "evaluated_value": "1186602.925"
+      },
+      {
+        "cell": "F65",
+        "formula_or_value": "=F64-F63",
+        "evaluated_value": "1471140.3"
+      },
+      {
+        "cell": "B67",
+        "formula_or_value": "=B65+B61",
+        "evaluated_value": "390631.52960425"
+      },
+      {
+        "cell": "C67",
+        "formula_or_value": "=C65+C61",
+        "evaluated_value": "720282.322325"
+      },
+      {
+        "cell": "D67",
+        "formula_or_value": "=D65+D61",
+        "evaluated_value": "960001.36825"
+      },
+      {
+        "cell": "E67",
+        "formula_or_value": "=E65+E61",
+        "evaluated_value": "1489562.925"
+      },
+      {
+        "cell": "F67",
+        "formula_or_value": "=F65+F61",
+        "evaluated_value": "1822020.3"
+      },
+      {
+        "cell": "B69",
+        "formula_or_value": "=B57*100",
+        "evaluated_value": "120000"
+      },
+      {
+        "cell": "C69",
+        "formula_or_value": "=C57*100",
+        "evaluated_value": "200000"
+      },
+      {
+        "cell": "D69",
+        "formula_or_value": "=D57*100",
+        "evaluated_value": "300000"
+      },
+      {
+        "cell": "E69",
+        "formula_or_value": "=E57*100",
+        "evaluated_value": "500000"
+      },
+      {
+        "cell": "F69",
+        "formula_or_value": "=F57*100",
+        "evaluated_value": "700000"
+      },
+      {
+        "cell": "B71",
+        "formula_or_value": "=B67-B69",
+        "evaluated_value": "270631.52960425"
+      },
+      {
+        "cell": "C71",
+        "formula_or_value": "=C67-C69",
+        "evaluated_value": "520282.322325"
+      },
+      {
+        "cell": "D71",
+        "formula_or_value": "=D67-D69",
+        "evaluated_value": "660001.36825"
+      },
+      {
+        "cell": "E71",
+        "formula_or_value": "=E67-E69",
+        "evaluated_value": "989562.925"
+      },
+      {
+        "cell": "F71",
+        "formula_or_value": "=F67-F69",
+        "evaluated_value": "1122020.3"
+      },
+      {
+        "cell": "A73",
+        "formula_or_value": "Tinta por bolsa",
+        "evaluated_value": "Tinta por bolsa"
+      },
+      {
+        "cell": "B73",
+        "formula_or_value": "19.6666666666667",
+        "evaluated_value": "19.6666666666667"
+      },
+      {
+        "cell": "C73",
+        "formula_or_value": "19.6666666666667",
+        "evaluated_value": "19.6666666666667"
+      },
+      {
+        "cell": "D73",
+        "formula_or_value": "19.6666666666667",
+        "evaluated_value": "19.6666666666667"
+      },
+      {
+        "cell": "E73",
+        "formula_or_value": "19.6666666666667",
+        "evaluated_value": "19.6666666666667"
+      },
+      {
+        "cell": "F73",
+        "formula_or_value": "19.6666666666667",
+        "evaluated_value": "19.6666666666667"
+      },
+      {
+        "cell": "A74",
+        "formula_or_value": "4 operarios",
+        "evaluated_value": "4 operarios"
+      },
+      {
+        "cell": "B74",
+        "formula_or_value": "=320000/B57",
+        "evaluated_value": "266.666666666667"
+      },
+      {
+        "cell": "C74",
+        "formula_or_value": "=320000/C57",
+        "evaluated_value": "160"
+      },
+      {
+        "cell": "D74",
+        "formula_or_value": "=320000/D57",
+        "evaluated_value": "106.666666666667"
+      },
+      {
+        "cell": "E74",
+        "formula_or_value": "=320000/E57",
+        "evaluated_value": "64"
+      },
+      {
+        "cell": "F74",
+        "formula_or_value": "=320000/F57",
+        "evaluated_value": "45.7142857142857"
+      },
+      {
+        "cell": "A75",
+        "formula_or_value": "Luz",
+        "evaluated_value": "Luz"
+      },
+      {
+        "cell": "B75",
+        "formula_or_value": "30",
+        "evaluated_value": "30"
+      },
+      {
+        "cell": "C75",
+        "formula_or_value": "30",
+        "evaluated_value": "30"
+      },
+      {
+        "cell": "D75",
+        "formula_or_value": "30",
+        "evaluated_value": "30"
+      },
+      {
+        "cell": "E75",
+        "formula_or_value": "30",
+        "evaluated_value": "30"
+      },
+      {
+        "cell": "F75",
+        "formula_or_value": "30",
+        "evaluated_value": "30"
+      },
+      {
+        "cell": "A76",
+        "formula_or_value": "Agua",
+        "evaluated_value": "Agua"
+      },
+      {
+        "cell": "B76",
+        "formula_or_value": "5",
+        "evaluated_value": "5"
+      },
+      {
+        "cell": "C76",
+        "formula_or_value": "5",
+        "evaluated_value": "5"
+      },
+      {
+        "cell": "D76",
+        "formula_or_value": "5",
+        "evaluated_value": "5"
+      },
+      {
+        "cell": "E76",
+        "formula_or_value": "5",
+        "evaluated_value": "5"
+      },
+      {
+        "cell": "F76",
+        "formula_or_value": "5",
+        "evaluated_value": "5"
+      },
+      {
+        "cell": "A77",
+        "formula_or_value": "Emulsión y Bloqueador",
+        "evaluated_value": "Emulsión y Bloqueador"
+      },
+      {
+        "cell": "B77",
+        "formula_or_value": "4.01",
+        "evaluated_value": "4.01"
+      },
+      {
+        "cell": "C77",
+        "formula_or_value": "4.01",
+        "evaluated_value": "4.01"
+      },
+      {
+        "cell": "D77",
+        "formula_or_value": "4.01",
+        "evaluated_value": "4.01"
+      },
+      {
+        "cell": "E77",
+        "formula_or_value": "4.01",
+        "evaluated_value": "4.01"
+      },
+      {
+        "cell": "F77",
+        "formula_or_value": "4.01",
+        "evaluated_value": "4.01"
+      },
+      {
+        "cell": "A78",
+        "formula_or_value": "Marcos y Seda",
+        "evaluated_value": "Marcos y Seda"
+      },
+      {
+        "cell": "B78",
+        "formula_or_value": "13.34",
+        "evaluated_value": "13.34"
+      },
+      {
+        "cell": "C78",
+        "formula_or_value": "13.34",
+        "evaluated_value": "13.34"
+      },
+      {
+        "cell": "D78",
+        "formula_or_value": "13.34",
+        "evaluated_value": "13.34"
+      },
+      {
+        "cell": "E78",
+        "formula_or_value": "13.34",
+        "evaluated_value": "13.34"
+      },
+      {
+        "cell": "F78",
+        "formula_or_value": "13.34",
+        "evaluated_value": "13.34"
+      },
+      {
+        "cell": "A79",
+        "formula_or_value": "Positivo TINTA IMPRESORA",
+        "evaluated_value": "Positivo TINTA IMPRESORA"
+      },
+      {
+        "cell": "B79",
+        "formula_or_value": "16.0225",
+        "evaluated_value": "16.0225"
+      },
+      {
+        "cell": "C79",
+        "formula_or_value": "16.0225",
+        "evaluated_value": "16.0225"
+      },
+      {
+        "cell": "D79",
+        "formula_or_value": "16.0225",
+        "evaluated_value": "16.0225"
+      },
+      {
+        "cell": "E79",
+        "formula_or_value": "16.0225",
+        "evaluated_value": "16.0225"
+      },
+      {
+        "cell": "F79",
+        "formula_or_value": "16.0225",
+        "evaluated_value": "16.0225"
+      },
+      {
+        "cell": "A80",
+        "formula_or_value": "Positivo Papel",
+        "evaluated_value": "Positivo Papel"
+      },
+      {
+        "cell": "B80",
+        "formula_or_value": "4",
+        "evaluated_value": "4"
+      },
+      {
+        "cell": "C80",
+        "formula_or_value": "4",
+        "evaluated_value": "4"
+      },
+      {
+        "cell": "D80",
+        "formula_or_value": "4",
+        "evaluated_value": "4"
+      },
+      {
+        "cell": "E80",
+        "formula_or_value": "4",
+        "evaluated_value": "4"
+      },
+      {
+        "cell": "F80",
+        "formula_or_value": "4",
+        "evaluated_value": "4"
+      }
+    ],
+    "BOLSA PLANA TROQUEL": [
+      {
+        "cell": "B1",
+        "formula_or_value": "m2",
+        "evaluated_value": "m2"
+      },
+      {
+        "cell": "I1",
+        "formula_or_value": "CARAS",
+        "evaluated_value": "CARAS"
+      },
+      {
+        "cell": "J1",
+        "formula_or_value": "2",
+        "evaluated_value": "2"
+      },
+      {
+        "cell": "B2",
+        "formula_or_value": "1.6",
+        "evaluated_value": "1.6"
+      },
+      {
+        "cell": "C2",
+        "formula_or_value": "1100",
+        "evaluated_value": "1100"
+      },
+      {
+        "cell": "I2",
+        "formula_or_value": " TINTAS",
+        "evaluated_value": " TINTAS"
+      },
+      {
+        "cell": "J2",
+        "formula_or_value": "1",
+        "evaluated_value": "1"
+      },
+      {
+        "cell": "B4",
+        "formula_or_value": "cm",
+        "evaluated_value": "cm"
+      },
+      {
+        "cell": "C4",
+        "formula_or_value": "m",
+        "evaluated_value": "m"
+      },
+      {
+        "cell": "E4",
+        "formula_or_value": "Alto rollo",
+        "evaluated_value": "Alto rollo"
+      },
+      {
+        "cell": "F4",
+        "formula_or_value": "Saldo Rollo",
+        "evaluated_value": "Saldo Rollo"
+      },
+      {
+        "cell": "A5",
+        "formula_or_value": "Ancho",
+        "evaluated_value": "Ancho"
+      },
+      {
+        "cell": "B5",
+        "formula_or_value": "16",
+        "evaluated_value": "16"
+      },
+      {
+        "cell": "C5",
+        "formula_or_value": "=B5/100",
+        "evaluated_value": "0.16"
+      },
+      {
+        "cell": "E5",
+        "formula_or_value": "=B6*2+B7+B8*2",
+        "evaluated_value": "62"
+      },
+      {
+        "cell": "F5",
+        "formula_or_value": "=(160-(E5*2))",
+        "evaluated_value": "36"
+      },
+      {
+        "cell": "A6",
+        "formula_or_value": "Alto",
+        "evaluated_value": "Alto"
+      },
+      {
+        "cell": "B6",
+        "formula_or_value": "25",
+        "evaluated_value": "25"
+      },
+      {
+        "cell": "C6",
+        "formula_or_value": "=B6/100",
+        "evaluated_value": "0.25"
+      },
+      {
+        "cell": "A7",
+        "formula_or_value": "Fuelle",
+        "evaluated_value": "Fuelle"
+      },
+      {
+        "cell": "B7",
+        "formula_or_value": "0",
+        "evaluated_value": "0"
+      },
+      {
+        "cell": "C7",
+        "formula_or_value": "=B7/100",
+        "evaluated_value": "0"
+      },
+      {
+        "cell": "E7",
+        "formula_or_value": "Sobrantes 1,6",
+        "evaluated_value": "Sobrantes 1,6"
+      },
+      {
+        "cell": "F7",
+        "formula_or_value": "m",
+        "evaluated_value": "m"
+      },
+      {
+        "cell": "G7",
+        "formula_or_value": "m2",
+        "evaluated_value": "m2"
+      },
+      {
+        "cell": "I7",
+        "formula_or_value": "PLANA TROQUEL",
+        "evaluated_value": "PLANA TROQUEL"
+      },
+      {
+        "cell": "A8",
+        "formula_or_value": "Dobles",
+        "evaluated_value": "Dobles"
+      },
+      {
+        "cell": "B8",
+        "formula_or_value": "6",
+        "evaluated_value": "6"
+      },
+      {
+        "cell": "C8",
+        "formula_or_value": "=B8/100",
+        "evaluated_value": "0.06"
+      },
+      {
+        "cell": "E8",
+        "formula_or_value": "=160-E5",
+        "evaluated_value": "98"
+      },
+      {
+        "cell": "F8",
+        "formula_or_value": "=E8/100",
+        "evaluated_value": "0.98"
+      },
+      {
+        "cell": "G8",
+        "formula_or_value": "=F8*C5",
+        "evaluated_value": "0.1568"
+      },
+      {
+        "cell": "I8",
+        "formula_or_value": "=A5",
+        "evaluated_value": "Ancho"
+      },
+      {
+        "cell": "J8",
+        "formula_or_value": "=B5",
+        "evaluated_value": "16"
+      },
+      {
+        "cell": "I9",
+        "formula_or_value": "=A6",
+        "evaluated_value": "Alto"
+      },
+      {
+        "cell": "J9",
+        "formula_or_value": "=B6",
+        "evaluated_value": "25"
+      },
+      {
+        "cell": "A10",
+        "formula_or_value": "Area Frente",
+        "evaluated_value": "Area Frente"
+      },
+      {
+        "cell": "C10",
+        "formula_or_value": "=C5*C6",
+        "evaluated_value": "0.04"
+      },
+      {
+        "cell": "I10",
+        "formula_or_value": "Fuelle",
+        "evaluated_value": "Fuelle"
+      },
+      {
+        "cell": "J10",
+        "formula_or_value": "0",
+        "evaluated_value": "0"
+      },
+      {
+        "cell": "A11",
+        "formula_or_value": "Area Dobles (m^2)",
+        "evaluated_value": "Area Dobles (m^2)"
+      },
+      {
+        "cell": "C11",
+        "formula_or_value": "=C8*C5*2",
+        "evaluated_value": "0.0192"
+      },
+      {
+        "cell": "F11",
+        "formula_or_value": "=G8*C2",
+        "evaluated_value": "172.48"
+      },
+      {
+        "cell": "A12",
+        "formula_or_value": "Area Atras",
+        "evaluated_value": "Area Atras"
+      },
+      {
+        "cell": "C12",
+        "formula_or_value": "=C6*C5",
+        "evaluated_value": "0.04"
+      },
+      {
+        "cell": "I12",
+        "formula_or_value": "CANTIDAD",
+        "evaluated_value": "CANTIDAD"
+      },
+      {
+        "cell": "J12",
+        "formula_or_value": "BOLSA",
+        "evaluated_value": "BOLSA"
+      },
+      {
+        "cell": "K12",
+        "formula_or_value": "LOGO",
+        "evaluated_value": "LOGO"
+      },
+      {
+        "cell": "L12",
+        "formula_or_value": "UNIDAD",
+        "evaluated_value": "UNIDAD"
+      },
+      {
+        "cell": "A13",
+        "formula_or_value": "AREA TOTAL",
+        "evaluated_value": "AREA TOTAL"
+      },
+      {
+        "cell": "C13",
+        "formula_or_value": "=SUM(C10:C12)",
+        "evaluated_value": "0.0992"
+      },
+      {
+        "cell": "I13",
+        "formula_or_value": "200",
+        "evaluated_value": "200"
+      },
+      {
+        "cell": "J13",
+        "formula_or_value": "=B50",
+        "evaluated_value": "900"
+      },
+      {
+        "cell": "K13",
+        "formula_or_value": "=IF($J$2=0,\"-\",300*$J$2*$J$1)",
+        "evaluated_value": "600"
+      },
+      {
+        "cell": "L13",
+        "formula_or_value": "=IF($J$2>0,K13+J13,J13)",
+        "evaluated_value": "1500"
+      },
+      {
+        "cell": "I14",
+        "formula_or_value": "300 - 400",
+        "evaluated_value": "300 - 400"
+      },
+      {
+        "cell": "J14",
+        "formula_or_value": "=C50",
+        "evaluated_value": "790"
+      },
+      {
+        "cell": "K14",
+        "formula_or_value": "=IF($J$2=0,\"-\",250*$J$2*$J$1)",
+        "evaluated_value": "500"
+      },
+      {
+        "cell": "L14",
+        "formula_or_value": "=IF($J$2>0,K14+J14,J14)",
+        "evaluated_value": "1290"
+      },
+      {
+        "cell": "A15",
+        "formula_or_value": "TELA",
+        "evaluated_value": "TELA"
+      },
+      {
+        "cell": "C15",
+        "formula_or_value": "=IF(E8<38,((C13*C2/B2)+F11),C13*C2/B2)",
+        "evaluated_value": "68.2"
+      },
+      {
+        "cell": "I15",
+        "formula_or_value": "500 - 1.000",
+        "evaluated_value": "500 - 1.000"
+      },
+      {
+        "cell": "J15",
+        "formula_or_value": "=D50",
+        "evaluated_value": "710"
+      },
+      {
+        "cell": "K15",
+        "formula_or_value": "=IF($J$2=0,\"-\",250*$J$2*$J$1)",
+        "evaluated_value": "500"
+      },
+      {
+        "cell": "L15",
+        "formula_or_value": "=IF($J$2>0,K15+J15,J15)",
+        "evaluated_value": "1210"
+      },
+      {
+        "cell": "A16",
+        "formula_or_value": "MAQUILA 1 - BOLSAS",
+        "evaluated_value": "MAQUILA 1 - BOLSAS"
+      },
+      {
+        "cell": "C16",
+        "formula_or_value": "25",
+        "evaluated_value": "25"
+      },
+      {
+        "cell": "I16",
+        "formula_or_value": "1.500 - 5.000",
+        "evaluated_value": "1.500 - 5.000"
+      },
+      {
+        "cell": "J16",
+        "formula_or_value": "=E50",
+        "evaluated_value": "650"
+      },
+      {
+        "cell": "K16",
+        "formula_or_value": "=IF($J$2=0,\"-\",230*$J$2*$J$1)",
+        "evaluated_value": "460"
+      },
+      {
+        "cell": "L16",
+        "formula_or_value": "=IF($J$2>0,K16+J16,J16)",
+        "evaluated_value": "1110"
+      },
+      {
+        "cell": "A17",
+        "formula_or_value": "LUZ",
+        "evaluated_value": "LUZ"
+      },
+      {
+        "cell": "C17",
+        "formula_or_value": "50",
+        "evaluated_value": "50"
+      },
+      {
+        "cell": "I17",
+        "formula_or_value": "5.500 - 15.000",
+        "evaluated_value": "5.500 - 15.000"
+      },
+      {
+        "cell": "J17",
+        "formula_or_value": "=F50",
+        "evaluated_value": "590"
+      },
+      {
+        "cell": "K17",
+        "formula_or_value": "=IF($J$2=0,\"-\",230*$J$2*$J$1)",
+        "evaluated_value": "460"
+      },
+      {
+        "cell": "L17",
+        "formula_or_value": "=IF($J$2>0,K17+J17,J17)",
+        "evaluated_value": "1050"
+      },
+      {
+        "cell": "A18",
+        "formula_or_value": "AGUA",
+        "evaluated_value": "AGUA"
+      },
+      {
+        "cell": "C18",
+        "formula_or_value": "5",
+        "evaluated_value": "5"
+      },
+      {
+        "cell": "I18",
+        "formula_or_value": "15000 +",
+        "evaluated_value": "15000 +"
+      },
+      {
+        "cell": "J18",
+        "formula_or_value": "=G50",
+        "evaluated_value": "585"
+      },
+      {
+        "cell": "K18",
+        "formula_or_value": "=IF($J$2=0,\"-\",220*$J$2*$J$1)",
+        "evaluated_value": "440"
+      },
+      {
+        "cell": "L18",
+        "formula_or_value": "=IF($J$2>0,K18+J18,J18)",
+        "evaluated_value": "1025"
+      },
+      {
+        "cell": "A19",
+        "formula_or_value": "ARRIENDO",
+        "evaluated_value": "ARRIENDO"
+      },
+      {
+        "cell": "C19",
+        "formula_or_value": "100",
+        "evaluated_value": "100"
+      },
+      {
+        "cell": "A20",
+        "formula_or_value": "GASTOS FIJOS",
+        "evaluated_value": "GASTOS FIJOS"
+      },
+      {
+        "cell": "C20",
+        "formula_or_value": "=SUM(C15:C19)",
+        "evaluated_value": "248.2"
+      },
+      {
+        "cell": "H20",
+        "formula_or_value": "1000",
+        "evaluated_value": "1000"
+      },
+      {
+        "cell": "H21",
+        "formula_or_value": "MIN",
+        "evaluated_value": "MIN"
+      },
+      {
+        "cell": "I21",
+        "formula_or_value": "MAX",
+        "evaluated_value": "MAX"
+      },
+      {
+        "cell": "J21",
+        "formula_or_value": "BOLSA",
+        "evaluated_value": "BOLSA"
+      },
+      {
+        "cell": "K21",
+        "formula_or_value": "LOGO",
+        "evaluated_value": "LOGO"
+      },
+      {
+        "cell": "L21",
+        "formula_or_value": "UNIDAD",
+        "evaluated_value": "UNIDAD"
+      },
+      {
+        "cell": "A22",
+        "formula_or_value": "DESPERDICIO TELA",
+        "evaluated_value": "DESPERDICIO TELA"
+      },
+      {
+        "cell": "B22",
+        "formula_or_value": "=C22*1.2",
+        "evaluated_value": "0.2198016"
+      },
+      {
+        "cell": "C22",
+        "formula_or_value": "=D22*1.2",
+        "evaluated_value": "0.183168"
+      },
+      {
+        "cell": "D22",
+        "formula_or_value": "=E22*1.2",
+        "evaluated_value": "0.15264"
+      },
+      {
+        "cell": "E22",
+        "formula_or_value": "=F22*1.2",
+        "evaluated_value": "0.1272"
+      },
+      {
+        "cell": "F22",
+        "formula_or_value": "=(18+B5*0.2)/200",
+        "evaluated_value": "0.106"
+      },
+      {
+        "cell": "H22",
+        "formula_or_value": "100",
+        "evaluated_value": "100"
+      },
+      {
+        "cell": "I22",
+        "formula_or_value": "299",
+        "evaluated_value": "299"
+      },
+      {
+        "cell": "J22",
+        "formula_or_value": "=IF(AND($H$20>=$H22 , $H$20<=$I22),J13,\"\")",
+        "evaluated_value": "None"
+      },
+      {
+        "cell": "K22",
+        "formula_or_value": "=IF(AND($H$20>=$H22 , $H$20<=$I22),K13,\"\")",
+        "evaluated_value": "None"
+      },
+      {
+        "cell": "L22",
+        "formula_or_value": "=IF(AND($H$20>=$H22 , $H$20<=$I22),L13,\"\")",
+        "evaluated_value": "None"
+      },
+      {
+        "cell": "B23",
+        "formula_or_value": "=$C$15*B22",
+        "evaluated_value": "14.99046912"
+      },
+      {
+        "cell": "C23",
+        "formula_or_value": "=$C$15*C22",
+        "evaluated_value": "12.4920576"
+      },
+      {
+        "cell": "D23",
+        "formula_or_value": "=$C$15*D22",
+        "evaluated_value": "10.410048"
+      },
+      {
+        "cell": "E23",
+        "formula_or_value": "=$C$15*E22",
+        "evaluated_value": "8.67504"
+      },
+      {
+        "cell": "F23",
+        "formula_or_value": "=$C$15*F22",
+        "evaluated_value": "7.2292"
+      },
+      {
+        "cell": "H23",
+        "formula_or_value": "300",
+        "evaluated_value": "300"
+      },
+      {
+        "cell": "I23",
+        "formula_or_value": "499",
+        "evaluated_value": "499"
+      },
+      {
+        "cell": "J23",
+        "formula_or_value": "=IF(AND($H$20>=$H23 , $H$20<=$I23),J14,\"\")",
+        "evaluated_value": "None"
+      },
+      {
+        "cell": "K23",
+        "formula_or_value": "=IF(AND($H$20>=$H23 , $H$20<=$I23),K14,\"\")",
+        "evaluated_value": "None"
+      },
+      {
+        "cell": "L23",
+        "formula_or_value": "=IF(AND($H$20>=$H23 , $H$20<=$I23),L14,\"\")",
+        "evaluated_value": "None"
+      },
+      {
+        "cell": "H24",
+        "formula_or_value": "500",
+        "evaluated_value": "500"
+      },
+      {
+        "cell": "I24",
+        "formula_or_value": "1499",
+        "evaluated_value": "1499"
+      },
+      {
+        "cell": "J24",
+        "formula_or_value": "=IF(AND($H$20>=$H24 , $H$20<=$I24),J15,\"\")",
+        "evaluated_value": "710"
+      },
+      {
+        "cell": "K24",
+        "formula_or_value": "=IF(AND($H$20>=$H24 , $H$20<=$I24),K15,\"\")",
+        "evaluated_value": "500"
+      },
+      {
+        "cell": "L24",
+        "formula_or_value": "=IF(AND($H$20>=$H24 , $H$20<=$I24),L15,\"\")",
+        "evaluated_value": "1210"
+      },
+      {
+        "cell": "A25",
+        "formula_or_value": "OPERARIO 1",
+        "evaluated_value": "OPERARIO 1"
+      },
+      {
+        "cell": "B25",
+        "formula_or_value": "=C25*1.2",
+        "evaluated_value": "59.688096"
+      },
+      {
+        "cell": "C25",
+        "formula_or_value": "=D25*1.3",
+        "evaluated_value": "49.74008"
+      },
+      {
+        "cell": "D25",
+        "formula_or_value": "=E25*1.3",
+        "evaluated_value": "38.2616"
+      },
+      {
+        "cell": "E25",
+        "formula_or_value": "=F25*1.3",
+        "evaluated_value": "29.432"
+      },
+      {
+        "cell": "F25",
+        "formula_or_value": "=21+(($B$5+$B$6)/25)",
+        "evaluated_value": "22.64"
+      },
+      {
+        "cell": "H25",
+        "formula_or_value": "1500",
+        "evaluated_value": "1500"
+      },
+      {
+        "cell": "I25",
+        "formula_or_value": "5499",
+        "evaluated_value": "5499"
+      },
+      {
+        "cell": "J25",
+        "formula_or_value": "=IF(AND($H$20>=$H25 , $H$20<=$I25),J16,\"\")",
+        "evaluated_value": "None"
+      },
+      {
+        "cell": "K25",
+        "formula_or_value": "=IF(AND($H$20>=$H25 , $H$20<=$I25),K16,\"\")",
+        "evaluated_value": "None"
+      },
+      {
+        "cell": "L25",
+        "formula_or_value": "=IF(AND($H$20>=$H25 , $H$20<=$I25),L16,\"\")",
+        "evaluated_value": "None"
+      },
+      {
+        "cell": "A26",
+        "formula_or_value": "OPERARIO 2",
+        "evaluated_value": "OPERARIO 2"
+      },
+      {
+        "cell": "B26",
+        "formula_or_value": "=C26*1.2",
+        "evaluated_value": "59.688096"
+      },
+      {
+        "cell": "C26",
+        "formula_or_value": "=D26*1.3",
+        "evaluated_value": "49.74008"
+      },
+      {
+        "cell": "D26",
+        "formula_or_value": "=E26*1.3",
+        "evaluated_value": "38.2616"
+      },
+      {
+        "cell": "E26",
+        "formula_or_value": "=F26*1.3",
+        "evaluated_value": "29.432"
+      },
+      {
+        "cell": "F26",
+        "formula_or_value": "=21+(($B$5+$B$6)/25)",
+        "evaluated_value": "22.64"
+      },
+      {
+        "cell": "H26",
+        "formula_or_value": "5500",
+        "evaluated_value": "5500"
+      },
+      {
+        "cell": "I26",
+        "formula_or_value": "10999",
+        "evaluated_value": "10999"
+      },
+      {
+        "cell": "J26",
+        "formula_or_value": "=IF(AND($H$20>=$H26 , $H$20<=$I26),J17,\"\")",
+        "evaluated_value": "None"
+      },
+      {
+        "cell": "K26",
+        "formula_or_value": "=IF(AND($H$20>=$H26 , $H$20<=$I26),K17,\"\")",
+        "evaluated_value": "None"
+      },
+      {
+        "cell": "L26",
+        "formula_or_value": "=IF(AND($H$20>=$H26 , $H$20<=$I26),L17,\"\")",
+        "evaluated_value": "None"
+      },
+      {
+        "cell": "A27",
+        "formula_or_value": "OPERARIO 3",
+        "evaluated_value": "OPERARIO 3"
+      },
+      {
+        "cell": "B27",
+        "formula_or_value": "=C27*1.2",
+        "evaluated_value": "59.688096"
+      },
+      {
+        "cell": "C27",
+        "formula_or_value": "=D27*1.3",
+        "evaluated_value": "49.74008"
+      },
+      {
+        "cell": "D27",
+        "formula_or_value": "=E27*1.3",
+        "evaluated_value": "38.2616"
+      },
+      {
+        "cell": "E27",
+        "formula_or_value": "=F27*1.3",
+        "evaluated_value": "29.432"
+      },
+      {
+        "cell": "F27",
+        "formula_or_value": "=21+(($B$5+$B$6)/25)",
+        "evaluated_value": "22.64"
+      },
+      {
+        "cell": "H27",
+        "formula_or_value": "11000",
+        "evaluated_value": "11000"
+      },
+      {
+        "cell": "I27",
+        "formula_or_value": "1000000",
+        "evaluated_value": "1000000"
+      },
+      {
+        "cell": "J27",
+        "formula_or_value": "=IF(AND($H$20>=$H27 , $H$20<=$I27),J18,\"\")",
+        "evaluated_value": "None"
+      },
+      {
+        "cell": "K27",
+        "formula_or_value": "=IF(AND($H$20>=$H27 , $H$20<=$I27),K18,\"\")",
+        "evaluated_value": "None"
+      },
+      {
+        "cell": "L27",
+        "formula_or_value": "=IF(AND($H$20>=$H27 , $H$20<=$I27),L18,\"\")",
+        "evaluated_value": "None"
+      },
+      {
+        "cell": "A28",
+        "formula_or_value": "OPERARIO 4",
+        "evaluated_value": "OPERARIO 4"
+      },
+      {
+        "cell": "B28",
+        "formula_or_value": "=C28*1.2",
+        "evaluated_value": "59.688096"
+      },
+      {
+        "cell": "C28",
+        "formula_or_value": "=D28*1.3",
+        "evaluated_value": "49.74008"
+      },
+      {
+        "cell": "D28",
+        "formula_or_value": "=E28*1.3",
+        "evaluated_value": "38.2616"
+      },
+      {
+        "cell": "E28",
+        "formula_or_value": "=F28*1.3",
+        "evaluated_value": "29.432"
+      },
+      {
+        "cell": "F28",
+        "formula_or_value": "=21+(($B$5+$B$6)/25)",
+        "evaluated_value": "22.64"
+      },
+      {
+        "cell": "J28",
+        "formula_or_value": "=IFERROR(__xludf.dummyfunction(\"FILTER(J22:J27,J22:J27<>\"\"\"\")\"),710)",
+        "evaluated_value": "710"
+      },
+      {
+        "cell": "K28",
+        "formula_or_value": "=IFERROR(__xludf.dummyfunction(\"FILTER(K22:K27,K22:K27<>\"\"\"\")\"),500)",
+        "evaluated_value": "500"
+      },
+      {
+        "cell": "L28",
+        "formula_or_value": "=IFERROR(__xludf.dummyfunction(\"FILTER(L22:L27,L22:L27<>\"\"\"\")\"),1210)",
+        "evaluated_value": "1210"
+      },
+      {
+        "cell": "M28",
+        "formula_or_value": "=L28*H20",
+        "evaluated_value": "1210000"
+      },
+      {
+        "cell": "F29",
+        "formula_or_value": " ",
+        "evaluated_value": " "
+      },
+      {
+        "cell": "M29",
+        "formula_or_value": "TOTAL PEDIDO",
+        "evaluated_value": "TOTAL PEDIDO"
+      },
+      {
+        "cell": "A30",
+        "formula_or_value": "TOTAL COSTOS",
+        "evaluated_value": "TOTAL COSTOS"
+      },
+      {
+        "cell": "B30",
+        "formula_or_value": "=$C$20+SUM(B25:B28)+B23",
+        "evaluated_value": "501.94285312"
+      },
+      {
+        "cell": "C30",
+        "formula_or_value": "=$C$20+SUM(C25:C28)+C23",
+        "evaluated_value": "459.6523776"
+      },
+      {
+        "cell": "D30",
+        "formula_or_value": "=$C$20+SUM(D25:D28)+D23",
+        "evaluated_value": "411.656448"
+      },
+      {
+        "cell": "E30",
+        "formula_or_value": "=$C$20+SUM(E25:E28)+E23",
+        "evaluated_value": "374.60304"
+      },
+      {
+        "cell": "F30",
+        "formula_or_value": "=$C$20+SUM(F25:F28)+F23",
+        "evaluated_value": "345.9892"
+      },
+      {
+        "cell": "G30",
+        "formula_or_value": "=F30",
+        "evaluated_value": "345.9892"
+      },
+      {
+        "cell": "G31",
+        "formula_or_value": "=F31",
+        "evaluated_value": "0"
+      },
+      {
+        "cell": "A32",
+        "formula_or_value": "1 S",
+        "evaluated_value": "1 S"
+      },
+      {
+        "cell": "B32",
+        "formula_or_value": "=C32*1.05",
+        "evaluated_value": "27.5190615"
+      },
+      {
+        "cell": "C32",
+        "formula_or_value": "=D32*1.05",
+        "evaluated_value": "26.20863"
+      },
+      {
+        "cell": "D32",
+        "formula_or_value": "=E32*1.05",
+        "evaluated_value": "24.9606"
+      },
+      {
+        "cell": "E32",
+        "formula_or_value": "=F32*1.05",
+        "evaluated_value": "23.772"
+      },
+      {
+        "cell": "F32",
+        "formula_or_value": "=MIN(MAX(F25, (($B$5*1 + $B$6*1) - 25)), F25*1.6)",
+        "evaluated_value": "22.64"
+      },
+      {
+        "cell": "G32",
+        "formula_or_value": "=F32",
+        "evaluated_value": "22.64"
+      },
+      {
+        "cell": "A33",
+        "formula_or_value": "5 S",
+        "evaluated_value": "5 S"
+      },
+      {
+        "cell": "B33",
+        "formula_or_value": "=B32*5",
+        "evaluated_value": "137.5953075"
+      },
+      {
+        "cell": "C33",
+        "formula_or_value": "=C32*5",
+        "evaluated_value": "131.04315"
+      },
+      {
+        "cell": "D33",
+        "formula_or_value": "=D32*5",
+        "evaluated_value": "124.803"
+      },
+      {
+        "cell": "E33",
+        "formula_or_value": "=E32*5",
+        "evaluated_value": "118.86"
+      },
+      {
+        "cell": "F33",
+        "formula_or_value": "=F32*5",
+        "evaluated_value": "113.2"
+      },
+      {
+        "cell": "G33",
+        "formula_or_value": "=F33",
+        "evaluated_value": "113.2"
+      },
+      {
+        "cell": "G34",
+        "formula_or_value": "=F34",
+        "evaluated_value": "0"
+      },
+      {
+        "cell": "A35",
+        "formula_or_value": "COSTO REAL",
+        "evaluated_value": "COSTO REAL"
+      },
+      {
+        "cell": "B35",
+        "formula_or_value": "=B30+B33",
+        "evaluated_value": "639.53816062"
+      },
+      {
+        "cell": "C35",
+        "formula_or_value": "=C30+C33",
+        "evaluated_value": "590.6955276"
+      },
+      {
+        "cell": "D35",
+        "formula_or_value": "=D30+D33",
+        "evaluated_value": "536.459448"
+      },
+      {
+        "cell": "E35",
+        "formula_or_value": "=E30+E33",
+        "evaluated_value": "493.46304"
+      },
+      {
+        "cell": "F35",
+        "formula_or_value": "=F30+F33",
+        "evaluated_value": "459.1892"
+      },
+      {
+        "cell": "G35",
+        "formula_or_value": "=F35",
+        "evaluated_value": "459.1892"
+      },
+      {
+        "cell": "G36",
+        "formula_or_value": "=F36",
+        "evaluated_value": "0"
+      },
+      {
+        "cell": "G37",
+        "formula_or_value": "=F37",
+        "evaluated_value": "0"
+      },
+      {
+        "cell": "G38",
+        "formula_or_value": "=F38",
+        "evaluated_value": "0"
+      },
+      {
+        "cell": "G39",
+        "formula_or_value": "=F39",
+        "evaluated_value": "0"
+      },
+      {
+        "cell": "G47",
+        "formula_or_value": "=F47",
+        "evaluated_value": "0"
+      },
+      {
+        "cell": "B48",
+        "formula_or_value": "100-200",
+        "evaluated_value": "100-200"
+      },
+      {
+        "cell": "C48",
+        "formula_or_value": "300-450",
+        "evaluated_value": "300-450"
+      },
+      {
+        "cell": "D48",
+        "formula_or_value": "500-1.000",
+        "evaluated_value": "500-1.000"
+      },
+      {
+        "cell": "E48",
+        "formula_or_value": "1.100-5.000",
+        "evaluated_value": "1.100-5.000"
+      },
+      {
+        "cell": "F48",
+        "formula_or_value": "5.500-10.000",
+        "evaluated_value": "5.500-10.000"
+      },
+      {
+        "cell": "G48",
+        "formula_or_value": "11000+",
+        "evaluated_value": "11000+"
+      },
+      {
+        "cell": "H48",
+        "formula_or_value": "DTO POR ALTURA ROLLO",
+        "evaluated_value": "DTO POR ALTURA ROLLO"
+      },
+      {
+        "cell": "I48",
+        "formula_or_value": "DTO POR TUCO PQ",
+        "evaluated_value": "DTO POR TUCO PQ"
+      },
+      {
+        "cell": "J48",
+        "formula_or_value": "DTO POR POCO DESPERDICIO",
+        "evaluated_value": "DTO POR POCO DESPERDICIO"
+      },
+      {
+        "cell": "K48",
+        "formula_or_value": "DTO POR COLA DE PRODUCCIÓN",
+        "evaluated_value": "DTO POR COLA DE PRODUCCIÓN"
+      },
+      {
+        "cell": "L48",
+        "formula_or_value": "DTO",
+        "evaluated_value": "DTO"
+      },
+      {
+        "cell": "A49",
+        "formula_or_value": "PRECIO CATALOGO",
+        "evaluated_value": "PRECIO CATALOGO"
+      },
+      {
+        "cell": "B49",
+        "formula_or_value": "=30-$L$49",
+        "evaluated_value": "26"
+      },
+      {
+        "cell": "C49",
+        "formula_or_value": "=29-$L$49",
+        "evaluated_value": "25"
+      },
+      {
+        "cell": "D49",
+        "formula_or_value": "=28-$L$49",
+        "evaluated_value": "24"
+      },
+      {
+        "cell": "E49",
+        "formula_or_value": "=27-$L$49",
+        "evaluated_value": "23"
+      },
+      {
+        "cell": "F49",
+        "formula_or_value": "=25.5-$L$49",
+        "evaluated_value": "21.5"
+      },
+      {
+        "cell": "G49",
+        "formula_or_value": "=IF(H20>19999,24-$L$49-2,25-$L$49)",
+        "evaluated_value": "21"
+      },
+      {
+        "cell": "H49",
+        "formula_or_value": "=IF(AND(E5>=60, E5<=67), 4, 0)",
+        "evaluated_value": "4"
+      },
+      {
+        "cell": "I49",
+        "formula_or_value": "=IF(AND(E5>=0, E5<=59), 6, 0)",
+        "evaluated_value": "0"
+      },
+      {
+        "cell": "J49",
+        "formula_or_value": "=IF(AND(F5>=0,F5<21),4,0)",
+        "evaluated_value": "0"
+      },
+      {
+        "cell": "K49",
+        "formula_or_value": "=IF(P2<50000,4,0)",
+        "evaluated_value": "4"
+      },
+      {
+        "cell": "L49",
+        "formula_or_value": "=MAX(H49:K49)",
+        "evaluated_value": "4"
+      },
+      {
+        "cell": "A50",
+        "formula_or_value": "ANTES DE IVA",
+        "evaluated_value": "ANTES DE IVA"
+      },
+      {
+        "cell": "B50",
+        "formula_or_value": "=CEILING(B35/((1-B49/100)),50)",
+        "evaluated_value": "900"
+      },
+      {
+        "cell": "C50",
+        "formula_or_value": "=CEILING(C35/((1-C49/100)),10)",
+        "evaluated_value": "790"
+      },
+      {
+        "cell": "D50",
+        "formula_or_value": "=CEILING(D35/((1-D49/100)),10)",
+        "evaluated_value": "710"
+      },
+      {
+        "cell": "E50",
+        "formula_or_value": "=CEILING(E35/((1-E49/100)),10)",
+        "evaluated_value": "650"
+      },
+      {
+        "cell": "F50",
+        "formula_or_value": "=CEILING(F35/((1-F49/100)),10)",
+        "evaluated_value": "590"
+      },
+      {
+        "cell": "G50",
+        "formula_or_value": "=CEILING(G35/((1-G49/100)),5)",
+        "evaluated_value": "585"
+      },
+      {
+        "cell": "A51",
+        "formula_or_value": "CON IVA",
+        "evaluated_value": "CON IVA"
+      },
+      {
+        "cell": "B51",
+        "formula_or_value": "=B50*1.19",
+        "evaluated_value": "1071"
+      },
+      {
+        "cell": "C51",
+        "formula_or_value": "=C50*1.19",
+        "evaluated_value": "940.1"
+      },
+      {
+        "cell": "D51",
+        "formula_or_value": "=D50*1.19",
+        "evaluated_value": "844.9"
+      },
+      {
+        "cell": "E51",
+        "formula_or_value": "=E50*1.19",
+        "evaluated_value": "773.5"
+      },
+      {
+        "cell": "F51",
+        "formula_or_value": "=F50*1.19",
+        "evaluated_value": "702.1"
+      },
+      {
+        "cell": "G51",
+        "formula_or_value": "=G50*1.19",
+        "evaluated_value": "696.15"
+      },
+      {
+        "cell": "G52",
+        "formula_or_value": "=F52",
+        "evaluated_value": "0"
+      },
+      {
+        "cell": "B53",
+        "formula_or_value": "15",
+        "evaluated_value": "15"
+      },
+      {
+        "cell": "C53",
+        "formula_or_value": "15",
+        "evaluated_value": "15"
+      },
+      {
+        "cell": "D53",
+        "formula_or_value": "15",
+        "evaluated_value": "15"
+      },
+      {
+        "cell": "E53",
+        "formula_or_value": "15",
+        "evaluated_value": "15"
+      },
+      {
+        "cell": "F53",
+        "formula_or_value": "15",
+        "evaluated_value": "15"
+      },
+      {
+        "cell": "G53",
+        "formula_or_value": "15",
+        "evaluated_value": "15"
+      },
+      {
+        "cell": "A54",
+        "formula_or_value": "PRECIO VENDEDORES  (15-11%)",
+        "evaluated_value": "PRECIO VENDEDORES  (15-11%)"
+      },
+      {
+        "cell": "B54",
+        "formula_or_value": "=B50-(B50*B53/100)",
+        "evaluated_value": "765"
+      },
+      {
+        "cell": "C54",
+        "formula_or_value": "=C50-(C50*C53/100)",
+        "evaluated_value": "671.5"
+      },
+      {
+        "cell": "D54",
+        "formula_or_value": "=D50-(D50*D53/100)",
+        "evaluated_value": "603.5"
+      },
+      {
+        "cell": "E54",
+        "formula_or_value": "=E50-(E50*E53/100)",
+        "evaluated_value": "552.5"
+      },
+      {
+        "cell": "F54",
+        "formula_or_value": "=F50-(F50*F53/100)",
+        "evaluated_value": "501.5"
+      },
+      {
+        "cell": "G54",
+        "formula_or_value": "=G50-(G50*G53/100)",
+        "evaluated_value": "497.25"
+      },
+      {
+        "cell": "A55",
+        "formula_or_value": "PRECIO VENDEDORES CON IVA",
+        "evaluated_value": "PRECIO VENDEDORES CON IVA"
+      },
+      {
+        "cell": "G55",
+        "formula_or_value": "=F55",
+        "evaluated_value": "0"
+      },
+      {
+        "cell": "G56",
+        "formula_or_value": "=F56",
+        "evaluated_value": "0"
+      },
+      {
+        "cell": "B57",
+        "formula_or_value": "1200",
+        "evaluated_value": "1200"
+      },
+      {
+        "cell": "C57",
+        "formula_or_value": "2000",
+        "evaluated_value": "2000"
+      },
+      {
+        "cell": "D57",
+        "formula_or_value": "3000",
+        "evaluated_value": "3000"
+      },
+      {
+        "cell": "E57",
+        "formula_or_value": "5000",
+        "evaluated_value": "5000"
+      },
+      {
+        "cell": "F57",
+        "formula_or_value": "7000",
+        "evaluated_value": "7000"
+      },
+      {
+        "cell": "B59",
+        "formula_or_value": "=B57*SUM(B25:B28)",
+        "evaluated_value": "286502.8608"
+      },
+      {
+        "cell": "C59",
+        "formula_or_value": "=C57*SUM(C25:C28)",
+        "evaluated_value": "397920.64"
+      },
+      {
+        "cell": "D59",
+        "formula_or_value": "=D57*SUM(D25:D28)",
+        "evaluated_value": "459139.2"
+      },
+      {
+        "cell": "E59",
+        "formula_or_value": "=E57*SUM(E25:E28)",
+        "evaluated_value": "588640"
+      },
+      {
+        "cell": "F59",
+        "formula_or_value": "=F57*SUM(F25:F28)",
+        "evaluated_value": "633920"
+      },
+      {
+        "cell": "B60",
+        "formula_or_value": "=4*80000",
+        "evaluated_value": "320000"
+      },
+      {
+        "cell": "C60",
+        "formula_or_value": "=4*80000",
+        "evaluated_value": "320000"
+      },
+      {
+        "cell": "D60",
+        "formula_or_value": "=4*80000",
+        "evaluated_value": "320000"
+      },
+      {
+        "cell": "E60",
+        "formula_or_value": "=4*80000",
+        "evaluated_value": "320000"
+      },
+      {
+        "cell": "F60",
+        "formula_or_value": "=4*80000",
+        "evaluated_value": "320000"
+      },
+      {
+        "cell": "B61",
+        "formula_or_value": "=B59-B60",
+        "evaluated_value": "-33497.1392"
+      },
+      {
+        "cell": "C61",
+        "formula_or_value": "=C59-C60",
+        "evaluated_value": "77920.6400000001"
+      },
+      {
+        "cell": "D61",
+        "formula_or_value": "=D59-D60",
+        "evaluated_value": "139139.2"
+      },
+      {
+        "cell": "E61",
+        "formula_or_value": "=E59-E60",
+        "evaluated_value": "268640"
+      },
+      {
+        "cell": "F61",
+        "formula_or_value": "=F59-F60",
+        "evaluated_value": "313920"
+      },
+      {
+        "cell": "B63",
+        "formula_or_value": "=B35*B57",
+        "evaluated_value": "767445.792744"
+      },
+      {
+        "cell": "C63",
+        "formula_or_value": "=C35*C57",
+        "evaluated_value": "1181391.0552"
+      },
+      {
+        "cell": "D63",
+        "formula_or_value": "=D35*D57",
+        "evaluated_value": "1609378.344"
+      },
+      {
+        "cell": "E63",
+        "formula_or_value": "=E35*E57",
+        "evaluated_value": "2467315.2"
+      },
+      {
+        "cell": "F63",
+        "formula_or_value": "=F35*F57",
+        "evaluated_value": "3214324.4"
+      },
+      {
+        "cell": "B64",
+        "formula_or_value": "=B50*$B57",
+        "evaluated_value": "1080000"
+      },
+      {
+        "cell": "C64",
+        "formula_or_value": "=C50*$C57",
+        "evaluated_value": "1580000"
+      },
+      {
+        "cell": "D64",
+        "formula_or_value": "=D50*$D57",
+        "evaluated_value": "2130000"
+      },
+      {
+        "cell": "E64",
+        "formula_or_value": "=E50*$E57",
+        "evaluated_value": "3250000"
+      },
+      {
+        "cell": "F64",
+        "formula_or_value": "=F50*$F57",
+        "evaluated_value": "4130000"
+      },
+      {
+        "cell": "B65",
+        "formula_or_value": "=B64-B63",
+        "evaluated_value": "312554.207256"
+      },
+      {
+        "cell": "C65",
+        "formula_or_value": "=C64-C63",
+        "evaluated_value": "398608.9448"
+      },
+      {
+        "cell": "D65",
+        "formula_or_value": "=D64-D63",
+        "evaluated_value": "520621.656"
+      },
+      {
+        "cell": "E65",
+        "formula_or_value": "=E64-E63",
+        "evaluated_value": "782684.8"
+      },
+      {
+        "cell": "F65",
+        "formula_or_value": "=F64-F63",
+        "evaluated_value": "915675.6"
+      },
+      {
+        "cell": "B67",
+        "formula_or_value": "=B65+B61",
+        "evaluated_value": "279057.068056"
+      },
+      {
+        "cell": "C67",
+        "formula_or_value": "=C65+C61",
+        "evaluated_value": "476529.5848"
+      },
+      {
+        "cell": "D67",
+        "formula_or_value": "=D65+D61",
+        "evaluated_value": "659760.856"
+      },
+      {
+        "cell": "E67",
+        "formula_or_value": "=E65+E61",
+        "evaluated_value": "1051324.8"
+      },
+      {
+        "cell": "F67",
+        "formula_or_value": "=F65+F61",
+        "evaluated_value": "1229595.6"
+      },
+      {
+        "cell": "B69",
+        "formula_or_value": "=B57*100",
+        "evaluated_value": "120000"
+      },
+      {
+        "cell": "C69",
+        "formula_or_value": "=C57*100",
+        "evaluated_value": "200000"
+      },
+      {
+        "cell": "D69",
+        "formula_or_value": "=D57*100",
+        "evaluated_value": "300000"
+      },
+      {
+        "cell": "E69",
+        "formula_or_value": "=E57*100",
+        "evaluated_value": "500000"
+      },
+      {
+        "cell": "F69",
+        "formula_or_value": "=F57*100",
+        "evaluated_value": "700000"
+      },
+      {
+        "cell": "B71",
+        "formula_or_value": "=B67-B69",
+        "evaluated_value": "159057.068056"
+      },
+      {
+        "cell": "C71",
+        "formula_or_value": "=C67-C69",
+        "evaluated_value": "276529.5848"
+      },
+      {
+        "cell": "D71",
+        "formula_or_value": "=D67-D69",
+        "evaluated_value": "359760.856"
+      },
+      {
+        "cell": "E71",
+        "formula_or_value": "=E67-E69",
+        "evaluated_value": "551324.8"
+      },
+      {
+        "cell": "F71",
+        "formula_or_value": "=F67-F69",
+        "evaluated_value": "529595.6"
+      }
+    ]
+  }
+}

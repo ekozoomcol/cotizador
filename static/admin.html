@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Auditoría de Cálculos EKOZOOM</title>
+  <style>
+    body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: #f3f4f6; color: #1f2937; margin: 0; padding: 20px; }
+    h1 { margin-top: 0; color: #111827; font-size: 24px; display: flex; align-items: center; gap: 10px; }
+    .panel { background: white; padding: 20px; border-radius: 8px; box-shadow: 0 1px 3px rgba(0,0,0,0.1); margin-bottom: 20px; }
+    h2 { font-size: 16px; margin-top: 0; padding-bottom: 10px; border-bottom: 1px solid #e5e7eb; color: #4b5563; }
+    
+    .grid-form { display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 15px; }
+    .form-group { display: flex; flex-direction: column; gap: 5px; }
+    label { font-size: 12px; font-weight: 600; color: #6b7280; text-transform: uppercase; letter-spacing: 0.5px; }
+    input, select { padding: 8px 10px; border: 1px solid #d1d5db; border-radius: 4px; font-size: 14px; }
+    
+    table { width: 100%; border-collapse: collapse; font-size: 13px; margin-top: 10px; }
+    th, td { padding: 10px; text-align: left; border-bottom: 1px solid #e5e7eb; }
+    th { background: #f9fafb; font-weight: 600; color: #374151; }
+    tr:hover { background: #f3f4f6; }
+    .val-money { font-family: 'Courier New', Courier, monospace; font-weight: bold; text-align: right; }
+    .val-pct { font-family: 'Courier New', Courier, monospace; color: #047857; text-align: right; }
+    
+    .status { padding: 10px; background: #dbfafe; color: #0369a1; border-radius: 4px; font-size: 13px; font-weight: bold; display: none; margin-bottom: 15px; }
+    .err-msg { background: #fee2e2; color: #b91c1c; }
+    
+    .col-red { color: #dc2626 !important; }
+    .col-green { color: #16a34a !important; }
+    .fw-bold { font-weight: bold; }
+  </style>
+</head>
+<body>
+
+  <h1>🛠️ Consola de Auditoría Financiera Back-end</h1>
+  
+  <div id="status" class="status">Calculando via API...</div>
+
+  <div class="panel">
+    <h2>Simulador de Inputs</h2>
+    <div class="grid-form">
+      <div class="form-group">
+        <label>Tipo de Bolsa</label>
+        <select id="bag_type">
+          <option value="PLANA_MANIJA">Plana Manija</option>
+          <option value="PLANA_TROQUEL">Plana Troquel</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label>Material</label>
+        <select id="material_code">
+          <option value="CAMBREL_70">Cambrel 70g</option>
+          <option value="CAMBREL_80">Cambrel 80g</option>
+        </select>
+      </div>
+      <div class="form-group"><label>Ancho (cm)</label><input type="number" id="ancho" value="35"></div>
+      <div class="form-group"><label>Alto (cm)</label><input type="number" id="alto" value="40"></div>
+      <div class="form-group"><label>Fuelle (cm)</label><input type="number" id="fuelle" value="0"></div>
+      <div class="form-group"><label>Manija 1 (cm)</label><input type="number" id="m1" value="60"></div>
+      <div class="form-group"><label>Ancho Manija (cm)</label><input type="number" id="am" value="5"></div>
+      <div class="form-group"><label>Dobles (cm)</label><input type="number" id="dob" value="3"></div>
+      <div class="form-group"><label>Caras Impresas</label><input type="number" id="caras" value="1" min="0" max="2"></div>
+      <div class="form-group"><label>Cantidad</label><input type="number" id="qty" value="500"></div>
+    </div>
+  </div>
+
+  <div class="panel">
+    <h2>Matriz de Precios Generada por Bandejas</h2>
+    <table>
+      <thead>
+        <tr>
+          <th>Bandeja</th>
+          <th style="text-align:right">Costo Directo (Und)</th>
+          <th style="text-align:right">Margen Base %</th>
+          <th style="text-align:right">Desc. L49 %</th>
+          <th style="text-align:right">Margen Real %</th>
+          <th style="text-align:right">Precio Venta (Sin IVA)</th>
+          <th style="text-align:right">IVA Unitario (19%)</th>
+          <th style="text-align:right">Precio Final (Con IVA)</th>
+        </tr>
+      </thead>
+      <tbody id="table-bands">
+        <!-- JS Injected -->
+      </tbody>
+    </table>
+  </div>
+
+  <div class="panel">
+    <h2>Desglose Físico (Anatomía del Costo Directo Unitario)</h2>
+    <div style="display:flex; gap: 40px; justify-content: space-between;">
+      <div style="flex:1;">
+        <table>
+          <thead>
+            <tr>
+              <th>Componente</th>
+              <th style="text-align:right">Valor Técnico</th>
+            </tr>
+          </thead>
+          <tbody id="table-anatomy">
+            <!-- JS Injected -->
+          </tbody>
+        </table>
+      </div>
+      <div style="flex:1;">
+        <pre id="jsonViewer" style="background:#1e1e1e; color:#d4d4d4; padding:15px; border-radius:6px; font-size:11px; max-height: 400px; overflow:auto;"></pre>
+      </div>
+    </div>
+  </div>
+
+<script>
+  const DOM = {
+    bagType: document.getElementById('bag_type'),
+    matCode: document.getElementById('material_code'),
+    ancho: document.getElementById('ancho'),
+    alto: document.getElementById('alto'),
+    fuelle: document.getElementById('fuelle'),
+    m1: document.getElementById('m1'),
+    am: document.getElementById('am'),
+    dob: document.getElementById('dob'),
+    caras: document.getElementById('caras'),
+    qty: document.getElementById('qty'),
+    tBands: document.getElementById('table-bands'),
+    tAnat: document.getElementById('table-anatomy'),
+    jsonV: document.getElementById('jsonViewer'),
+    status: document.getElementById('status')
+  };
+
+  const money = (val) => new Intl.NumberFormat('es-CO', { style: 'currency', currency: 'COP', maximumFractionDigits: 1 }).format(Number(val));
+  const pct = (val) => Number(val).toFixed(2) + '%';
+  const float = (val) => Number(val).toFixed(4);
+
+  let debounceTimer;
+
+  async function fetchQuote() {
+    DOM.status.style.display = 'block';
+    DOM.status.textContent = 'Calculando via API...';
+    DOM.status.className = 'status';
+
+    const payload = {
+      bag_type: DOM.bagType.value,
+      material_code: DOM.matCode.value,
+      inputs: {
+        ancho_cm: Number(DOM.ancho.value),
+        alto_cm: Number(DOM.alto.value),
+        fuelle_cm: Number(DOM.fuelle.value),
+        manija1_cm: Number(DOM.m1.value),
+        manija2_cm: Number(DOM.m1.value),
+        ancho_manijas_cm: Number(DOM.am.value),
+        dobles_cm: Number(DOM.dob.value),
+        caras: Number(DOM.caras.value),
+        cantidad: Number(DOM.qty.value)
+      }
+    };
+
+    try {
+      const resp = await fetch('/quote', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload)
+      });
+
+      if (!resp.ok) throw new Error('Error HTTP: ' + resp.status);
+      const data = await resp.json();
+      
+      DOM.status.style.display = 'none';
+      renderData(data);
+    } catch (err) {
+      DOM.status.textContent = 'ERROR EN API: ' + err.message;
+      DOM.status.className = 'status err-msg';
+      console.error(err);
+    }
+  }
+
+  function renderData(data) {
+    // 1. Render RAW JSON format
+    DOM.jsonV.textContent = JSON.stringify(data, null, 2);
+
+    // 2. Render Band Tables
+    const breakdown = data.breakdown || {};
+    const before = data.prices_by_band_before_iva || {};
+    const withIva = data.prices_by_band_with_iva || {};
+    const costs = data.costs_by_band || {};
+    
+    // Si no hay banda elegida predeterminada, escogemos la base
+    const chosenBandCode = data.chosen_band_code || Object.keys(before)[0];
+    const chosenCosts = costs[chosenBandCode] || {};
+    
+    DOM.tBands.innerHTML = '';
+    Object.keys(before).forEach(code => {
+      const r1 = before[code];
+      const r2 = withIva[code] || {};
+      const cst = costs[code] || {};
+      
+      const tr = document.createElement('tr');
+      // Highlight row if qty falls in this band
+      const match = r1.label ? r1.label.match(/\d+/) : null;
+      const minQty = match ? Number(match[0]) : 0;
+      if (data.chosen_band_code === code) {
+        tr.style.background = '#e0f2fe';
+        tr.style.fontWeight = 'bold';
+      } else if (r1.is_public === false) {
+        tr.style.display = 'none';
+      }
+
+      tr.innerHTML = `
+        <td>${r1.label}</td>
+        <td class="val-money col-red">${money(cst.costo_real || 0)}</td>
+        <td class="val-pct">${pct(r1.margen_base_pct)}</td>
+        <td class="val-pct col-green">${pct(r1.dto_L49_pct)}</td>
+        <td class="val-pct fw-bold">${pct(r1.margen_real_pct)}</td>
+        <td class="val-money fw-bold">${money(r1.precio_unitario_sin_iva)}</td>
+        <td class="val-money" style="color:#9ca3af">${money((r2.precio_unitario_con_iva || 0) - (r1.precio_unitario_sin_iva || 0))}</td>
+        <td class="val-money fw-bold" style="color:#4f46e5">${money(r2.precio_unitario_con_iva)}</td>
+      `;
+      DOM.tBands.appendChild(tr);
+    });
+
+    // 3. Render Anatomy (using exactly the Python schema keys)
+    const areaFrente = breakdown.C14_area_frente || 0;
+    const areaAtras = breakdown.C16_area_atras || 0;
+    const areaDobles = breakdown.C15_area_dobles || 0;
+    const areaCuerpo = areaFrente + areaAtras + areaDobles;
+    
+    const qty = Number(DOM.qty.value) || 1;
+    const qtyStr = qty > 100 ? data.chosen_band_code : 'Tramo Básico';
+
+    const anatomyHtml = `
+      <tr>
+        <td>Área Fieltro Cuerpo (m²)</td>
+        <td class="val-money">${float(areaCuerpo)} m²</td>
+      </tr>
+      <tr>
+        <td>Área Manijas (m²)</td>
+        <td class="val-money">${float(breakdown.C13_area_2_manijas || 0)} m²</td>
+      </tr>
+      <tr>
+        <td>Área Total Material (m²)</td>
+        <td class="val-money">${float(breakdown.C17_area_total || 0)} m²</td>
+      </tr>
+      <tr>
+        <td>Costo Ref. M² del Material</td>
+        <td class="val-money">${money(breakdown.material_costo_por_m2 || 0)}</td>
+      </tr>
+      <tr style="background:#f9fafb;">
+        <td class="fw-bold">TELA (C24)</td>
+        <td class="val-money col-red fw-bold">${money(breakdown.C24_tela || 0)}</td>
+      </tr>
+      <tr>
+        <td>DESPERDICIO TELA 10% (C25)</td>
+        <td class="val-money col-red">${money(breakdown.C25_desperdicio || 0)}</td>
+      </tr>
+      <tr style="background:#f4f4f5; border-bottom: 2px solid #e5e7eb;">
+        <td class="fw-bold">TOTAL TELA (C26)</td>
+        <td class="val-money col-red fw-bold">${money(breakdown.C26_total_tela || 0)}</td>
+      </tr>
+      <tr>
+        <td>GASTOS FIJOS (C32) <br><small style="color:#6b7280; font-size:11px; font-weight:normal;">Maquila, Luz, Agua, Arriendo</small></td>
+        <td class="val-money col-red">${money(breakdown.C32_gastos_fijos || 0)}</td>
+      </tr>
+      <tr>
+        <td>OPERARIOS + OFICINA (C34)</td>
+        <td class="val-money col-red">${money(breakdown.C34_operarios_oficina || 0)}</td>
+      </tr>
+      <tr style="background:#fef2f2; border-top: 2px solid #ef4444;">
+        <td class="fw-bold col-red">TOTAL COSTOS (C36)</td>
+        <td class="val-money col-red fw-bold" style="font-size:15px;">${money(breakdown.C36_total_costos || 0)}</td>
+      </tr>
+    `;
+    DOM.tAnat.innerHTML = anatomyHtml;
+  }
+
+  function schedule() {
+    clearTimeout(debounceTimer);
+    debounceTimer = setTimeout(fetchQuote, 300);
+  }
+
+  // Bind events
+  Object.values(DOM).forEach(el => {
+    if (el.tagName === 'INPUT' || el.tagName === 'SELECT') {
+      el.addEventListener('input', schedule);
+    }
+  });
+
+  // Init
+  DOM.bagType.addEventListener('change', (e) => {
+    if (e.target.value === 'PLANA_TROQUEL') {
+      DOM.dob.value = 6;
+    } else {
+      DOM.dob.value = 3;
+    }
+    // Also change Ancho/Alto defaults to make testing more accurate to the Excel?
+    // In March Excel: Troquel defaults 14x20. Manija defaults 35x40.
+    if (e.target.value === 'PLANA_TROQUEL') {
+      DOM.ancho.value = 14;
+      DOM.alto.value = 20;
+    } else {
+      DOM.ancho.value = 35;
+      DOM.alto.value = 40;
+    }
+    schedule();
+  });
+
+  window.onload = fetchQuote;
+</script>
+</body>
+</html>

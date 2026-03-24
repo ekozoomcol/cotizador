@@ -1,7 +1,7 @@
 from typing import Dict, Any, List
 
 from app.bags.base import BagCalculator
-from app.config import FixedCosts
+from app.config import GlobalConfig
 from app.models import QuoteInputs
 from app.pricing.materials import Material
 from app.utils import clamp
@@ -25,156 +25,90 @@ class PlanaManijaCalculator(BagCalculator):
     # Bandas: deben calzar con config.py
     BAND_ORDER = ["B100_200","B300_450","B500_1000","B1100_5000","B5500_10000","B11000P"]
 
-    def compute(self, inputs: QuoteInputs, fixed_costs: FixedCosts, material: Material) -> Dict[str, Any]:
-        # ==========================
-        # (1) cm -> m  (C5..C11)
-        # ==========================
-        C5 = inputs.ancho_cm / 100.0
-        C6 = inputs.alto_cm / 100.0
-        C7 = inputs.fuelle_cm / 100.0
-        C8 = inputs.manija1_cm / 100.0
-        C9 = inputs.manija2_cm / 100.0
-        C10 = inputs.ancho_manijas_cm / 100.0
-        C11 = inputs.dobles_cm / 100.0
+    def compute(self, inputs: QuoteInputs, config: GlobalConfig, material: Material) -> Dict[str, Any]:
+        import math
 
-        # ==========================
-        # (2) Áreas (C13..C17)
-        # ==========================
-        C13 = (C8 + C9) * C10              # Area 2 Manijas
-        C14 = C5 * C6                      # Area Frente
-        C15 = C11 * C5 * 2                 # Area Dobles (m^2)
-        C16 = C6 * C5                      # Area Atrás
-        C17 = C13 + C14 + C15 + C16        # AREA TOTAL
+        B5 = float(inputs.ancho_cm)
+        B6 = float(inputs.alto_cm)
+        B7 = float(inputs.fuelle_cm)
+        B8 = float(inputs.manija1_cm)
+        B9 = float(inputs.manija2_cm)
+        B10 = float(inputs.ancho_manijas_cm)
+        B11 = float(inputs.dobles_cm)
 
-        # ==========================
-        # (3) Alto rollo / sobrantes (espejo a tu bloque)
-        # ==========================
-        # E5 = B6*2 + B7 + B11*2   (en cm)
-        E5 = inputs.alto_cm * 2 + inputs.fuelle_cm + inputs.dobles_cm * 2
+        C5 = B5 / 100.0
+        C6 = B6 / 100.0
+        C7 = B7 / 100.0
+        C8 = B8 / 100.0
+        C9 = B9 / 100.0
+        C10 = B10 / 100.0
+        C11 = B11 / 100.0
 
-        # D? sobrantes 1,6: =160 - E5 (cm)
-        sobrantes_cm = 160 - E5
+        C2 = float(material.costo_por_m2)
+        B2 = 1.6  # Default based on Excel
 
-        # F5 saldo rollo: =(160-(E5*2)) (cm)
+        # Regla Global de Produccion Maxima
+        if (B5 + B6) < 40:
+            F4 = 8000
+        elif (B5 + B6) < 60:
+            F4 = 7000
+        else:
+            F4 = 6000
+
+        # G4 = Nomina Diaria (global)
+        G4 = float(config.nomina_diaria)
+
+        E5 = (B6 * 2) + B7 + (B11 * 2)
         F5 = 160 - (E5 * 2)
 
-        # ==========================
-        # (4) Variables auxiliares del bloque que vimos:
-        # E8 = F8*C5  (m2) donde F8 = E8/100 en tu hoja, pero ahí hay mezcla de celdas.
-        # Para mantener espejo sin inventar demasiado: tratamos E8 como "alto rollo en m" * ancho en m
-        # y lo usaremos solo en el SI(...) del TELA como tu hoja hace con E8<38.
-        # OJO: si tú confirmas qué es exactamente E8 en tu hoja, aquí se ajusta 1 línea.
-        E8_m2_proxy = (E5 / 100.0) * C5
+        E8 = 160 - E5
 
-        # ==========================
-        # (5) TELA (C19) espejo:
-        # C19 = SI(E8<38; ((C17*C2/B2)+F11); C17*C2/B2)
-        # Aquí no tenemos B2 (en tu captura B2 era m2=1,6). Lo tratamos como factor_rendimiento_m2 = 1.6
-        # y C2 = costo_por_m2 material.
-        # ==========================
-        B2_factor_rendimiento = 1.6  # de tu hoja (m2 1,6)
-        fijo_F11 = inputs.fijo_F11 if inputs.fijo_F11 is not None else 0.0
-        umbral_E8 = inputs.umbral_E8 if inputs.umbral_E8 is not None else 38.0
+        C16 = (C8 + C9) * C10
+        C17 = C5 * C6
+        C18 = C11 * C5 * 2
+        C19 = C6 * C5
+        C20 = C16 + C17 + C18 + C19
 
-        base_tela = (C17 * material.costo_por_m2 / B2_factor_rendimiento)
-        C19 = (base_tela + fijo_F11) if (E8_m2_proxy < umbral_E8) else base_tela
+        base_tela = C20 * C2 / B2
+        C24 = base_tela  # La formula de Excel fue simplificada: ya no suma sobrantes si E8 < 38
 
-        # ==========================
-        # (6) Costos fijos globales (C24)
-        # ==========================
-        C24 = fixed_costs.total
+        # Desperdicio Tela plano 10%
+        C25 = C24 * 0.1
+        C26 = C24 + C25
 
-        # ==========================
-        # (7) Desperdicio tela (por banda) – en tu hoja es algo tipo "*1,15" + $C$19 * ...
-        # Aquí lo dejamos espejo pero parametrizable:
-        # desperdicio_cost = C19 * (desperdicio_multiplicador_por_banda)
-        # Como en tu Excel esto depende de B26..F26, lo dejamos como factores editables:
-        # ==========================
-        desperdicio_factor = 1.15
+        # Gastos fijos (C32)
+        C32 = float(config.fixed_costs.total)
 
-        # Estos factores son el equivalente conceptual de B26..G26.
-        # Ajusta aquí si en tu hoja cada banda cambia (ej: por eficiencia).
-        desperdicio_mult_por_banda = {
-            "B100_200": 1.0,
-            "B300_450": 1.0,
-            "B500_1000": 1.0,
-            "B1100_5000": 1.0,
-            "B5500_10000": 1.0,
-            "B11000P": 1.0,
-        }
+        # Operarios + Oficina (C34)
+        C34 = G4 / F4
 
-        # ==========================
-        # (8) Operarios por banda (B29..B32 etc.)
-        # En tu hoja se ve fórmula base:
-        # =21+(($B$5+$B$6)/25)
-        # y multiplicadores 1,2 o 1,3 según banda.
-        # ==========================
-        base_operario = 21 + ((inputs.ancho_cm + inputs.alto_cm) / 25.0)
+        # Total Costos (C36 monolítico)
+        C36 = C34 + C32 + C26
 
-        # Multiplicadores por banda (puedes editar sin tocar la estructura):
-        oper_mult = {
-            "B100_200":   [1.2, 1.2, 1.2, 1.2],
-            "B300_450":   [1.3, 1.3, 1.3, 1.3],
-            "B500_1000":  [1.3, 1.3, 1.3, 1.3],
-            "B1100_5000": [1.3, 1.3, 1.3, 1.3],
-            "B5500_10000":[1.3, 1.3, 1.3, 1.3],
-            "B11000P":    [1.3, 1.3, 1.3, 1.3],
-        }
-
-        # ==========================
-        # (9) Total costos + costo real por banda
-        # Total_costos = C24 + SUMA(operarios) + desperdicio
-        # Costo_real = Total_costos + (5$)  (en tu hoja: B39 = B34 + B37)
-        # "5$" depende de "1$" (fila 36) *5.
-        # En tu hoja el "1$" verde lo vimos en la última banda:
-        # =MIN(MAX(F29; (($B$5*1+$B$6*1)-25)); F29*1,6)
-        # Lo aplicamos por banda con un comportamiento espejo:
-        # - default: 1usd = base_operario (o el operario1) con límites
-        # - 5usd = 1usd*5
-        # ==========================
-        costs_by_band: Dict[str, Any] = {}
-
-        for b in self.BAND_ORDER:
-            mults = oper_mult[b]
-            op_vals = [base_operario * m for m in mults]  # 4 operarios
-
-            # desperdicio tela espejo: (C19 * desperdicio_factor) * mult_banda
-            desperdicio_cost = (C19 * desperdicio_factor) * desperdicio_mult_por_banda[b]
-
-            total_costos = C24 + sum(op_vals) + desperdicio_cost
-
-            # 1$ / 5$ (modo espejo con tu fórmula verde)
-            # Excel verde: MIN(MAX(F29; ((B5+B6)-25)); F29*1,6)
-            # Donde F29 es Operario1 (o la celda base).
-            op1 = op_vals[0]
-            uno_usd = min(
-                max(op1, (inputs.ancho_cm + inputs.alto_cm) - 25),
-                op1 * 1.6
-            )
-            cinco_usd = uno_usd * 5
-
-            costo_real = total_costos + cinco_usd
-
-            costs_by_band[b] = {
-                "operarios": {
-                    "op1": round(op_vals[0], 6),
-                    "op2": round(op_vals[1], 6),
-                    "op3": round(op_vals[2], 6),
-                    "op4": round(op_vals[3], 6),
-                    "base_operario": round(base_operario, 6),
-                    "mults": mults,
-                },
-                "desperdicio_cost": round(desperdicio_cost, 6),
-                "total_costos": round(total_costos, 6),
-                "uno_usd": round(uno_usd, 6),
-                "cinco_usd": round(cinco_usd, 6),
-                "costo_real": round(costo_real, 6),
+        costs_by_band = {}
+        for b in config.bands:
+            rentabilidad = float(b.margen_base_pct)
+            if config.cola_produccion_global < 50000:
+                rentabilidad -= 3.0
+                
+            denom = 1.0 - (rentabilidad / 100.0)
+            if denom <= 0: denom = 0.01
+            
+            p_final = math.ceil(C36 / denom / float(b.redondeo)) * b.redondeo
+            
+            # Map new variables to old frontend expected keys
+            costs_by_band[b.code] = {
+                "operarios": {"base_operario": C34, "sum_op": 0},
+                "desperdicio_cost": C25,
+                "total_costos": C36,
+                "uno_usd": 0,
+                "cinco_usd": 0,
+                "costo_real": C36,
+                "rentabilidad_pct": rentabilidad,
+                "precio_final": p_final
             }
 
-        # ==========================
-        # (10) Preview SVG simple para orientación (anti 40x30 vs 30x40)
-        # ==========================
-        svg = self._svg_preview(inputs.ancho_cm, inputs.alto_cm, inputs.fuelle_cm)
+        svg = self._svg_preview(B5, B6, B7)
 
         excel_vars = {
             "C5_ancho_m": C5,
@@ -184,21 +118,23 @@ class PlanaManijaCalculator(BagCalculator):
             "C9_manija2_m": C9,
             "C10_ancho_manijas_m": C10,
             "C11_dobles_m": C11,
-            "C13_area_2_manijas": C13,
-            "C14_area_frente": C14,
-            "C15_area_dobles": C15,
-            "C16_area_atras": C16,
-            "C17_area_total": C17,
-            "C19_tela": C19,
-            "C24_costos_fijos": C24,
+            "C13_area_2_manijas": C16,
+            "C14_area_frente": C17,
+            "C15_area_dobles": C18,
+            "C16_area_atras": C19,
+            "C17_area_total": C20,
+            "C24_tela": C24,
+            "C25_desperdicio": C25,
+            "C26_total_tela": C26,
+            "C32_gastos_fijos": C32,
+            "C34_operarios_oficina": C34,
+            "C36_total_costos": C36,
             "E5_alto_rollo_cm": E5,
-            "sobrantes_cm_160_menos_E5": sobrantes_cm,
             "F5_saldo_rollo_cm": F5,
-            "E8_m2_proxy": E8_m2_proxy,
-            "material_costo_por_m2": material.costo_por_m2,
-            "B2_factor_rendimiento": B2_factor_rendimiento,
-            "umbral_E8": umbral_E8,
-            "fijo_F11": fijo_F11,
+            "E8_m2_proxy": E8,
+            "material_costo_por_m2": C2,
+            "B2_factor_rendimiento": B2,
+            "sobrantes_cm_160_menos_E5": E8
         }
 
         return {

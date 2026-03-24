@@ -7,3 +7,4 @@ class PricingBand:
     label: str
     margen_base_pct: float   # 30,29,28...
     redondeo: int            # 50,10,10,10,10,5
+    is_public: bool = True

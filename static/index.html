@@ -76,8 +76,7 @@
 
     .card {
       border: 1px solid var(--card-border);
-      border-radius: 28px;
-      /* Google MD3 typical large shape */
+      border-radius: 8px; /* Tighter for WhatsApp screenshots */
       background: var(--card-bg);
       backdrop-filter: blur(24px);
       -webkit-backdrop-filter: blur(24px);
@@ -396,10 +395,6 @@
       margin-bottom: auto;
       filter: drop-shadow(0 20px 25px rgba(0, 0, 0, 0.1));
       transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
-    }
-
-    #previewGrid .previewSvg svg:hover {
-      transform: scale(1.02);
     }
 
     .previewSvg svg {
@@ -756,12 +751,20 @@
       max-width: 100% !important;
       max-height: 100% !important;
       object-fit: contain;
-      filter: drop-shadow(0 15px 25px rgba(0, 0, 0, 0.12));
+      filter: drop-shadow(0 15px 25px rgba(0, 0, 0, 0.15));
+    }
+
+    /* Calibración de escala asimétrica para que entren perfecto en sus contenedores */
+    #previewGrid .previewSvg svg {
+      transform: scale(1.12) translateY(1%);
+    }
+    #orderPreviewGrid .previewSvg svg {
+      transform: scale(1.05);
     }
 
     /* New Commercial Blocks Styling */
     .commercial-block {
-      margin-bottom: 24px;
+      margin-bottom: 14px;
       width: 100%;
     }
 
@@ -837,9 +840,10 @@
     }
 
     .price-val {
-      font-weight: 800;
-      color: #1a1a1a;
-      font-size: 16px;
+      font-weight: 900;
+      color: #111827;
+      font-size: 22px;
+      letter-spacing: -0.5px;
     }
 
     .benefits-grid {
@@ -1021,6 +1025,10 @@
         .compact-form input, .compact-form select { padding: 4px 6px !important; font-size: 12px !important; height: 28px !important; box-sizing: border-box; width: 100%; border: 1px solid #ccc; border-radius: 4px; text-transform: none; }
         .compact-form select { appearance: auto; }
         .compact-hint { font-size: 10px !important; margin-top: 2px !important; color: #666; display: block; }
+        .row-chips { display: flex; gap: 4px; height: 28px; width: 100%; box-sizing: border-box; }
+        .btn-chip { flex: 1; background: #fff; border: 1px solid #ccc; border-radius: 4px; cursor: pointer; font-size: 13px; font-weight: 700; color: #475569; transition: all 0.2s; padding: 0; display:flex; align-items:center; justify-content:center; }
+        .btn-chip:hover { border-color: #94a3b8; background: #f8fafc; }
+        .btn-chip.active { background: #4f46e5; border-color: #4f46e5; color: white; }
       </style>
       <h3>Datos de cotización (arriba)</h3>
 
@@ -1038,7 +1046,15 @@
       <div class="row compact-row">
         <div><label>Alto (cm)</label><input id="alto_cm" type="number" value="40"></div>
         <div><label>Fuelle (cm)</label><input id="fuelle_cm" type="number" value="20"></div>
-        <div><label>Caras</label><input id="caras" type="number" value="1" min="0" max="2"></div>
+        <div>
+          <label>Caras</label>
+          <div class="row-chips" id="caras_chips">
+            <button type="button" class="btn-chip" data-val="0">0</button>
+            <button type="button" class="btn-chip active" data-val="1">1</button>
+            <button type="button" class="btn-chip" data-val="2">2</button>
+          </div>
+          <input id="caras" type="hidden" value="1">
+        </div>
         <div><label>Cantidad</label><input id="cantidad" type="number" value="500" min="1"></div>
       </div>
 
@@ -1106,7 +1122,7 @@
               <option value="4">4 colores</option>
             </select>
           </div>
-          <div id="wrap_c2_1"><label>C1</label><input type="color" id="logo_c2_1" value="#059669"></div>
+          <div id="wrap_c2_1"><label>C1</label><input type="color" id="logo_c2_1" value="#FFD700"></div>
           <div id="wrap_c2_2"><label>C2</label><input type="color" id="logo_c2_2" value="#000000"></div>
           <div id="wrap_c2_3"><label>C3</label><input type="color" id="logo_c2_3" value="#FFFFFF"></div>
           <div id="wrap_c2_4"><label>C4</label><input type="color" id="logo_c2_4" value="#FF7A00"></div>
@@ -1129,55 +1145,28 @@
           <div id="flyerBadge" class="badge-promo">✔ Incluye logo 1 tinta (1 cara)</div>
         </div>
 
-        <!-- BLOQUE 2: PRECIOS POR CANTIDAD -->
-        <div class="commercial-block price-table-area">
-          <span class="price-table-title">Precios por cantidad (Valor Unitario):</span>
-          <div id="flyerPriceGrid" class="price-grid"></div>
-          <p id="flyerIvaNote"
-            style="font-size: 16px; margin-top: 3px; font-weight: 700; color: #666; text-align: right;">+ IVA</p>
-        </div>
-
-        <!-- BLOQUE 3: ANCLA COMERCIAL -->
-        <div class="commercial-block">
-          <div class="benefits-grid">
-            <div class="benefit-item" id="benefit-diseno">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"
-                stroke-linejoin="round">
-                <polyline points="20 6 9 17 4 12"></polyline>
-              </svg>
-              <span>Diseño incluido</span>
-            </div>
-            <div class="benefit-item">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"
-                stroke-linejoin="round">
-                <path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"></path>
-              </svg>
-              <span>Producción rápida</span>
-            </div>
-            <div class="benefit-item">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"
-                stroke-linejoin="round">
-                <circle cx="12" cy="12" r="10"></circle>
-                <path d="M12 8l4 4-4 4M8 12h7"></path>
-              </svg>
-              <span>Mayor ahorro por cantidad</span>
-            </div>
-            <div class="benefit-item">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"
-                stroke-linejoin="round">
-                <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"></path>
-                <circle cx="12" cy="10" r="3"></circle>
-              </svg>
-              <span>Envíos a todo el país</span>
-            </div>
-          </div>
-        </div>
-
-        <!-- BLOQUE 5: IMAGEN -->
-        <div class="commercial-block image-block">
+        <!-- BLOQUE 5: IMAGEN HERO (MOVIDO ARRIBA) -->
+        <div class="commercial-block image-block" style="height: 250px; min-height: 250px; padding: 0;">
           <div id="previewWrap">
             <div id="previewGrid"></div>
           </div>
+        </div>
+
+        <!-- BLOQUE 2: PRECIOS POR CANTIDAD -->
+        <div class="commercial-block price-table-area">
+          <span class="price-table-title" style="color: #4f46e5; font-size: 13px;">💪 TU MEJOR ESCALA DE PRECIOS:</span>
+          <div id="flyerPriceGrid" class="price-grid"></div>
+          <p id="flyerIvaNote"
+            style="font-size: 16px; margin-top: 5px; font-weight: 800; color: #666; text-align: right;">+ IVA</p>
+        </div>
+
+        <!-- BLOQUE 3: ANCLA COMERCIAL SIMPLIFICADA -->
+        <div class="commercial-block" style="background:#eef2ff; padding: 12px; border-radius: 8px; text-align: center; border: 1px dashed #c7d2fe; margin-bottom: 0;">
+          <span id="benefit-diseno" style="font-size: 14px; font-weight: 800; color: #4338ca; display: flex; align-items: center; justify-content: center; gap: 6px;">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+            Diseño Profesional Incluido
+          </span>
+          <span style="font-size: 12px; font-weight: 700; color: #6366f1; margin-top: 4px; display: block;">⚡ Producción rápida · 📦 Envíos a todo el país</span>
         </div>
       </div>
       <div class="card">
@@ -1239,12 +1228,22 @@
     /** Fondo oscuro SOLO para tela blanca */
     function updatePreviewBackground(colorHex) {
       const wrap = document.getElementById("previewWrap");
-      if ((colorHex || "").toUpperCase() === "#FFFFFF") {
-        wrap.style.background = "#f1f5f9";
-        wrap.style.borderColor = "#d7e0ea";
-      } else {
-        wrap.style.background = "#ffffff";
-        wrap.style.borderColor = "#eee";
+      const orderWrap = document.getElementById("orderPreviewWrap");
+      const isWhite = (colorHex || "").toUpperCase() === "#FFFFFF";
+      
+      const bgWhite = "linear-gradient(135deg, #cbd5e1 0%, #94a3b8 100%)";
+      const bgNormal = "#ffffff";
+
+      if (wrap) {
+        const target = wrap.parentElement && wrap.parentElement.classList.contains("image-block") ? wrap.parentElement : wrap;
+        target.style.background = isWhite ? bgWhite : bgNormal;
+        target.style.borderColor = isWhite ? "#94a3b8" : "#f0f0f0";
+        target.style.transition = "background-color 0.3s, background-image 0.3s, border-color 0.3s";
+      }
+      if (orderWrap) {
+        orderWrap.style.background = isWhite ? bgWhite : bgNormal;
+        orderWrap.style.borderRadius = "8px"; // Para redondear bonito
+        orderWrap.style.transition = "background-color 0.3s, background-image 0.3s, border-color 0.3s";
       }
     }
 
@@ -1314,11 +1313,20 @@
       const t1 = n("tintas_c1") || 0;
       const t2 = n("tintas_c2") || 0;
 
-      document.getElementById("row_tintas_c2").style.display = (caras === 2) ? "flex" : "none";
+      // Deshabilitar todo si Caras es 0
+      const row1 = document.getElementById("row_tintas_c1");
+      const subTitle = document.querySelector(".adv .subTitle");
+      if (row1) row1.style.display = (caras === 0) ? "none" : "flex";
+      if (subTitle) subTitle.style.display = (caras === 0) ? "none" : "block";
+
+      const row2 = document.getElementById("row_tintas_c2");
+      if (row2) row2.style.display = (caras === 2) ? "flex" : "none";
 
       for (let i = 1; i <= 4; i++) {
-        document.getElementById(`wrap_c1_${i}`).style.display = (i <= t1) ? "block" : "none";
-        document.getElementById(`wrap_c2_${i}`).style.display = (i <= t2 && caras === 2) ? "block" : "none";
+        const w1 = document.getElementById(`wrap_c1_${i}`);
+        if(w1) w1.style.display = (i <= t1 && caras > 0) ? "block" : "none";
+        const w2 = document.getElementById(`wrap_c2_${i}`);
+        if(w2) w2.style.display = (i <= t2 && caras === 2) ? "block" : "none";
       }
     }
 
@@ -1398,7 +1406,7 @@
       s = s.replace(/<text[^>]*>[^<]*fuelle[^<]*<\/text>\s*/gi, "");
       if (!showMeasures) {
         s = s.replace(/<!--\s*Flecha ancho\s*-->[\s\S]*?(?=<!--\s*Flecha alto\s*-->|<\/svg>)/i, "");
-          s = s.replace(/<!--\s*Flecha alto\s*-->[\s\S]*?(?=<\/svg>)/i, "");
+        s = s.replace(/<!--\s*Flecha alto\s*-->[\s\S]*?(?=<\/svg>)/i, "");
         s = s.replace(/<text[^>]*>[^<]*ANCHO[^<]*<\/text>\s*/gi, "");
         s = s.replace(/<text[^>]*>[^<]*ALTO[^<]*<\/text>\s*/gi, "");
       }
@@ -1649,9 +1657,9 @@
 
       // Pure SVG Geometric Cambrel Texture (Semillitas / Honeycomb)
       const texturePattern = `
-        <pattern id="cambrelNoise-${Math.round(tx)}" width="2.2" height="2" patternUnits="userSpaceOnUse">
-          <ellipse cx="0.55" cy="0.5" rx="0.25" ry="0.2" fill="rgba(0,0,0,0.15)" />
-          <ellipse cx="1.65" cy="1.5" rx="0.25" ry="0.2" fill="rgba(0,0,0,0.15)" />
+        <pattern id="cambrelNoise-${Math.round(tx)}" width="3.8" height="3.4" patternUnits="userSpaceOnUse">
+          <ellipse cx="0.95" cy="0.85" rx="0.45" ry="0.35" fill="rgba(0,0,0,0.15)" />
+          <ellipse cx="2.85" cy="2.55" rx="0.45" ry="0.35" fill="rgba(0,0,0,0.15)" />
         </pattern>
       `;
 
@@ -1732,7 +1740,8 @@
       const alto = n("alto_cm");
       const fuelle = n("fuelle_cm");
       const bagType = v("bag_type");
-      const caras = Math.max(0, Math.min(2, n("caras")));
+      const caras = Math.max(0, Math.min(2, parseInt(document.getElementById("caras").value) || 0));
+      
       grid.classList.toggle("is-one-face", caras <= 1);
       grid.classList.toggle("two-faces", caras === 2);
       if (orderGrid) orderGrid.classList.toggle("is-one-face", caras <= 1);
@@ -1789,6 +1798,7 @@
           label: row.label || "",
           minQty: parseTramoMin(row.label),
           sinIva: Number(row.precio_unitario_sin_iva || 0),
+          is_public: row.is_public !== false
         };
       }).filter(x => Number.isFinite(x.minQty));
 
@@ -1848,8 +1858,10 @@
       const flyerGrid = document.getElementById("flyerPriceGrid");
       flyerGrid.innerHTML = "";
       if (selection && selection.all) {
-        // Solo mostrar los primeros 5 rangos
-        selection.all.slice(0, 5).forEach(band => {
+        // Mostrar solo bandas públicas, O la banda actual si el usuario cotizó específicamente esa cantidad oculta
+        const visibleBands = selection.all.filter(band => band.is_public || (selection.chosen && band.code === selection.chosen.code));
+        
+        visibleBands.forEach(band => {
           const row = document.createElement("div");
           row.className = "price-row";
           row.innerHTML = `
@@ -1857,9 +1869,12 @@
             <span class="price-val">${money(band.sinIva)}</span>
           `;
           if (cantidad >= band.minQty && (selection.chosen && band.code === selection.chosen.code)) {
-            row.style.background = "#fff9c4"; // Highlight current band
-            row.style.borderRadius = "4px";
-            row.style.padding = "4px 8px";
+            row.style.background = "#dcfce7"; // Stronger mint green highlight
+            row.style.borderRadius = "6px";
+            row.style.padding = "6px 12px";
+            row.style.transform = "scale(1.02)";
+            row.style.boxShadow = "0 2px 8px rgba(34,197,94,0.15)";
+            row.style.border = "1px solid #bbf7d0";
           }
           flyerGrid.appendChild(row);
         });
@@ -1998,8 +2013,95 @@
       el.addEventListener("change", () => renderDesignSummary(lastQuoteData));
     });
 
+    let userCustomizedC1Color = false;
+    let userCustomizedC2Color = false;
+
+    function smartInkToggle(fromCarasBtn = false, oldCaras = "0", fromBagColorChange = false) {
+      const caras = n("caras");
+      if (caras === 0) return;
+      
+      const colorHex = (v("color_hex") || "").toUpperCase();
+      const isWhiteBag = colorHex === "#FFFFFF";
+      const defaultInk1 = isWhiteBag ? "#000000" : "#FFFFFF";
+      
+      const c1 = document.getElementById("logo_c1_1");
+      // SOLO forzamos blanco/negro en C1 si el usuario está cambiando la tela Y nunca ha tocado C1 a mano
+      if (c1 && fromBagColorChange && !userCustomizedC1Color) { 
+        c1.value = defaultInk1; 
+      }
+      
+      // Auto-configurar la cara 2 SOLO cuando se pasa de 0/1 a 2...
+      // En otros casos (ej. cambiar tamaño o cambiar de bolsa blanca a negra) se respeta C2
+      if (caras === 2 && fromCarasBtn && oldCaras !== "2") {
+        const selectC2 = document.getElementById("tintas_c2");
+        const c2_color = document.getElementById("logo_c2_1");
+        
+        if (selectC2 && selectC2.value === "0") {
+          selectC2.value = "1";
+        }
+        if (c2_color) {
+          c2_color.value = "#FFD700";
+        }
+      }
+      
+      if (typeof scheduleAutoQuote === "function") scheduleAutoQuote();
+      if (typeof renderPreviewInstant === "function") renderPreviewInstant();
+    }
+    
+    function bindCarasChips() {
+      const chips = document.querySelectorAll("#caras_chips .btn-chip");
+      const input = document.getElementById("caras");
+      if (!chips.length || !input) return;
+      
+      chips.forEach(btn => {
+        btn.addEventListener("click", () => {
+          const oldVal = input.value;
+          chips.forEach(c => c.classList.remove("active"));
+          btn.classList.add("active");
+          input.value = btn.dataset.val;
+          
+          syncLogoControlsUI();
+          
+          input.dispatchEvent(new Event("input", { bubbles: true }));
+          input.dispatchEvent(new Event("change", { bubbles: true }));
+          
+          if (oldVal !== btn.dataset.val && btn.dataset.val !== "0") {
+            smartInkToggle(true, oldVal);
+          }
+        });
+      });
+      
+      const bagColorSelect = document.getElementById("color_hex");
+      if (bagColorSelect) {
+        bagColorSelect.addEventListener("change", () => {
+             if (n("caras") > 0) { smartInkToggle(false, "0", true); }
+        });
+      }
+      
+      const bagTypeSelect = document.getElementById("bag_type");
+      if (bagTypeSelect) {
+        bagTypeSelect.addEventListener("change", (e) => {
+          const bt = e.target.value;
+          if (bt === "PLANA_TROQUEL") {
+            // Defaults for Troquel
+            document.getElementById("dobles_cm").value = 6;
+          } else {
+            // Defaults for Manija
+            document.getElementById("dobles_cm").value = 3;
+          }
+        });
+      }
+      
+      // Listeners para marcar si el usuario toca los colores a mano
+      const c1Listener = document.getElementById("logo_c1_1");
+      if(c1Listener) c1Listener.addEventListener("input", () => userCustomizedC1Color = true);
+      const c2Listener = document.getElementById("logo_c2_1");
+      if(c2Listener) c2Listener.addEventListener("input", () => userCustomizedC2Color = true);
+    }
+
     window.addEventListener("load", () => {
       ["color_hex"].forEach(initColorSwatches);
+      bindCarasChips();
       syncFuelleField();
       syncLogoControlsUI();
       updatePreviewBackground(v("color_hex"));
