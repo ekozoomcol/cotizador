@@ -1,387 +1,567 @@
-﻿<!doctype html>
+<!doctype html>
 <html lang="es">
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>Cotizador EKOZOOM</title>
   <style>
-    :root{
-      --bg: #dce8f2;
-      --bg: #eaf1ff;
-      --bg-accent: #dbeafe;
-      --card: #ffffff;
-      --ink: #243241;
-      --muted: #6b7785;
-      --brand: #0b3f71;
-      --line: #d9e1e8;
-      --ink: #1e293b;
-      --muted: #64748b;
-      --brand: #1d4ed8;
-      --brand-ink: #0f2f71;
-      --line: #dbe5f4;
-      --ok: #047857;
-      --warn: #b45309;
-      --shadow-soft: 0 10px 30px rgba(15, 23, 42, 0.08);
-      --shadow-strong: 0 20px 40px rgba(30, 64, 175, 0.12);
-    }
-    * { box-sizing: border-box; }
-    body {
-      font-family: "Segoe UI", Arial, sans-serif;
-      font-family: Inter, "Segoe UI", Arial, sans-serif;
-      margin: 0;
-      color: var(--ink);
-      background: var(--bg);
-      min-height: 100vh;
-      background:
-        radial-gradient(circle at 10% 0%, #f8fbff 0%, transparent 38%),
-        radial-gradient(circle at 90% 100%, #dbeafe 0%, transparent 42%),
-        linear-gradient(160deg, var(--bg) 0%, var(--bg-accent) 100%);
-    }
-    .app {
-      max-width: 1220px;
-      margin: 0 auto;
-      padding: 16px;
-      padding: 24px 16px 28px;
-    }
-    h1 {
-      margin: 0 0 12px;
-      font-size: 28px;
-      color: var(--brand);
-      margin: 0 0 14px;
-      font-size: clamp(31px, 3vw, 42px);
-      color: var(--brand-ink);
-      text-align: center;
-      letter-spacing: 0.4px;
-      letter-spacing: 0.2px;
-      font-weight: 800;
-      text-shadow: 0 2px 10px rgba(59,130,246,0.16);
-    }
-    .connectionBanner {
-      margin: 0 auto 12px;
-      max-width: 700px;
-      text-align: center;
-      background: linear-gradient(135deg, #dcfce7 0%, #bbf7d0 100%);
-      border: 1px solid #86efac;
-      color: #166534;
-      font-weight: 800;
-      padding: 10px 14px;
-      border-radius: 999px;
-      box-shadow: 0 6px 20px rgba(22, 101, 52, 0.15);
-      letter-spacing: 0.3px;
-    }
-    .card {
-      border: 1px solid var(--line);
-      border-radius: 14px;
-      border-radius: 18px;
-      background: var(--card);
-      padding: 14px;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.04);
-      padding: 16px;
-      box-shadow: var(--shadow-soft);
-    }
-    .topForm { margin-bottom: 10px; padding: 10px; }
-    .topForm h3 { margin: 0 0 8px; font-size: 16px; }
-    .row { display:flex; gap: 8px; align-items: end; flex-wrap: wrap; }
-    .topForm { margin-bottom: 14px; padding: 14px; }
-    .topForm h3 { margin: 0 0 10px; font-size: 17px; color: var(--brand-ink); }
-    .row { display:flex; gap: 10px; align-items: end; flex-wrap: wrap; }
-    .row > div { flex: 1; min-width: 140px; }
-    .topForm .row > div { min-width: 120px; }
-    label { display:block; font-size: 11px; color:#4b5a68; margin-bottom: 3px; font-weight: 600; }
-    label { display:block; font-size: 11px; color:#3f5268; margin-bottom: 4px; font-weight: 700; }
-    input, select {
-      width: 100%;
-      padding: 7px 9px;
-      border:1px solid #cfd9e3;
-      border-radius:8px;
-      background: #fff;
-      padding: 9px 11px;
-      border:1px solid #cbd7e6;
-      border-radius:10px;
-      background: rgba(255,255,255,0.9);
-      font-size: 13px;
-      transition: border-color .2s ease, box-shadow .2s ease;
-    }
-    input:focus, select:focus {
-      border-color: #60a5fa;
-      box-shadow: 0 0 0 4px rgba(59,130,246,0.16);
-      outline: none;
-    }
-    .subTitle { font-weight: 700; font-size: 11px; color:#334155; margin: 6px 0 2px; }
-    .inlineHint { font-size: 12px; color:#64748b; margin-top: 4px; }
-    .muted { color: var(--muted); font-size: 12px; }
-    .ok { color: var(--ok); font-weight: 700; }
-    .warn { color: var(--warn); font-weight: 700; }
-    .board {
-      display: grid;
-      grid-template-columns: 1.2fr 1fr;
-      gap: 14px;
-      margin-bottom: 12px;
-      gap: 16px;
-      margin-bottom: 14px;
-      align-items: stretch;
-    }
-    .board > .card{
-      aspect-ratio: 3 / 4.5;
-      display: flex;
-      flex-direction: column;
-      overflow: hidden;
-      transition: transform .22s ease, box-shadow .22s ease;
-    }
-    .board > .card:hover{
-      transform: translateY(-2px);
-      box-shadow: var(--shadow-strong);
-    }
-    .posterTitle {
-      text-align: center;
-      font-size: clamp(28px, 2.1vw, 40px);
-      letter-spacing: 0.4px;
-      margin: 2px 0 6px;
-      color: #2f3f50;
-      color: #1e293b;
-      font-weight: 800;
-    }
-    .posterSub {
-      text-align: center;
-      color: #5f6f7f;
-      color: #64748b;
-      font-size: clamp(18px, 1.2vw, 23px);
-      margin-bottom: 6px;
-    }
-    .logoLegend {
-      text-align: center;
-      background: #eef2f7;
-      color: #2f3f50;
-      border: 1px solid #dde5ee;
-      border-radius: 8px;
-      background: linear-gradient(180deg, #eff6ff 0%, #e2ecff 100%);
-      color: #1e3a8a;
-      border: 1px solid #c7d8fb;
-      border-radius: 10px;
-      font-size: clamp(14px, 1vw, 18px);
-      font-weight: 800;
-      letter-spacing: 0.2px;
-      padding: 6px 8px;
-      margin: 0 0 8px;
-    }
-    .priceHighlight {
-      margin: 8px auto 10px;
-      width: 100%;
-      text-align: center;
-      background: #f5edbe;
-      color: #1f5d2f;
-      background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%);
-      color: #14532d;
-      font-size: clamp(38px, 3vw, 58px);
-      font-weight: 900;
-      border-radius: 10px;
-      border-radius: 12px;
-      box-shadow: 0 8px 16px rgba(245, 158, 11, 0.15);
-      padding: 8px;
-      line-height: 1.05;
-    }
-    .miniList {
-      width: 100%;
-      margin: 0 auto 8px;
-      border-top: 1px solid #e8edf2;
-      border-bottom: 1px solid #e8edf2;
-      border-top: 1px solid #d9e6fb;
-      border-bottom: 1px solid #d9e6fb;
-      padding: 6px 0;
-      font-size: clamp(26px, 2.1vw, 34px);
-      font-weight: 800;
-    }
-    .miniRow {
-      display:flex;
-      justify-content: space-between;
-      gap: 16px;
-      margin: 4px 0;
-    }
-    .miniRow span:last-child { color: var(--brand); }
-    .miniRow span:last-child { color: #1d4ed8; }
+
+  @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap');
+
+  :root {
+    --bg-color: #f8fafc;
+    --card-bg: rgba(255, 255, 255, 0.85);
+    --card-border: rgba(255, 255, 255, 0.6);
+    --ink: #0f172a;
+    --muted: #64748b;
+    --brand: #4f46e5;
+    --brand-dark: #3730a3;
+    --brand-light: #e0e7ff;
+    --accent: #10b981;
+    --line: #e2e8f0;
+    --ok: #059669;
+    --warn: #ea580c;
+    --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+    --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+    --shadow-xl: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
+    --radius-md: 12px;
+    --radius-lg: 16px;
+    --radius-xl: 24px;
+  }
+  * { box-sizing: border-box; }
+  body {
+    font-family: 'Plus Jakarta Sans', system-ui, sans-serif;
+    margin: 0;
+    color: var(--ink);
+    min-height: 100vh;
+    background-color: var(--bg-color);
+    background-image: 
+      radial-gradient(at 0% 0%, rgba(79, 70, 229, 0.15) 0px, transparent 50%),
+      radial-gradient(at 100% 0%, rgba(16, 185, 129, 0.15) 0px, transparent 50%),
+      radial-gradient(at 100% 100%, rgba(236, 72, 153, 0.15) 0px, transparent 50%),
+      radial-gradient(at 0% 100%, rgba(56, 189, 248, 0.15) 0px, transparent 50%);
+    background-attachment: fixed;
+  }
+  .app {
+    max-width: 1220px;
+    margin: 0 auto;
+    padding: 32px 20px;
+  }
+  h1 {
+    margin: 0 0 28px;
+    font-size: clamp(36px, 5vw, 56px);
+    font-family: 'Outfit', sans-serif;
+    font-weight: 800;
+    background: linear-gradient(135deg, #1e1b4b 0%, #4f46e5 50%, #d946ef 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    text-align: center;
+    letter-spacing: -1px;
+    line-height: 1.1;
+    filter: drop-shadow(0px 4px 6px rgba(0,0,0,0.1));
+  }
+  /* Agregando un badge de conexion elegante */
+  .connectionBanner {
+    display: none; /* el original dice que es banner, pero lo omitimos si no es importante, la v actual no lo tiene */
+  }
+  .card {
+    border: 1px solid var(--card-border);
+    border-radius: 28px; /* Google MD3 typical large shape */
+    background: var(--card-bg);
+    backdrop-filter: blur(24px);
+    -webkit-backdrop-filter: blur(24px);
+    padding: 24px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.05), 0 1px 3px rgba(0,0,0,0.08); /* MD3 elevation 1 */
+    transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.3s ease;
+  }
+  .card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 25px 30px -5px rgb(0 0 0 / 0.15);
+  }
+  .topForm { 
+    margin-bottom: 32px; 
+    padding: 28px; 
+    border-radius: var(--radius-xl); 
+    border-top: 2px solid rgba(255,255,255,0.8);
+    border-left: 2px solid rgba(255,255,255,0.8);
+  }
+  .topForm h3 { 
+    margin: 0 0 24px; 
+    font-size: 20px; 
+    font-family: 'Outfit', sans-serif; 
+    color: #1e293b; 
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .topForm h3::before {
+    content: "";
+    display: inline-block;
+    width: 6px;
+    height: 20px;
+    background: var(--brand);
+    border-radius: 4px;
+  }
+  .row { display:flex; gap: 16px; align-items: flex-end; flex-wrap: wrap; margin-bottom: 20px; }
+  .row:last-child { margin-bottom: 0; }
+  .row > div { flex: 1; min-width: 160px; position: relative; }
+  .topForm .row > div { min-width: 140px; }
+  label { 
+    display:block; 
+    font-size: 13px; 
+    color: #334155; 
+    margin-bottom: 6px; 
+    font-weight: 600; 
+  }
+  input, select {
+    width: 100%;
+    padding: 10px 14px;
+    border: 2px solid #cbd5e1;
+    border-radius: var(--radius-md);
+    background: #ffffff;
+    font-size: 14px;
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-weight: 500;
+    color: var(--ink);
+    transition: all 0.2s ease;
+    box-shadow: var(--shadow-sm);
+  }
+  input:hover, select:hover {
+    border-color: #94a3b8;
+  }
+  input:focus, select:focus {
+    outline: none;
+    border-color: var(--brand);
+    box-shadow: 0 0 0 4px var(--brand-light);
+  }
+  .subTitle { font-weight: 700; font-size: 14px; color:#1e293b; margin: 16px 0 8px; font-family: 'Outfit', sans-serif;}
+  .inlineHint { font-size: 12px; color:#64748b; margin-top: 6px; font-weight: 500;}
+  .muted { color: var(--muted); font-size: 14px; font-weight: 500;}
+  #status { margin-top: 16px; padding: 12px 16px; border-radius: 8px; background: rgba(255,255,255,0.7); border: 1px solid var(--line); display: inline-block; font-weight:600;}
+  .ok { color: var(--ok); font-weight: 800; padding-right: 4px;}
+  .warn { color: var(--warn); font-weight: 800; padding-right: 4px;}
+  
+  .board {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 32px;
+    margin-bottom: 32px;
+    align-items: center;
+  }
+  .board > .card {
+  container-type: inline-size;
+    aspect-ratio: 3 / 4.4;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    padding: 24px;
+    /* Make it essentially a standalone poster */
+  }
+  .posterTitle {
+    text-align: center;
+    font-size: clamp(26px, 2.5vw, 40px);
+    letter-spacing: -0.5px;
+    margin: 0 0 6px;
+    color: #0f172a;
+    font-weight: 800;
+    font-family: 'Outfit', sans-serif;
+    text-transform: uppercase;
+  }
+  .posterSub {
+    text-align: center;
+    color: #475569;
+    font-size: clamp(15px, 1.2vw, 19px);
+    margin-bottom: 12px;
+    font-weight: 500;
+  }
+  .logoLegend {
+    text-align: center;
+    background: linear-gradient(to right, #e0e7ff, #f3e8ff);
+    color: var(--brand-dark);
+    border: 1px solid #c7d2fe;
+    border-radius: var(--radius-md);
+    font-size: clamp(14px, 1.1vw, 18px);
+    font-weight: 700;
+    padding: 8px 16px;
+    margin: 0 auto 16px;
+    display: inline-block;
+    width: auto;
+    align-self: center;
+    box-shadow: var(--shadow-sm);
+  }
+  .priceHighlight {
+    margin: 0 auto 12px;
+    width: 100%;
+    text-align: center;
+    background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+    color: #ffffff;
+    font-size: clamp(16px, 8.5cqi, 44px);
+    font-weight: 800;
+    border-radius: var(--radius-lg);
+    padding: 12px 0px;
+    line-height: 1.1;
+    box-shadow: 0 10px 20px -5px rgba(16, 185, 129, 0.4);
+    font-family: 'Outfit', sans-serif;
+    text-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    white-space: nowrap;
+    overflow: hidden;
+  }
+  .miniList {
+    width: 100%;
+    margin: 0 auto 8px;
+    border-top: 1px solid var(--line);
+    border-bottom: 1px solid var(--line);
+    padding: 8px 0;
+    font-size: clamp(16px, 1.4vw, 22px);
+    font-weight: 700;
+    font-family: 'Outfit', sans-serif;
+  }
+  .miniRow {
+    display:flex;
+    justify-content: space-between;
+    gap: 16px;
+    margin: 6px 0;
+    padding: 4px 12px;
+    border-radius: 8px;
+    transition: background 0.2s;
+  }
+  .miniRow:hover {
+    background: rgba(79, 70, 229, 0.05);
+  }
+  .miniRow span:last-child { color: var(--brand); font-weight: 800;}
+  
+  #previewWrap {
+    border-radius: 20px;
+    border: none;
+    background: transparent;
+    padding: 0;
+    flex: 1 1 auto;
+    min-height: 250px;
+    max-height: 400px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    margin: 0;
+    width: 100%;
+  }
+  #previewGrid{
+    width: 100%;
+    height: 100%;
+    display: flex;
+    gap: 16px;
+    align-items: center;
+    justify-content: center;
+  }
+  #previewGrid.two-faces{ gap: 8px; }
+  .previewItem{
+    width: 100%;
+    max-width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    animation: fadeIn 0.4s ease-out;
+  }
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  .previewSvg{
+    width: 100%;
+    flex: 1;
+    min-height: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 8px 0 0;
+  }
+  #previewGrid .previewItem{ width: 50%; }
+  #previewGrid.is-one-face .previewItem{ width: 90%; }
+  #previewGrid .previewSvg svg{
+    width: 100%;
+    height: 100%;
+    margin-bottom: auto;
+    filter: drop-shadow(0 20px 25px rgba(0,0,0,0.1));
+    transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+  }
+  #previewGrid .previewSvg svg:hover {
+    transform: scale(1.02);
+  }
+  .previewSvg svg{ width: 100%; height: 100%; display: block; }
+  .previewLabel{ font-weight: 800; font-size: 16px; font-family: 'Outfit', sans-serif; color: #1e293b; background: #e2e8f0; padding: 4px 12px; border-radius: 999px;}
+  .previewDims{ font-size: 13px; color: #64748b; text-align: center; font-weight: 600; margin-top: 4px;}
+  
+  .orderTitle {
+    text-align: center;
+    font-size: clamp(32px, 2.8vw, 42px);
+    margin: 0 0 16px;
+    color: #1e293b;
+    font-weight: 800;
+    font-family: 'Outfit', sans-serif;
+    letter-spacing: -0.5px;
+  }
+  .orderPanel {
+    background: rgba(255,255,255,0.7);
+    border: 2px solid var(--line);
+    border-radius: var(--radius-lg);
+    padding: 24px;
+    font-size: clamp(16px, 1.4vw, 20px);
+    line-height: 1.6;
+    margin-top: auto;
+  }
+  .orderPanel div {
+    display: flex;
+    justify-content: space-between;
+    border-bottom: 1px dashed var(--line);
+    padding: 8px 0;
+  }
+  .orderPanel div:last-of-type, .orderPanel .total, .orderPanel .totalNote {
+    border-bottom: none;
+  }
+  .orderPanel strong { color: #334155; font-weight: 600;}
+  .orderPanel span { font-weight: 700; color: #0f172a;}
+  .total {
+    margin-top: 16px;
+    border-top: 2px solid var(--brand);
+    padding-top: 16px !important;
+    color: var(--brand);
+    font-size: clamp(38px, 3.2vw, 52px);
+    line-height: 1.1;
+    font-weight: 900;
+    text-align: center;
+    font-family: 'Outfit', sans-serif;
+    display: block !important;
+  }
+  .totalNote {
+    text-align: center;
+    color: #64748b;
+    font-size: clamp(14px, 1.1vw, 16px);
+    font-weight: 600;
+    display: block !important;
+    padding-top: 4px !important;
+  }
+  
+  #previewWrap {
+    border-radius: 20px;
+    border: none;
+    background: transparent;
+    padding: 0;
+    flex: 1 1 auto;
+    min-height: 250px;
+    max-height: 400px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    margin: 0;
+    width: 100%;
+  }
+  #orderPreviewGrid{
+    width: 100%;
+    height: 100%;
+    display: flex;
+    gap: 8px;
+    align-items: center;
+    justify-content: center;
+  }
+  #orderPreviewGrid .previewItem{
+    max-width: none;
+    width: 50%;
+    gap: 4px;
+  }
+  #orderPreviewGrid .previewSvg{
+    height: auto;
+    flex: 1;
+    min-height: 0;
+    padding: 0;
+  }
+  #orderPreviewGrid.is-one-face .previewItem{ width: 90%; }
+  #orderPreviewGrid .previewSvg svg{
+    width: 100%;
+    height: 100%;
+    filter: drop-shadow(0 15px 20px rgba(0,0,0,0.1));
+  }
+  #orderPreviewGrid .previewLabel{
+    font-size: 12px;
+    padding: 2px 8px;
+  }
+  #orderPreviewGrid .previewDims{
+    display: none;
+  }
+  
+  .is-disabled {
+    opacity: 0.4;
+    filter: grayscale(1);
+    pointer-events: none;
+  }
+  .color-select {
+    display: none;
+  }
+  .swatchGroup {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    min-height: 32px;
+    padding-top: 8px;
+  }
+  .swatchBtn {
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    border: 2px solid rgba(0,0,0,0.1);
+    cursor: pointer;
+    outline: none;
+    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+    position: relative;
+  }
+  .swatchBtn:hover { transform: scale(1.15) translateY(-2px); box-shadow: 0 4px 6px rgba(0,0,0,0.1); }
+  .swatchBtn.active {
+    box-shadow: 0 0 0 3px #fff, 0 0 0 5px var(--brand);
+    border-color: transparent;
+    transform: scale(1.1);
+  }
+  .adv {
+    margin-top: 16px;
+    background: rgba(241, 245, 249, 0.5);
+    border: 1px solid var(--line);
+    border-radius: var(--radius-md);
+    padding: 16px;
+    transition: all 0.3s ease;
+  }
+  .adv[open] {
+    background: #ffffff;
+    box-shadow: var(--shadow-md);
+  }
+  .adv summary {
+    cursor: pointer;
+    font-weight: 700;
+    color: var(--brand);
+    font-size: 14px;
+    list-style: none;
+    font-family: 'Outfit', sans-serif;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .adv summary::-webkit-details-marker { display: none; }
+  .adv summary::before { 
+    content: ""; 
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%234f46e5' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M9 18l6-6-6-6'/%3E%3C/svg%3E");
+    background-size: cover;
+    transition: transform 0.3s ease;
+  }
+  .adv[open] summary::before { transform: rotate(90deg); }
+  
+  table { width:100%; border-collapse: collapse; background: #fff; margin-top: 20px; border-radius: 8px; overflow: hidden; box-shadow: var(--shadow-sm);}
+  th, td { border-bottom: 1px solid #edf2f7; padding: 12px; text-align:left; font-size: 14px; }
+  th { background: #f1f5f9; font-weight: 700; color: #334155; }
+  .mono { font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas; font-size: 12px; white-space: pre-wrap; }
+  
+  @media (max-width: 980px){
+    .board { grid-template-columns: 1fr; }
+    .board > .card {
+  container-type: inline-size;
+    aspect-ratio: 3 / 4.4;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    padding: 24px;
+    /* Make it essentially a standalone poster */
+  }
     #previewWrap {
-      border-radius: 12px;
-      border: 1px solid #e3e8ee;
-      background: #fff;
-      border: 1px solid #d6e4fb;
-      background: linear-gradient(180deg, #f8fbff 0%, #eef5ff 100%);
-      padding: 6px 4px 8px;
-      flex: 1;
-      min-height: 0;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      overflow: hidden;
-      margin: 4px auto 0;
-      width: 100%;
-    }
-    #previewGrid{
-      width: 100%;
-      height: 100%;
-      display: flex;
-      gap: 4px;
-      align-items: center;
-      justify-content: center;
-    }
-    #previewGrid.two-faces{ gap: 0px; }
-    #previewGrid.two-faces .previewItem + .previewItem{
-      margin-left: -24px;
-    }
-    .previewItem{
-      width: 100%;
-      max-width: 100%;
-@@ -161,84 +196,84 @@
-      align-items: center;
-      gap: 2px;
-    }
-    .previewSvg{
-      width: 100%;
-      flex: 1;
-      min-height: 0;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      padding: 2px 0 0;
-    }
-    #previewGrid .previewItem{ width: 50%; }
-    #previewGrid.is-one-face .previewItem{ width: 94%; }
-    #previewGrid .previewSvg svg{
-      width: 100%;
-      height: 100%;
-    }
-    .previewSvg svg{ width: 100%; height: 100%; display: block; }
-    .previewLabel{ font-weight: 700; font-size: 15px; }
-    .previewDims{ font-size: 12px; color: #5f6f7f; text-align: center; }
-    .orderTitle {
-      text-align: center;
-      font-size: clamp(30px, 2.4vw, 44px);
-      margin: 2px 0 6px;
-      color: #2f3f50;
-      color: #1e293b;
-      font-weight: 800;
-    }
-    .orderPanel {
-      background: #f8fafc;
-      border: 1px solid #e2e8f0;
-      background: linear-gradient(180deg, #f8fbff 0%, #f1f6ff 100%);
-      border: 1px solid #d6e4fb;
-      border-radius: 12px;
-      padding: 10px;
-      padding: 12px;
-      font-size: clamp(22px, 1.6vw, 30px);
-      line-height: 1.25;
-    }
-    .orderPanel strong { color: #2d4052; }
-    .orderPanel strong { color: #1e3a5f; }
-    .total {
-      margin-top: 8px;
-      border-top: 1px solid #d9e1e8;
-      border-top: 1px solid #d6e4fb;
-      padding-top: 8px;
-      color: #0b3f71;
-      color: #1e3a8a;
-      font-size: clamp(46px, 3.6vw, 66px);
-      line-height: 1.02;
-      font-weight: 900;
-      text-align: center;
-    }
-    .totalNote {
-      text-align: center;
-      color: #516577;
-      color: #64748b;
-      font-size: clamp(18px, 1.3vw, 24px);
-      font-weight: 700;
-    }
-    #orderPreviewWrap{
-      margin-top: 2px;
-      margin-bottom: 8px;
-      border: 1px solid #e2e8f0;
-      border: 1px solid #d6e4fb;
-      border-radius: 10px;
-      background: #f8fafc;
-      background: linear-gradient(180deg, #f8fbff 0%, #f1f6ff 100%);
-      padding: 3px;
-      width: 100%;
-      flex: 1;
-      min-height: 0;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      overflow: hidden;
-    }
-    #orderPreviewGrid{
-      width: 100%;
-      height: 100%;
-      display: flex;
-      gap: 1px;
-      align-items: center;
-      justify-content: center;
-    }
-    #orderPreviewGrid.two-faces{ gap: 0px; }
-    #orderPreviewGrid.two-faces .previewItem + .previewItem{
-      margin-left: -18px;
-    }
-    #orderPreviewGrid .previewItem{
-      max-width: none;
-      width: 50%;
-      gap: 2px;
-@@ -266,77 +301,78 @@
-    .is-disabled {
-      opacity: 0.55;
-      filter: grayscale(0.15);
-    }
-    .color-select {
-      display: none;
-    }
-    .swatchGroup {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 6px;
-      min-height: 28px;
-      padding-top: 2px;
-    }
-    .swatchBtn {
-      width: 18px;
-      height: 18px;
-      border-radius: 999px;
-      border: 1px solid rgba(0,0,0,0.24);
-      cursor: pointer;
-      outline: none;
-      transition: transform .08s ease;
-    }
-    .swatchBtn:hover { transform: scale(1.08); }
-    .swatchBtn.active {
-      box-shadow: 0 0 0 2px #fff, 0 0 0 4px #0b3f71;
-      box-shadow: 0 0 0 2px #fff, 0 0 0 4px #1d4ed8;
-    }
-    .adv {
-      margin-top: 6px;
-      border-top: 1px dashed #d5dde5;
-      border-top: 1px dashed #c9d7ec;
-      padding-top: 6px;
-    }
-    .adv summary {
-      cursor: pointer;
-      font-weight: 700;
-      color: #334155;
-      color: #1e3a5f;
-      font-size: 12px;
-      list-style: none;
-    }
-    .adv summary::-webkit-details-marker { display: none; }
-    .adv summary::before { content: "▶ "; font-size: 10px; }
-    .adv[open] summary::before { content: "▼ "; }
-    @media (max-width: 980px){
-      .board { grid-template-columns: 1fr; }
-      .board > .card { aspect-ratio: 3 / 4.5; }
-      #previewWrap, #orderPreviewWrap { min-height: 270px; }
-    }
+    border-radius: 20px;
+    border: none;
+    background: transparent;
+    padding: 0;
+    flex: 1 1 auto;
+    min-height: 250px;
+    max-height: 400px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    margin: 0;
+    width: 100%;
+  }
+    #previewWrap {
+    border-radius: 20px;
+    border: none;
+    background: transparent;
+    padding: 0;
+    flex: 1 1 auto;
+    min-height: 250px;
+    max-height: 400px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    margin: 0;
+    width: 100%;
+  }
+  }
+
   </style>
+<style>
+/* --- INJECTED SCALING FIXES FOR MULTIPLE BAGS --- */
+#previewGrid, #orderPreviewGrid {
+  display: flex;
+  gap: 16px;
+  width: 100%;
+  height: 100%;
+  box-sizing: border-box;
+  align-items: center;
+  justify-content: center;
+}
+.previewItem {
+  flex: 1 1 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  max-width: 100%;
+  overflow: hidden;
+}
+.previewItem > span, .previewItem > div:not(.previewSvg) {
+  display: none; /* Hide any extra text/dims if they exist inside Item */
+}
+.previewSvg {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+#previewGrid .previewSvg svg, #orderPreviewGrid .previewSvg svg, .previewSvg svg {
+  width: 100% !important;
+  height: 100% !important;
+  max-width: 100% !important;
+  max-height: 100% !important;
+  object-fit: contain;
+  filter: drop-shadow(0 15px 25px rgba(0,0,0,0.08));
+}
+/* Ensure the wraps are constrained heavily */
+#previewWrap, #orderPreviewWrap {
+  flex: 1 1 20%;
+  min-height: 20% !important;
+  max-height: 50vh !important;
+  height: 100%;
+  padding: 10px;
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+</style>
 </head>
 <body>
   <div class="app">
     <h1>Cotizador EKOZOOM</h1>
-    <div class="connectionBanner">PRUEBA DE CONEXION CORRECTA</div>
 
     <div class="card topForm">
       <h3>Datos de cotización (arriba)</h3>
@@ -407,8 +587,768 @@
           <label>Color tela</label>
           <select id="color_hex">
             <option value="#FFFFFF">Blanco</option>
-@@ -989,26 +1025,26 @@ backendIds.forEach(id=>{
-  "logo_c1_a","logo_c1_b","logo_c2_a","logo_c2_b"
+            <option value="#000000">Negro</option>
+            <option value="#0833A2">Azul Rey (0833A2)</option>
+            <option value="#F2E6D8">Marfil</option>
+            <option value="#D9C3A5">Beige</option>
+            <option value="#8A2BE2">Lila</option>
+            <option value="#FF00AA">Fucsia</option>
+            <option value="#FF7A00">Naranja</option>
+            <option value="#00A7A7">Turquesa</option>
+          </select>
+          <div class="inlineHint">* La tela cambia preview al instante.</div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div><label>Ancho (cm)</label><input id="ancho_cm" type="number" value="30"></div>
+        <div><label>Alto (cm)</label><input id="alto_cm" type="number" value="40"></div>
+        <div><label>Fuelle (cm)</label><input id="fuelle_cm" type="number" value="20"></div>
+      </div>
+
+      <div class="row" id="row_manijas">
+        <div style="display:none;"><label>Manija 1 (cm)</label><input id="manija1_cm" type="number" value="60"></div>
+        <div style="display:none;"><label>Manija 2 (cm)</label><input id="manija2_cm" type="number" value="60"></div>
+        <div><label>Largo Manija</label><input id="largo_arco_visual" type="number" value="46" min="10" max="300"></div>
+        <div><label>Ancho manijas (cm)</label><input id="ancho_manijas_cm" type="number" value="5"></div>
+      </div>
+
+      <div class="row">
+        <div><label>Cantidad</label><input id="cantidad" type="number" value="500" min="1"></div>
+        <div><label>Dobles (cm)</label><input id="dobles_cm" type="number" value="3"></div>
+        <div><label>Caras</label><input id="caras" type="number" value="2" min="1" max="2"></div>
+        <div>
+          <label>Colores del logo</label>
+          <select id="logo_colors_count">
+            <option value="1">1 color</option>
+            <option value="2" selected>2 colores</option>
+          </select>
+          <div class="inlineHint">* Define si el logo se ve en 1 o 2 colores.</div>
+        </div>
+      </div>
+
+      <details class="adv">
+        <summary>Opciones avanzadas (logo y producción)</summary>
+        <div class="subTitle">Logo por cara</div>
+
+        <div class="row">
+          <div>
+            <label>Cara 1 - Color 1</label>
+            <select id="logo_c1_a">
+              <option value="#000000">Negro</option>
+              <option value="#FFFFFF">Blanco</option>
+              <option value="#0833A2">Azul Rey</option>
+              <option value="#FF7A00">Naranja</option>
+              <option value="#FF00AA">Fucsia</option>
+              <option value="#2B2B2B">Gris Oscuro</option>
+            </select>
+          </div>
+          <div id="wrap_logo_c1_b">
+            <label>Cara 1 - Color 2</label>
+            <select id="logo_c1_b">
+              <option value="#0833A2">Azul Rey</option>
+              <option value="#FF7A00">Naranja</option>
+              <option value="#FF00AA">Fucsia</option>
+              <option value="#000000">Negro</option>
+              <option value="#FFFFFF">Blanco</option>
+              <option value="#2B2B2B">Gris Oscuro</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="row" id="row_logo_cara2">
+          <div>
+            <label>Cara 2 - Color 1</label>
+            <select id="logo_c2_a">
+              <option value="#000000">Negro</option>
+              <option value="#FFFFFF">Blanco</option>
+              <option value="#0833A2">Azul Rey</option>
+              <option value="#FF7A00">Naranja</option>
+              <option value="#FF00AA">Fucsia</option>
+              <option value="#2B2B2B">Gris Oscuro</option>
+            </select>
+          </div>
+          <div id="wrap_logo_c2_b">
+            <label>Cara 2 - Color 2</label>
+            <select id="logo_c2_b">
+              <option value="#FF7A00">Naranja</option>
+              <option value="#0833A2">Azul Rey</option>
+              <option value="#FF00AA">Fucsia</option>
+              <option value="#000000">Negro</option>
+              <option value="#FFFFFF">Blanco</option>
+              <option value="#2B2B2B">Gris Oscuro</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="row">
+          <div><label>Tintas (info cálculo)</label><input id="tintas" type="number" value="1" min="0" max="6"></div>
+          <div><label>Cola producción (P2)</label><input id="cola_produccion" type="number" value="25000"></div>
+        </div>
+      </details>
+
+      <p id="status" class="muted">Listo.</p>
+    </div>
+
+    <div class="board">
+      <div class="card">
+        <div class="posterTitle" id="posterTitle">BOLSA PLANA TROQUEL</div>
+        <div class="posterSub" id="posterSub">Tamaño: 40 cm Ancho x 45 Alto · Material: Cambrel 70 gramos</div>
+        <div class="logoLegend" id="posterLegend">INCLUYE LOGO A 1 CARA A 1 TINTA</div>
+        <div class="priceHighlight" id="priceDesde">DESDE $0 + IVA</div>
+        <div class="miniList" id="miniBands"></div>
+        <div id="previewWrap">
+          <div id="previewGrid"></div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="orderTitle">PEDIDO</div>
+        <div class="logoLegend" id="orderLegend">INCLUYE LOGO A 1 CARA A 1 TINTA</div>
+        <div id="orderPreviewWrap">
+          <div id="orderPreviewGrid"></div>
+        </div>
+        <div class="orderPanel">
+          <div><strong>Cantidad:</strong> <span id="sumCantidad">500 bolsas</span></div>
+          <div><strong>Medidas:</strong> <span id="sumMedidas">40 cm Ancho x 45 Alto</span></div>
+          <div><strong>Precio por bolsa:</strong> <span id="sumPrecioBolsa">$0</span></div>
+          <div><strong>Subtotal (sin IVA):</strong> <span id="sumSubtotal">$0</span></div>
+          <div><strong>IVA 19%:</strong> <span id="sumIva">$0</span></div>
+          <div class="total" id="sumTotal">$0</div>
+          <div class="totalNote">IVA Incluido</div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+<script>
+function v(id){ return document.getElementById(id).value; }
+function n(id){ return Number(v(id)); }
+function setStatus(html){ document.getElementById("status").innerHTML = html; }
+function money(value){
+  return new Intl.NumberFormat("es-CO", { style: "currency", currency: "COP", maximumFractionDigits: 0 }).format(Number(value || 0));
+}
+function parseTramoMin(label){
+  const m = String(label || "").match(/(\d[\d\.\,]*)/);
+  if (!m) return null;
+  return Number(m[1].replace(/\./g,"").replace(",","."));
+}
+
+function hexToRgb(hex){
+  const h = (hex || "").replace("#","").trim();
+  if (h.length !== 6) return {r:0,g:0,b:0};
+  return { r: parseInt(h.slice(0,2),16), g: parseInt(h.slice(2,4),16), b: parseInt(h.slice(4,6),16) };
+}
+function rgbToHex(r,g,b){
+  const to2 = (x)=> Math.max(0, Math.min(255, Math.round(x))).toString(16).padStart(2,"0");
+  return "#" + to2(r) + to2(g) + to2(b);
+}
+function normalizeHex(hex){
+  const raw = String(hex || "").trim().toUpperCase();
+  return raw.startsWith("#") ? raw : `#${raw}`;
+}
+function isLightHex(hex){
+  const {r,g,b} = hexToRgb(normalizeHex(hex));
+  const luma = (0.299 * r) + (0.587 * g) + (0.114 * b);
+  return luma > 205;
+}
+function darken(hex, factor=0.60){
+  const {r,g,b} = hexToRgb(hex);
+  return rgbToHex(r*factor, g*factor, b*factor);
+}
+
+/** Fondo oscuro SOLO para tela blanca */
+function updatePreviewBackground(colorHex){
+  const wrap = document.getElementById("previewWrap");
+  if ((colorHex || "").toUpperCase() === "#FFFFFF") {
+    wrap.style.background = "#f1f5f9";
+    wrap.style.borderColor = "#d7e0ea";
+  } else {
+    wrap.style.background = "#ffffff";
+    wrap.style.borderColor = "#eee";
+  }
+}
+
+function syncFuelleField(){
+  const bagSel = document.getElementById("bag_type");
+  const fuelleInput = document.getElementById("fuelle_cm");
+  const row = fuelleInput?.closest("div");
+  if (!bagSel || !fuelleInput || !row) return;
+
+  const optionText = bagSel.selectedOptions[0]?.textContent || "";
+  const optionVal = bagSel.value || "";
+  const hasFuelle = /fuelle/i.test(`${optionText} ${optionVal}`);
+
+  fuelleInput.disabled = !hasFuelle;
+  row.classList.toggle("is-disabled", !hasFuelle);
+  if (!hasFuelle && Number(fuelleInput.value || 0) !== 0){
+    fuelleInput.value = "0";
+  }
+}
+
+function initColorSwatches(selectId){
+  const select = document.getElementById(selectId);
+  if (!select) return;
+  select.classList.add("color-select");
+
+  let swatchWrap = select.parentElement.querySelector(".swatchGroup");
+  if (!swatchWrap){
+    swatchWrap = document.createElement("div");
+    swatchWrap.className = "swatchGroup";
+    select.parentElement.appendChild(swatchWrap);
+  }
+  swatchWrap.innerHTML = "";
+
+  const setActive = (valueHex) => {
+    [...swatchWrap.querySelectorAll(".swatchBtn")].forEach(btn => {
+      btn.classList.toggle("active", btn.dataset.value === valueHex);
+    });
+  };
+
+  [...select.options].forEach(opt => {
+    const color = normalizeHex(opt.value);
+    const btn = document.createElement("button");
+    btn.type = "button";
+    btn.className = "swatchBtn";
+    btn.title = opt.textContent || color;
+    btn.dataset.value = color;
+    btn.style.background = color;
+    if (isLightHex(color)){
+      btn.style.borderColor = "rgba(0,0,0,0.4)";
+    }
+    btn.addEventListener("click", () => {
+      select.value = color;
+      setActive(color);
+      select.dispatchEvent(new Event("input", { bubbles: true }));
+      select.dispatchEvent(new Event("change", { bubbles: true }));
+    });
+    swatchWrap.appendChild(btn);
+  });
+
+  setActive(normalizeHex(select.value));
+  select.addEventListener("change", () => setActive(normalizeHex(select.value)));
+}
+
+/** Mostrar/ocultar selectores según Caras y #colores */
+function syncLogoControlsUI(){
+  const caras = Math.max(1, Math.min(2, n("caras") || 1));
+  const k = Math.max(1, Math.min(2, Number(v("logo_colors_count")) || 1));
+
+  // Cara 2
+  document.getElementById("row_logo_cara2").style.display = (caras === 2) ? "flex" : "none";
+
+  // Color 2 por cara
+  document.getElementById("wrap_logo_c1_b").style.display = (k === 2) ? "block" : "none";
+  document.getElementById("wrap_logo_c2_b").style.display = (k === 2 && caras === 2) ? "block" : "none";
+}
+
+/**
+ * Logo placeholder:
+ * - 1 color => TU/LOGO/AQUI en ese color
+ * - 2 colores => COLOR 1 (color A) y COLOR 2 (color B) en esos colores
+ *   + usando “halo” suave para que se lea en telas claras u oscuras
+ */
+function buildLogoSVGBlock(x, y, w, h, logoColors){
+  const tx = x + w/2;
+
+  const textWithHalo = (text, yPos, fill) => `
+    <text x="${tx}" y="${yPos}" text-anchor="middle"
+      font-size="18" font-weight="900"
+      fill="${fill}" fill-opacity="0.98"
+      style="letter-spacing:0.6px"
+      stroke="rgba(0,0,0,0.25)" stroke-width="1.2" paint-order="stroke">
+      ${text}
+    </text>
+  `;
+
+  if (Array.isArray(logoColors) && logoColors.length >= 2){
+    const c1 = logoColors[0] || "#000000";
+    const c2 = logoColors[1] || "#000000";
+    const y1 = y + h/2 - 10;
+    const y2 = y + h/2 + 18;
+    return `
+      ${textWithHalo("COLOR 1", y1, c1)}
+      ${textWithHalo("COLOR 2", y2, c2)}
+    `;
+  }
+
+  const c1 = (Array.isArray(logoColors) && logoColors.length) ? logoColors[0] : "#000000";
+  const y0 = y + h/2 - 18;
+
+  return `
+    <text x="${tx}" y="${y0}" text-anchor="middle"
+      font-size="18" font-weight="900"
+      fill="${c1}" fill-opacity="0.98"
+      style="letter-spacing:0.6px"
+      stroke="rgba(0,0,0,0.18)" stroke-width="1.1" paint-order="stroke">
+      <tspan x="${tx}" dy="0">TU</tspan>
+      <tspan x="${tx}" dy="22">LOGO</tspan>
+      <tspan x="${tx}" dy="22">AQUI</tspan>
+    </text>
+  `;
+}
+
+/**
+ * Limpia y estiliza el SVG:
+ * - Quita fondo blanco interno
+ * - Estiliza borde acorde a la tela (pero neutro si el logo es multicolor)
+ * - Quita textos inferiores conflictivos
+ * - Inserta bloque de logo por cara
+ */
+function cleanAndStyleSVG(svgString, fabricHex, logoColors, bagType, anchoCm, altoCm, showMeasures=true){
+  let s = svgString || "";
+  if (!s) return "";
+
+  const multicolor = Array.isArray(logoColors) && logoColors.length >= 2;
+  const isWhiteFabric = normalizeHex(fabricHex) === "#FFFFFF";
+
+  // Si el logo es multicolor, usamos líneas neutrales para no “crear” un 3er color visual.
+  const strokeHex = multicolor ? "rgba(0,0,0,0.55)" : darken(fabricHex, 0.55);
+  const strokeWidth = 1;
+  const strokeOpacity = multicolor ? 0.55 : 0.9;
+
+  // Si la tela es blanca, no usar transparencia para evitar tono gris.
+  const fillOpacity = isWhiteFabric ? 1.0 : 0.22;
+
+  // 1) quitar fondo blanco interno
+  s = s.replace(/<rect[^>]*fill="white"[^>]*\/>\s*/i, "");
+
+  // 2) quitar textos inferiores conflictivos
+  s = s.replace(/<text[^>]*>[^<]*Preview orientaci[oó]n[^<]*<\/text>\s*/gi, "");
+  s = s.replace(/<text[^>]*>[^<]*fuelle[^<]*<\/text>\s*/gi, "");
+  if (!showMeasures){
+    s = s.replace(/<!--\s*Flecha ancho\s*-->[\s\S]*?(?=<!--\s*Flecha alto\s*-->|<\/svg>)/i, "");
+    s = s.replace(/<!--\s*Flecha alto\s*-->[\s\S]*?(?=<\/svg>)/i, "");
+    s = s.replace(/<text[^>]*>[^<]*ANCHO[^<]*<\/text>\s*/gi, "");
+    s = s.replace(/<text[^>]*>[^<]*ALTO[^<]*<\/text>\s*/gi, "");
+  }
+
+  // 3) estilizar rect principal (toma el rect que tenía stroke-width="2")
+  s = s.replace(
+    /<rect([^>]*stroke-width=")2(".*?)(\/?>)/,
+    (m, p1, p2, end) => {
+      let body = (p1 + strokeWidth + p2)
+        .replace(/\sfill="[^"]*"/g, "")
+        .replace(/\sfill-opacity="[^"]*"/g, "")
+        .replace(/\sstroke="[^"]*"/g, "")
+        .replace(/\sstroke-opacity="[^"]*"/g, "");
+      return `<rect${body} stroke="${strokeHex}" stroke-opacity="${strokeOpacity}" fill="${fabricHex}" fill-opacity="${fillOpacity}"${end}`;
+    }
+  );
+
+  // 4) Insertar logo centrado (coordenadas viewBox 0 0 300 260)
+  const logo = buildLogoSVGBlock(95, 78, 110, 110, logoColors);
+  let extraShape = "";
+  const isTroquel = /TROQUEL/i.test(String(bagType || ""));
+  if (isTroquel && Number(anchoCm) > 0 && Number(altoCm) > 0){
+    const rectMatch = s.match(/<rect[^>]*x="([\d.]+)"[^>]*y="([\d.]+)"[^>]*width="([\d.]+)"[^>]*height="([\d.]+)"/i);
+    if (rectMatch){
+      const x = Number(rectMatch[1]);
+      const y = Number(rectMatch[2]);
+      const rw = Number(rectMatch[3]);
+      const rh = Number(rectMatch[4]);
+
+      const scaleX = rw / Number(anchoCm);
+      const scaleY = rh / Number(altoCm);
+      const slotW = 7.5 * scaleX;
+      const slotH = 2.5 * scaleY;
+      const r = slotH / 2;
+      const slotX = x + (rw - slotW) / 2;
+      const slotY = y + Math.max(6, rh * 0.08);
+      const slotStroke = isWhiteFabric ? "rgba(55,65,81,0.55)" : "rgba(255,255,255,0.9)";
+      const slotFill = isWhiteFabric ? "rgba(241,245,249,0.95)" : "rgba(255,255,255,0.96)";
+
+      // Troquel tipo "cápsula" (rectángulo con semicirculos en extremos).
+      extraShape = `
+        <rect x="${slotX.toFixed(2)}" y="${slotY.toFixed(2)}"
+          width="${slotW.toFixed(2)}" height="${slotH.toFixed(2)}"
+          rx="${r.toFixed(2)}" ry="${r.toFixed(2)}"
+          fill="${slotFill}" stroke="${slotStroke}" stroke-width="1.2"/>
+      `;
+    }
+  }
+
+  // 5) Reencuadre del viewBox para que ambas caras tengan el mismo tamaño
+  // visual, tomando como referencia solo el recuadro de la bolsa.
+  const mainRect = s.match(/<rect[^>]*x="([\d.]+)"[^>]*y="([\d.]+)"[^>]*width="([\d.]+)"[^>]*height="([\d.]+)"/i);
+  if (mainRect){
+    const rx = Number(mainRect[1]);
+    const ry = Number(mainRect[2]);
+    const rw = Number(mainRect[3]);
+    const rh = Number(mainRect[4]);
+    const vx = rx - 26;
+    const vy = ry - 10;
+    const vw = rw + 52;
+    const vh = rh + 44;
+
+    s = s.replace(/viewBox="[^"]*"/i, `viewBox="${vx.toFixed(2)} ${vy.toFixed(2)} ${vw.toFixed(2)} ${vh.toFixed(2)}"`);
+  }
+  s = s.replace(/<\/svg>\s*$/i, `${extraShape}${logo}\n</svg>`);
+
+  return s;
+}
+
+let debounceTimer = null;
+let lastPayloadKey = "";
+let lastRawSVG = "";
+let lastQuoteData = null;
+
+/**
+ * Renderiza 1 o 2 previews según "caras"
+ * - Si 2 caras: dims solo en Cara 1 (ANCHO/ALTO)
+ * - Si 1 cara: dims completas (incluye fuelle)
+ */
+
+function generateModernBagSVG(fabricHex, logoColors, bagType, anchoCm, altoCm, showMeasures=true, archVisualCm=46) {
+  const isTroquel = /TROQUEL/i.test(String(bagType || ""));
+  const w = 240;
+  const ratio = (altoCm && anchoCm) ? (Number(altoCm) / Number(anchoCm)) : 1.25;
+  const h = w * Math.min(Math.max(ratio, 0.8), 1.8);
+
+  const isWhite = normalizeHex(fabricHex) === "#FFFFFF";
+  const strokeColor = isWhite ? "rgba(0,0,0,0.12)" : "rgba(0,0,0,0.15)";
+  const shadowColor = isWhite ? "rgba(0,0,0,0.06)" : "rgba(0,0,0,0.15)";
+  const highlightColor = "rgba(255,255,255,0.12)";
+
+  // Logo Text Setup
+  let logoSVG = "";
+  const tx = w / 2;
+  const ty = h / 2;
+  
+  const textWithHalo = (text, yPos, fill, textSize) => `
+    <text x="${tx}" y="${yPos}" text-anchor="middle"
+      font-size="${textSize}" font-family="Plus Jakarta Sans, sans-serif" font-weight="800"
+      fill="${fill}" fill-opacity="1"
+      style="letter-spacing:-0.5px"
+      stroke="rgba(255,255,255,0.4)" stroke-width="2" paint-order="stroke">
+      ${text}
+    </text>
+  `;
+
+  if (Array.isArray(logoColors) && logoColors.length >= 2) {
+    logoSVG += textWithHalo("COLOR 1", ty - 8, logoColors[0] || "#000", 22);
+    logoSVG += textWithHalo("COLOR 2", ty + 20, logoColors[1] || "#000", 22);
+  } else {
+    const c1 = (Array.isArray(logoColors) && logoColors.length) ? logoColors[0] : "#000000";
+    logoSVG += textWithHalo("TU LOGO", ty, c1, 26);
+  }
+
+  // Handle (Manija vs Troquel)
+  let manijaSVG = "";
+  let maskSVG = "";
+    let peakY = 0;
+  if (isTroquel) {
+    const holeW = w * 0.28;
+    const holeH = holeW * 0.35;
+    const holeX = (w - holeW) / 2;
+    const holeY = h * 0.08;
+    maskSVG = `
+      <mask id="bagMask-${tx}">
+        <rect x="0" y="0" width="${w}" height="${h}" rx="6" fill="white" />
+        <rect x="${holeX}" y="${holeY}" width="${holeW}" height="${holeH}" rx="${holeH/2}" fill="black" />
+      </mask>
+    `;
+    manijaSVG = `<rect x="${holeX}" y="${holeY}" width="${holeW}" height="${holeH}" rx="${holeH/2}" fill="none" stroke="${strokeColor}" stroke-width="1.5" />`;
+    peakY = 0;
+  } else {
+    // Manija calculada por proporciones exactas en cm
+    const cmToSvg = w / (Number(anchoCm) || 30);
+    const gruesoCm = 2.5;
+    const separacionInternaCm = 8;
+    const archW = (separacionInternaCm + gruesoCm) * cmToSvg; 
+    const archX = (w - archW) / 2;
+    
+    const visualH = (Number(archVisualCm) / 2) * cmToSvg;
+    const archH = visualH * 1.33; 
+    const strokeWidthSVG = gruesoCm * cmToSvg;
+    const yAnchor = 25; 
+    
+    peakY = yAnchor - visualH;
+    
+    manijaSVG = `
+      <path d="M ${archX} ${yAnchor} C ${archX} ${yAnchor - archH}, ${archX + archW} ${yAnchor - archH}, ${archX + archW} ${yAnchor}" fill="none" stroke="${fabricHex}" stroke-width="${strokeWidthSVG}" stroke-linecap="round" />
+      <path d="M ${archX} ${yAnchor} C ${archX} ${yAnchor - archH}, ${archX + archW} ${yAnchor - archH}, ${archX + archW} ${yAnchor}" fill="none" stroke="${strokeColor}" stroke-width="${strokeWidthSVG + 3}" stroke-linecap="round" stroke-dasharray="0" opacity="0.3" style="mix-blend-mode: multiply;" />
+      <path d="M ${archX} ${yAnchor} C ${archX} ${yAnchor - archH}, ${archX + archW} ${yAnchor - archH}, ${archX + archW} ${yAnchor}" fill="none" stroke="${fabricHex}" stroke-width="${strokeWidthSVG}" stroke-linecap="round" />
+    `;
+    maskSVG = `
+      <mask id="bagMask-${tx}">
+        <rect x="0" y="0" width="${w}" height="${h}" rx="6" fill="white" />
+      </mask>
+    `
+  }
+
+  // Modern Flat Bag Design - Responsive ViewBox
+  const vbX = -30;
+  const vbY = isTroquel ? -20 : (peakY - 20); 
+  const vbW = w + 60;
+  // Alto del viewbox es el fondo de la bolsa (h + pad) menos el inicio (vbY)
+  const vbH = h + 40 - vbY;
+
+  // Soft reflection/creases to make it look premium
+  const creases = `
+    <!-- Left seam reflection -->
+    <rect x="0" y="0" width="10" height="${h}" fill="${highlightColor}" rx="4" mask="url(#bagMask-${tx})"/>
+    <!-- Bottom seam shadow -->
+    <rect x="0" y="${h - 10}" width="${w}" height="10" fill="${shadowColor}" rx="4" mask="url(#bagMask-${tx})"/>
+  `;
+
+  return `
+    <svg viewBox="${vbX} ${vbY} ${vbW} ${vbH}" xmlns="http://www.w3.org/2000/svg" style="width:100%; height:100%; filter: drop-shadow(0 15px 25px rgba(0,0,0,0.08)); max-height: 100%;">
+      <defs>
+        ${maskSVG}
+        <linearGradient id="bagGrad-${tx}" x1="0%" y1="0%" x2="100%" y2="100%">
+          <stop offset="0%" stop-color="${fabricHex}" />
+          <stop offset="100%" stop-color="${fabricHex}" stop-opacity="0.9" />
+        </linearGradient>
+      </defs>
+      ${!isTroquel ? manijaSVG : ''}
+      <rect x="0" y="0" width="${w}" height="${h}" rx="6" fill="url(#bagGrad-${tx})" mask="url(#bagMask-${tx})" stroke="${strokeColor}" stroke-width="1.5" />
+      ${isTroquel ? manijaSVG : ''}
+      ${creases}
+      ${logoSVG}
+    </svg>
+  `;
+}
+
+function renderPreviewInstant(){
+  const fabricHex = v("color_hex");
+  updatePreviewBackground(fabricHex);
+  syncFuelleField();
+  syncLogoControlsUI();
+
+  const grid = document.getElementById("previewGrid");
+  const orderGrid = document.getElementById("orderPreviewGrid");
+  grid.innerHTML = "";
+  if (orderGrid) orderGrid.innerHTML = "";
+
+  
+
+  const ancho = n("ancho_cm");
+  const alto = n("alto_cm");
+  const fuelle = n("fuelle_cm");
+  const bagType = v("bag_type");
+  const caras = Math.max(1, Math.min(2, n("caras") || 1));
+  grid.classList.toggle("is-one-face", caras === 1);
+  grid.classList.toggle("two-faces", caras === 2);
+  if (orderGrid) orderGrid.classList.toggle("is-one-face", caras === 1);
+  if (orderGrid) orderGrid.classList.toggle("two-faces", caras === 2);
+
+  const k = Math.max(1, Math.min(2, Number(v("logo_colors_count")) || 1));
+
+  const dimsTextCara1_2Caras = `ANCHO ${ancho} cm · ALTO ${alto} cm`;
+  const dimsText1Cara = `ANCHO ${ancho} cm · ALTO ${alto} cm · FUELLE ${fuelle} cm`;
+
+  const getLogoColors = (caraIdx) => {
+    const aId = (caraIdx === 1) ? "logo_c1_a" : "logo_c2_a";
+    const bId = (caraIdx === 1) ? "logo_c1_b" : "logo_c2_b";
+
+    const a = document.getElementById(aId)?.value || "#000000";
+    const b = document.getElementById(bId)?.value || "#000000";
+    return (k === 2) ? [a, b] : [a];
+  };
+
+  const makeItem = (_label, _showDims, _dimsText, logoColors, showMeasures=true) => {
+    const wrap = document.createElement("div");
+    wrap.className = "previewItem";
+
+    const svgBox = document.createElement("div");
+    svgBox.className = "previewSvg";
+    svgBox.innerHTML = generateModernBagSVG(fabricHex, logoColors, bagType, ancho, alto, showMeasures, document.getElementById("largo_arco_visual") ? Number(document.getElementById("largo_arco_visual").value) : 46);
+
+    wrap.appendChild(svgBox);
+    return wrap;
+  };
+
+  const appendToBoards = (itemMain) => {
+    grid.appendChild(itemMain);
+    if (orderGrid) orderGrid.appendChild(itemMain.cloneNode(true));
+  };
+
+  if (caras === 1){
+    appendToBoards(makeItem("Cara 1", true, dimsText1Cara, getLogoColors(1), true));
+  } else {
+    appendToBoards(makeItem("Cara 1", true, dimsTextCara1_2Caras, getLogoColors(1), true));
+    // Cara 2 no muestra medidas para evitar redundancia visual.
+    appendToBoards(makeItem("Cara 2", false, "", getLogoColors(2), false));
+  }
+}
+
+function pickBandForCantidad(beforeObj, cantidad){
+  const arr = Object.keys(beforeObj || {}).map((code) => {
+    const row = beforeObj[code] || {};
+    return {
+      code,
+      label: row.label || "",
+      minQty: parseTramoMin(row.label),
+      sinIva: Number(row.precio_unitario_sin_iva || 0),
+    };
+  }).filter(x => Number.isFinite(x.minQty));
+
+  arr.sort((a,b) => a.minQty - b.minQty);
+  if (!arr.length) return null;
+
+  let chosen = arr[0];
+  for (const it of arr){
+    if (cantidad >= it.minQty) chosen = it;
+  }
+  return { chosen, all: arr };
+}
+
+function renderDesignSummary(data){
+  if (!data) return;
+
+  const bagTypeLabel = v("bag_type") === "PLANA_MANIJA" ? "BOLSA PLANA MANIJA" : "BOLSA PLANA TROQUEL";
+  const materialText = document.getElementById("material_code").selectedOptions[0]?.textContent || "";
+  const ancho = n("ancho_cm") || 0;
+  const alto = n("alto_cm") || 0;
+  const cantidad = Math.max(1, n("cantidad") || 1);
+  const caras = Math.max(1, Math.min(2, n("caras") || 1));
+  const tintas = Math.max(1, n("tintas") || 1);
+  const txtCara = caras === 1 ? "CARA" : "CARAS";
+  const txtTinta = tintas === 1 ? "TINTA" : "TINTAS";
+  const legend = `INCLUYE LOGO A ${caras} ${txtCara} A ${tintas} ${txtTinta}`;
+
+  document.getElementById("posterTitle").textContent = bagTypeLabel;
+  const orderTitle = document.querySelector(".orderTitle");
+  if (orderTitle) orderTitle.textContent = bagTypeLabel;
+  document.getElementById("posterSub").textContent = `Tamaño: ${ancho} cm Ancho x ${alto} Alto · Material: ${materialText}`;
+  document.getElementById("posterLegend").textContent = legend;
+  document.getElementById("orderLegend").textContent = legend;
+  document.getElementById("sumCantidad").textContent = `${cantidad} bolsas`;
+  document.getElementById("sumMedidas").textContent = `${ancho} cm Ancho x ${alto} Alto`;
+
+  const before = data.prices_by_band_before_iva || {};
+  const selection = pickBandForCantidad(before, cantidad);
+  if (!selection){
+    document.getElementById("priceDesde").textContent = "DESDE $0 + IVA";
+    document.getElementById("miniBands").innerHTML = "";
+    return;
+  }
+
+  const minPrice = Math.min(...selection.all.map(x => x.sinIva));
+  document.getElementById("priceDesde").textContent = `DESDE ${money(minPrice)} + IVA`;
+
+  const mini = selection.all.slice(0, 5).map((it) => {
+    return `<div class="miniRow"><span>${it.label}:</span><span>${money(it.sinIva)}</span></div>`;
+  }).join("");
+  document.getElementById("miniBands").innerHTML = mini;
+
+  const unit = Number(selection.chosen.sinIva || 0);
+  const subtotal = unit * cantidad;
+  const iva = subtotal * 0.19;
+  const total = subtotal + iva;
+  document.getElementById("sumPrecioBolsa").textContent = money(unit);
+  document.getElementById("sumSubtotal").textContent = money(subtotal);
+  document.getElementById("sumIva").textContent = money(iva);
+  document.getElementById("sumTotal").textContent = money(total);
+}
+
+async function cotizarAuto(){
+  const bagType = v("bag_type");
+  syncFuelleField();
+  document.getElementById("row_manijas").style.display = (bagType === "PLANA_TROQUEL") ? "none" : "flex";
+
+  const ancho = n("ancho_cm");
+  const alto = n("alto_cm");
+  if (!ancho || !alto || ancho <= 0 || alto <= 0){
+    setStatus("<span class='warn'>Faltan medidas</span>");
+    return;
+  }
+
+  const payload = {
+    bag_type: bagType,
+    inputs: {
+      ancho_cm: ancho,
+      alto_cm: alto,
+      fuelle_cm: n("fuelle_cm"),
+      manija1_cm: n("manija1_cm"),
+      manija2_cm: n("manija2_cm"),
+      ancho_manijas_cm: n("ancho_manijas_cm"),
+      dobles_cm: n("dobles_cm"),
+      caras: n("caras"),
+      tintas: n("tintas"),
+      cola_produccion: n("cola_produccion"),
+      material_code: v("material_code")
+    }
+  };
+  payload.material = v("material_code");
+
+  const payloadKey = JSON.stringify(payload);
+  if (payloadKey === lastPayloadKey) return;
+  lastPayloadKey = payloadKey;
+
+  setStatus("Calculando...");
+
+  let res;
+  try{
+    res = await fetch("/quote", {
+      method: "POST",
+      headers: {"Content-Type":"application/json"},
+      body: payloadKey
+    });
+  }catch(err){
+    setStatus("<span class='warn'>Error</span> No se pudo conectar al backend.");
+    return;
+  }
+
+  if(!res.ok){
+    const t = await res.text();
+    setStatus("<span class='warn'>Error</span> " + t);
+    return;
+  }
+
+  const data = await res.json();
+  lastQuoteData = data;
+  setStatus("<span class='ok'>OK</span> Cotización actualizada");
+
+  lastRawSVG = data.svg_preview || "";
+  renderPreviewInstant();
+
+  const tbody = null;
+  const before = data.prices_by_band_before_iva || {};
+  const withIva = data.prices_by_band_with_iva || {};
+
+  Object.keys(before).forEach(code=>{
+    const r1 = before[code];
+    const r2 = withIva[code] || {};
+    if (tbody){
+      const tr = document.createElement("tr");
+      tr.innerHTML = `
+        <td>${r1.label ?? ""}</td>
+        <td>${r1.margen_base_pct ?? ""}%</td>
+        <td>${r1.dto_L49_pct ?? ""}%</td>
+        <td>${r1.margen_real_pct ?? ""}%</td>
+        <td>${r1.precio_unitario_sin_iva ?? ""}</td>
+        <td>${r2.precio_unitario_con_iva ?? ""}</td>
+      `;
+      tbody.appendChild(tr);
+    }
+  });
+  renderDesignSummary(data);
+}
+
+function scheduleAutoQuote(){
+  if (debounceTimer) clearTimeout(debounceTimer);
+  debounceTimer = setTimeout(cotizarAuto, 250);
+}
+
+// Inputs que disparan backend (debounced)
+const backendIds = [
+  "bag_type","material_code",
+  "ancho_cm","alto_cm","fuelle_cm",
+  "manija1_cm","manija2_cm","ancho_manijas_cm",
+  "dobles_cm","caras","tintas","cola_produccion"
+];
+backendIds.forEach(id=>{
+  const el = document.getElementById(id);
+  el.addEventListener("input", scheduleAutoQuote);
+  el.addEventListener("change", scheduleAutoQuote);
+});
+
+// Preview instantáneo (sin backend): tela, caras, colores
+[
+  "color_hex","caras","logo_colors_count",
+  "logo_c1_a","logo_c1_b","logo_c2_a","logo_c2_b", "largo_arco_visual"
 ].forEach(id=>{
   const el = document.getElementById(id);
   if (!el) return;
@@ -434,5 +1374,3 @@ window.addEventListener("load", () => {
 </script>
 </body>
 </html>
-</html>
-
