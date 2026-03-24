@@ -1010,10 +1010,21 @@
   <div class="app">
     <h1>Cotizador EKOZOOM</h1>
 
-    <div class="card topForm">
+    <div class="card topForm compact-form">
+      <style>
+        .compact-form { padding: 12px 16px !important; margin-bottom: 12px !important; }
+        .compact-form h3 { margin: 0 0 10px 0 !important; font-size: 14px !important; border-bottom: none !important;}
+        .compact-row { display: flex; gap: 10px; margin-bottom: 8px; }
+        .compact-row:last-of-type { margin-bottom: 0; }
+        .compact-row > div { flex: 1; min-width: 0; }
+        .compact-form label { font-size: 11px !important; margin-bottom: 2px !important; white-space: nowrap; font-weight: 600; display: block; }
+        .compact-form input, .compact-form select { padding: 4px 6px !important; font-size: 12px !important; height: 28px !important; box-sizing: border-box; width: 100%; border: 1px solid #ccc; border-radius: 4px; text-transform: none; }
+        .compact-form select { appearance: auto; }
+        .compact-hint { font-size: 10px !important; margin-top: 2px !important; color: #666; display: block; }
+      </style>
       <h3>Datos de cotización (arriba)</h3>
 
-      <div class="row">
+      <div class="row compact-row">
         <div>
           <label>Tipo de bolsa</label>
           <select id="bag_type">
@@ -1021,15 +1032,17 @@
             <option value="PLANA_TROQUEL">Bolsa Plana Troquel</option>
           </select>
         </div>
+        <div><label>Ancho (cm)</label><input id="ancho_cm" type="number" value="35"></div>
+      </div>
 
-        <div>
-          <label>Material</label>
-          <select id="material_code">
-            <option value="CAMBREL_70">Cambrel 70gr</option>
-            <option value="CAMBREL_80">Cambrel 80gr (+$100/m²)</option>
-          </select>
-        </div>
+      <div class="row compact-row">
+        <div><label>Alto (cm)</label><input id="alto_cm" type="number" value="40"></div>
+        <div><label>Fuelle (cm)</label><input id="fuelle_cm" type="number" value="20"></div>
+        <div><label>Caras</label><input id="caras" type="number" value="1" min="0" max="2"></div>
+        <div><label>Cantidad</label><input id="cantidad" type="number" value="500" min="1"></div>
+      </div>
 
+      <div class="row compact-row">
         <div>
           <label>Color tela</label>
           <select id="color_hex">
@@ -1043,28 +1056,22 @@
             <option value="#FF7A00">Naranja</option>
             <option value="#00A7A7">Turquesa</option>
           </select>
-          <div class="inlineHint">* La tela cambia preview al instante.</div>
+          <span class="compact-hint">* Cambia al instante.</span>
         </div>
-      </div>
-
-      <div class="row">
-        <div><label>Ancho (cm)</label><input id="ancho_cm" type="number" value="35"></div>
-        <div><label>Alto (cm)</label><input id="alto_cm" type="number" value="40"></div>
-        <div><label>Fuelle (cm)</label><input id="fuelle_cm" type="number" value="20"></div>
-      </div>
-
-      <div class="row" id="row_manijas">
-        <div style="display:none;"><label>Manija 1 (cm)</label><input id="manija1_cm" type="number" value="60"></div>
-        <div style="display:none;"><label>Manija 2 (cm)</label><input id="manija2_cm" type="number" value="60"></div>
-        <div><label>Largo Manija</label><input id="largo_arco_visual" type="number" value="40" min="10" max="300"></div>
-        <div style="display:none;"><label>Ancho manijas (cm)</label><input id="ancho_manijas_cm" type="number"
-            value="5"></div>
-      </div>
-
-      <div class="row">
-        <div><label>Cantidad</label><input id="cantidad" type="number" value="500" min="1"></div>
-        <div style="display:none;"><label>Dobles (cm)</label><input id="dobles_cm" type="number" value="3"></div>
-        <div><label>Caras</label><input id="caras" type="number" value="1" min="0" max="2"></div>
+        <div id="row_manijas"><label>Largo Manija</label><input id="largo_arco_visual" type="number" value="40" min="10" max="300"></div>
+        <div>
+          <label>Material</label>
+          <select id="material_code">
+            <option value="CAMBREL_70">Cambrel 70gr</option>
+            <option value="CAMBREL_80">Cambrel 80gr (+$100/m²)</option>
+          </select>
+        </div>
+        
+        <!-- Ocultos -->
+        <div style="display:none;"><label>Manija 1</label><input id="manija1_cm" type="number" value="60"></div>
+        <div style="display:none;"><label>Manija 2</label><input id="manija2_cm" type="number" value="60"></div>
+        <div style="display:none;"><label>Ancho manijas</label><input id="ancho_manijas_cm" type="number" value="5"></div>
+        <div style="display:none;"><label>Dobles</label><input id="dobles_cm" type="number" value="3"></div>
       </div>
 
       <details class="adv">
@@ -1494,12 +1501,10 @@
         const c3 = logoColors.length > 2 ? logoColors[2] : c1;
         const c4 = logoColors.length > 3 ? logoColors[3] : c2;
 
-        const dropShadow = `<filter id="logoShdw-${tx}"><feDropShadow dx="0" dy="8" stdDeviation="6" flood-color="#000" flood-opacity="0.12"/></filter>`;
-
         // Isotipo (Hoja geometrica)
         const pieceA = `
       <path d="M ${tx} ${ty - 40} C ${tx + 35} ${ty - 40}, ${tx + 35} ${ty - 5}, ${tx} ${ty - 5} C ${tx - 35} ${ty - 5}, ${tx - 35} ${ty - 40}, ${tx} ${ty - 40} Z" 
-            fill="${c1}" filter="url(#logoShdw-${tx})"/>
+            fill="${c1}"/>
     `;
         // Detalle Isotipo (Lenteja central)
         const pieceB = `
@@ -1516,13 +1521,13 @@
 
         logoSVG = `
       <g transform="scale(1.5)" transform-origin="${tx} ${ty}">
-        <defs>${dropShadow}</defs>${pieceA}${pieceB}${pieceC}${pieceD}
+        ${pieceA}${pieceB}${pieceC}${pieceD}
       </g>
     `;
       }
 
-      // Handle (Manija vs Troquel)
-      let manijaSVG = "";
+            let manijaSVG = "";
+      let handleStitchesSVG = "";
       let maskSVG = "";
       let peakY = 0;
       if (isTroquel) {
@@ -1530,7 +1535,7 @@
         const holeW = 7.5 * cmToSvg;
         const holeH = 2.4 * cmToSvg;
         const holeX = (w - holeW) / 2;
-        const holeY = h * 0.08;
+        const holeY = 1.7 * cmToSvg;
         maskSVG = `
       <mask id="bagMask-${tx}">
         <rect x="0" y="0" width="${w}" height="${h}" rx="6" fill="white" />
@@ -1558,12 +1563,81 @@
       <path d="M ${archX} ${yAnchor} C ${archX} ${yAnchor - archH}, ${archX + archW} ${yAnchor - archH}, ${archX + archW} ${yAnchor}" fill="none" stroke="${fabricHex}" stroke-width="${strokeWidthSVG}" stroke-linecap="round" />
       <path d="M ${archX} ${yAnchor} C ${archX} ${yAnchor - archH}, ${archX + archW} ${yAnchor - archH}, ${archX + archW} ${yAnchor}" fill="none" stroke="${strokeColor}" stroke-width="${strokeWidthSVG + 3}" stroke-linecap="round" stroke-dasharray="0" opacity="0.3" style="mix-blend-mode: multiply;" />
       <path d="M ${archX} ${yAnchor} C ${archX} ${yAnchor - archH}, ${archX + archW} ${yAnchor - archH}, ${archX + archW} ${yAnchor}" fill="none" stroke="${fabricHex}" stroke-width="${strokeWidthSVG}" stroke-linecap="round" />
+      <!-- Textura Cambrel para la Manija -->
+      <path d="M ${archX} ${yAnchor} C ${archX} ${yAnchor - archH}, ${archX + archW} ${yAnchor - archH}, ${archX + archW} ${yAnchor}" fill="none" stroke="url(#cambrelNoise-${Math.round(tx)})" stroke-width="${strokeWidthSVG}" stroke-linecap="round" style="mix-blend-mode: multiply;" />
     `;
+    
+        const stitchW = 2.2 * cmToSvg;
+        const stitchH = 2.2 * cmToSvg;
+        const scX = stitchW / 71.93;
+        const scY = stitchH / 76.03;
+        const leftX = archX - stitchW / 2;
+        const rightX = archX + archW - stitchW / 2;
+        // Centrado entre las costuras superiores (1.5 + 4.5)/2 = 3.0 cm del borde
+        const stitchY = (3.0 * cmToSvg) - (stitchH / 2);
+
+        handleStitchesSVG = `
+          <g transform="translate(${leftX}, ${stitchY}) scale(${scX}, ${scY})" fill="${shadowColor}" stroke="${shadowColor}" stroke-width="0.6" stroke-linejoin="round" opacity="0.6">
+            <rect x="40.92" y="6.83" width="2.83" height="8.5"/>
+            <rect x="58.64" y="20.97" width="2.83" height="8.5" transform="translate(85.27 -34.84) rotate(90)"/>
+            <rect x="59.67" y="7.54" width="2.27" height="7.09" transform="translate(25.65 -39.75) rotate(45)"/>
+            <rect x="50.67" y="16.54" width="2.27" height="7.09" transform="translate(29.38 -30.75) rotate(45)"/>
+            <rect x="41.67" y="25.54" width="2.27" height="7.09" transform="translate(33.1 -21.75) rotate(45)"/>
+            <rect x="58.64" y="33.76" width="2.83" height="8.5" transform="translate(98.07 -22.04) rotate(90)"/>
+            <rect x="58.64" y="27.36" width="2.83" height="8.5" transform="translate(91.67 -28.44) rotate(90)"/>
+            <rect x="28.17" y="6.83" width="2.83" height="8.5" transform="translate(59.17 22.17) rotate(180)"/>
+            <rect x="10.45" y="20.97" width="2.83" height="8.5" transform="translate(37.09 13.35) rotate(90)"/>
+            <rect x="9.99" y="7.54" width="2.27" height="7.09" transform="translate(26.83 11.06) rotate(135)"/>
+            <rect x="18.99" y="16.54" width="2.27" height="7.09" transform="translate(48.56 20.06) rotate(135)"/>
+            <rect x="27.99" y="25.54" width="2.27" height="7.09" transform="translate(70.27 29.06) rotate(135)"/>
+            <rect x="10.45" y="33.76" width="2.83" height="8.5" transform="translate(49.88 26.15) rotate(90)"/>
+            <rect x="10.45" y="27.36" width="2.83" height="8.5" transform="translate(43.49 19.75) rotate(90)"/>
+            <rect x="40.92" y="60.69" width="2.83" height="8.5"/>
+            <rect x="58.64" y="46.56" width="2.83" height="8.5" transform="translate(9.24 110.87) rotate(-90)"/>
+            <rect x="59.67" y="61.4" width="2.27" height="7.09" transform="translate(-28.11 62.02) rotate(-45)"/>
+            <rect x="50.67" y="52.4" width="2.27" height="7.09" transform="translate(-24.39 53.02) rotate(-45)"/>
+            <rect x="41.67" y="43.41" width="2.27" height="7.09" transform="translate(-20.66 44.02) rotate(-45)"/>
+            <rect x="58.64" y="40.16" width="2.83" height="8.5" transform="translate(15.64 104.47) rotate(-90)"/>
+            <rect x="28.17" y="60.69" width="2.83" height="8.5" transform="translate(59.17 129.89) rotate(180)"/>
+            <rect x="10.45" y="46.56" width="2.83" height="8.5" transform="translate(-38.95 62.68) rotate(-90)"/>
+            <rect x="9.99" y="61.4" width="2.27" height="7.09" transform="translate(-26.93 118.73) rotate(-135)"/>
+            <rect x="18.99" y="52.4" width="2.27" height="7.09" transform="translate(-5.2 109.73) rotate(-135)"/>
+            <rect x="27.99" y="43.41" width="2.27" height="7.09" transform="translate(16.51 100.74) rotate(-135)"/>
+            <rect x="10.45" y="40.16" width="2.83" height="8.5" transform="translate(-32.55 56.28) rotate(-90)"/>
+          </g>
+          <g transform="translate(${rightX}, ${stitchY}) scale(${scX}, ${scY})" fill="${shadowColor}" stroke="${shadowColor}" stroke-width="0.6" stroke-linejoin="round" opacity="0.6">
+            <rect x="40.92" y="6.83" width="2.83" height="8.5"/>
+            <rect x="58.64" y="20.97" width="2.83" height="8.5" transform="translate(85.27 -34.84) rotate(90)"/>
+            <rect x="59.67" y="7.54" width="2.27" height="7.09" transform="translate(25.65 -39.75) rotate(45)"/>
+            <rect x="50.67" y="16.54" width="2.27" height="7.09" transform="translate(29.38 -30.75) rotate(45)"/>
+            <rect x="41.67" y="25.54" width="2.27" height="7.09" transform="translate(33.1 -21.75) rotate(45)"/>
+            <rect x="58.64" y="33.76" width="2.83" height="8.5" transform="translate(98.07 -22.04) rotate(90)"/>
+            <rect x="58.64" y="27.36" width="2.83" height="8.5" transform="translate(91.67 -28.44) rotate(90)"/>
+            <rect x="28.17" y="6.83" width="2.83" height="8.5" transform="translate(59.17 22.17) rotate(180)"/>
+            <rect x="10.45" y="20.97" width="2.83" height="8.5" transform="translate(37.09 13.35) rotate(90)"/>
+            <rect x="9.99" y="7.54" width="2.27" height="7.09" transform="translate(26.83 11.06) rotate(135)"/>
+            <rect x="18.99" y="16.54" width="2.27" height="7.09" transform="translate(48.56 20.06) rotate(135)"/>
+            <rect x="27.99" y="25.54" width="2.27" height="7.09" transform="translate(70.27 29.06) rotate(135)"/>
+            <rect x="10.45" y="33.76" width="2.83" height="8.5" transform="translate(49.88 26.15) rotate(90)"/>
+            <rect x="10.45" y="27.36" width="2.83" height="8.5" transform="translate(43.49 19.75) rotate(90)"/>
+            <rect x="40.92" y="60.69" width="2.83" height="8.5"/>
+            <rect x="58.64" y="46.56" width="2.83" height="8.5" transform="translate(9.24 110.87) rotate(-90)"/>
+            <rect x="59.67" y="61.4" width="2.27" height="7.09" transform="translate(-28.11 62.02) rotate(-45)"/>
+            <rect x="50.67" y="52.4" width="2.27" height="7.09" transform="translate(-24.39 53.02) rotate(-45)"/>
+            <rect x="41.67" y="43.41" width="2.27" height="7.09" transform="translate(-20.66 44.02) rotate(-45)"/>
+            <rect x="58.64" y="40.16" width="2.83" height="8.5" transform="translate(15.64 104.47) rotate(-90)"/>
+            <rect x="28.17" y="60.69" width="2.83" height="8.5" transform="translate(59.17 129.89) rotate(180)"/>
+            <rect x="10.45" y="46.56" width="2.83" height="8.5" transform="translate(-38.95 62.68) rotate(-90)"/>
+            <rect x="9.99" y="61.4" width="2.27" height="7.09" transform="translate(-26.93 118.73) rotate(-135)"/>
+            <rect x="18.99" y="52.4" width="2.27" height="7.09" transform="translate(-5.2 109.73) rotate(-135)"/>
+            <rect x="27.99" y="43.41" width="2.27" height="7.09" transform="translate(16.51 100.74) rotate(-135)"/>
+          </g>
+        `;
         maskSVG = `
       <mask id="bagMask-${tx}">
         <rect x="0" y="0" width="${w}" height="${h}" rx="6" fill="white" />
       </mask>
-    `
+    `;
       }
 
       // Modern Flat Bag Design - Responsive ViewBox
@@ -1573,31 +1647,37 @@
       // Alto del viewbox es el fondo de la bolsa (h + pad) menos el inicio (vbY)
       const vbH = h + 40 - vbY;
 
-      // Realistic Cambrel Texture Pattern (micro-dots)
+      // Pure SVG Geometric Cambrel Texture (Semillitas / Honeycomb)
       const texturePattern = `
-        <pattern id="cambrelPattern" x="0" y="0" width="8" height="8" patternUnits="userSpaceOnUse">
-          <circle cx="2" cy="2" r="0.8" fill="${fabricHex}" fill-opacity="0.3" />
-          <circle cx="6" cy="6" r="0.8" fill="${fabricHex}" fill-opacity="0.3" />
+        <pattern id="cambrelNoise-${Math.round(tx)}" width="2.2" height="2" patternUnits="userSpaceOnUse">
+          <ellipse cx="0.55" cy="0.5" rx="0.25" ry="0.2" fill="rgba(0,0,0,0.15)" />
+          <ellipse cx="1.65" cy="1.5" rx="0.25" ry="0.2" fill="rgba(0,0,0,0.15)" />
         </pattern>
-        <filter id="fabricTexture">
-          <feTurbulence type="fractalNoise" baseFrequency="0.8" numOctaves="3" result="noise" />
-          <feDiffuseLighting in="noise" lighting-color="white" surfaceScale="1" result="diffuse">
-            <feDistantLight azimuth="45" elevation="60" />
-          </feDiffuseLighting>
-          <feComposite operator="in" in="diffuse" in2="SourceGraphic" result="texture" />
-          <feBlend in="texture" in2="SourceGraphic" mode="multiply" opacity="0.4" />
-        </filter>
       `;
 
-      // Termosellado (puntos en bordes)
-      const sealStyle = `stroke="${shadowColor}" stroke-width="3" stroke-dasharray="0.5, 4" stroke-linecap="round"`;
+      // Termosellado (puntos en bordes) usando proporciones en CM para realismo
+      const topSealStyle = `stroke="${shadowColor}" stroke-width="3" stroke-dasharray="1, 2" stroke-linecap="butt"`;
+      const sideSealStyle = `stroke="${shadowColor}" stroke-width="1" stroke-dasharray="4, 1.5" stroke-linecap="butt"`;
+      
+      const _cmToSvg = w / (Number(anchoCm) || 30);
+      const top1 = 1.5 * _cmToSvg;
+      const top2 = top1 + (3 * _cmToSvg);
+
       const sealedEdges = `
-        <!-- Left Sealing -->
-        <line x1="4" y1="4" x2="4" y2="${h - 4}" ${sealStyle} opacity="0.6" />
-        <!-- Right Sealing -->
-        <line x1="${w - 4}" y1="4" x2="${w - 4}" y2="${h - 4}" ${sealStyle} opacity="0.6" />
-        <!-- Bottom Sealing -->
-        <line x1="4" y1="${h - 4}" x2="${w - 4}" y2="${h - 4}" ${sealStyle} opacity="0.6" />
+        <g mask="url(#bagMask-${tx})">
+          <!-- Left Sealing (Doble línea alinea horizontalmente con stroke-dashoffset) -->
+          <line x1="2.5" y1="0" x2="2.5" y2="${h}" ${sideSealStyle} opacity="0.6" />
+          <line x1="4.5" y1="0" x2="4.5" y2="${h}" ${sideSealStyle} stroke-dashoffset="-2.75" opacity="0.6" />
+          
+          <!-- Right Sealing (Doble línea alinea horizontalmente con stroke-dashoffset) -->
+          <line x1="${w - 2.5}" y1="0" x2="${w - 2.5}" y2="${h}" ${sideSealStyle} opacity="0.6" />
+          <line x1="${w - 4.5}" y1="0" x2="${w - 4.5}" y2="${h}" ${sideSealStyle} stroke-dashoffset="-2.75" opacity="0.6" />
+          
+          <!-- Top Sealing 1 -->
+          <line x1="0" y1="${top1}" x2="${w}" y2="${top1}" ${topSealStyle} opacity="0.6" />
+          <!-- Top Sealing 2 -->
+          <line x1="0" y1="${top2}" x2="${w}" y2="${top2}" ${topSealStyle} opacity="0.6" />
+        </g>
       `;
 
       // Soft reflection/creases to make it look premium
@@ -1621,9 +1701,11 @@
       ${!isTroquel ? manijaSVG : ''}
       <!-- Main Fabric with texture -->
       <rect x="0" y="0" width="${w}" height="${h}" rx="6" fill="url(#bagGrad-${tx})" mask="url(#bagMask-${tx})" stroke="${strokeColor}" stroke-width="1" />
-      <rect x="0" y="0" width="${w}" height="${h}" rx="6" fill="url(#cambrelPattern)" mask="url(#bagMask-${tx})" style="mix-blend-mode: overlay; opacity: 0.5;" />
+      <!-- Geometric Seeds Overlay (Pores) -->
+      <rect x="0" y="0" width="${w}" height="${h}" rx="6" fill="url(#cambrelNoise-${Math.round(tx)})" mask="url(#bagMask-${tx})" style="mix-blend-mode: multiply;" />
       
       ${sealedEdges}
+      ${handleStitchesSVG}
       ${creases}
       <!-- Printed Logo Effect -->
       <g style="opacity: 0.9; filter: contrast(1.05) brightness(1.05);">
@@ -1742,7 +1824,7 @@
 
       // Bloque 1: Títulos (Jerarquía Invertida)
       document.getElementById("flyerTitle").textContent = bagTypeLabel;
-      document.getElementById("flyerSubtitle").textContent = `Termosellada • ${alto}cm Alto x ${ancho}cm Ancho`;
+      document.getElementById("flyerSubtitle").textContent = `Termosellada • ${ancho}cm Ancho x ${alto}cm Alto`;
       document.getElementById("flyerBadge").textContent = `✔ ${legend}`;
 
       // Bloque 3: Beneficio condicional (Diseño incluido)
@@ -1752,7 +1834,7 @@
       }
 
       // Pedido (derecha)
-      const flyerMainTitle = `BOLSA CAMBREL ${ancho} x ${alto} cm`;
+      const flyerMainTitle = bagTypeLabel;
       const orderTitle = document.querySelector(".orderTitle");
       if (orderTitle) orderTitle.textContent = flyerMainTitle;
       document.getElementById("orderLegend").textContent = legend;
@@ -1799,7 +1881,8 @@
     async function cotizarAuto() {
       const bagType = v("bag_type");
       syncFuelleField();
-      document.getElementById("row_manijas").style.display = (bagType === "PLANA_TROQUEL") ? "none" : "flex";
+      const rm = document.getElementById("row_manijas");
+      if (rm) rm.style.display = (bagType === "PLANA_TROQUEL") ? "none" : "block";
 
       const ancho = n("ancho_cm");
       const alto = n("alto_cm");
