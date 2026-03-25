@@ -9,7 +9,7 @@ class FixedCosts:
     maquila_bolsas: float = 25
     luz: float = 50
     agua: float = 5
-    arriendo: float = 100
+    arriendo: float = 75.0
 
     @property
     def total(self) -> float:
@@ -42,7 +42,7 @@ def default_config() -> GlobalConfig:
         "maquila_bolsas": 25.0,
         "luz": 50.0,
         "agua": 5.0,
-        "arriendo": 100.0
+        "arriendo": 75.0
     }
 
     if os.path.exists(ref_file):

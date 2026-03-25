@@ -88,8 +88,6 @@ class PlanaManijaCalculator(BagCalculator):
         costs_by_band = {}
         for b in config.bands:
             rentabilidad = float(b.margen_base_pct)
-            if config.cola_produccion_global < 50000:
-                rentabilidad -= 3.0
                 
             denom = 1.0 - (rentabilidad / 100.0)
             if denom <= 0: denom = 0.01

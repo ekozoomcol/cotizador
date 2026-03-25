@@ -1744,12 +1744,27 @@
     `;
       }
 
-            let manijaSVG = "";
+      // Medidas base para proporción y ViewBox (Compartidas para mantener el ZOOM idéntico)
+      const cmToSvg = w / (Number(anchoCm) || 30);
+      const gruesoCm = 2.5;
+      const separacionInternaCm = 8;
+      const archW = (separacionInternaCm + gruesoCm) * cmToSvg;
+      const archX = (w - archW) / 2;
+
+      const visualH = (Number(archVisualCm) / 2) * cmToSvg;
+      const archH = visualH * 1.33;
+      const strokeWidthSVG = gruesoCm * cmToSvg;
+      const yAnchor = 25;
+
+      // peakY define el "techo" del dibujo para el ViewBox. 
+      // Lo calculamos siempre (aunque sea Troquel) para que el ZOOM sea el mismo.
+      const peakY = yAnchor - visualH;
+
+      let manijaSVG = "";
       let handleStitchesSVG = "";
       let maskSVG = "";
-      let peakY = 0;
+      
       if (isTroquel) {
-        const cmToSvg = w / (Number(anchoCm) || 30);
         const holeW = 7.5 * cmToSvg;
         const holeH = 2.4 * cmToSvg;
         const holeX = (w - holeW) / 2;
@@ -1761,22 +1776,8 @@
       </mask>
     `;
         manijaSVG = `<rect x="${holeX}" y="${holeY}" width="${holeW}" height="${holeH}" rx="${holeH / 2}" fill="none" stroke="${strokeColor}" stroke-width="1.5" />`;
-        peakY = 0;
       } else {
         // Manija calculada por proporciones exactas en cm
-        const cmToSvg = w / (Number(anchoCm) || 30);
-        const gruesoCm = 2.5;
-        const separacionInternaCm = 8;
-        const archW = (separacionInternaCm + gruesoCm) * cmToSvg;
-        const archX = (w - archW) / 2;
-
-        const visualH = (Number(archVisualCm) / 2) * cmToSvg;
-        const archH = visualH * 1.33;
-        const strokeWidthSVG = gruesoCm * cmToSvg;
-        const yAnchor = 25;
-
-        peakY = yAnchor - visualH;
-
         manijaSVG = `
       <path d="M ${archX} ${yAnchor} C ${archX} ${yAnchor - archH}, ${archX + archW} ${yAnchor - archH}, ${archX + archW} ${yAnchor}" fill="none" stroke="${fabricHex}" stroke-width="${strokeWidthSVG}" stroke-linecap="round" />
       <path d="M ${archX} ${yAnchor} C ${archX} ${yAnchor - archH}, ${archX + archW} ${yAnchor - archH}, ${archX + archW} ${yAnchor}" fill="none" stroke="${strokeColor}" stroke-width="${strokeWidthSVG + 3}" stroke-linecap="round" stroke-dasharray="0" opacity="0.3" style="mix-blend-mode: multiply;" />
@@ -1860,7 +1861,7 @@
 
       // Modern Flat Bag Design - Responsive ViewBox
       const vbX = -30;
-      const vbY = isTroquel ? -20 : (peakY - 20);
+      const vbY = peakY - 20; // Siempre relativo al peakY (techo máximo del dibujo)
       const vbW = w + 60;
       // Alto del viewbox es el fondo de la bolsa (h + pad) menos el inicio (vbY)
       const vbH = h + 40 - vbY;

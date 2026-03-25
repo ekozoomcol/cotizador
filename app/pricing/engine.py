@@ -1,3 +1,4 @@
+import math
 from app.bags.registry import get_bag
 from app.config import default_config
 from app.models import QuoteInputs
@@ -45,6 +46,15 @@ def quote(bag_type: str, material_code: str, inputs: dict):
             cost_row = costs_by_band.get(band.code, {})
             unit_before = float(cost_row.get("precio_final", 0))
             rentabilidad = float(cost_row.get("rentabilidad_pct", 30))
+            
+            # Ajuste global por cola de producción (centralizado)
+            if cfg.cola_produccion_global < 50000:
+                rentabilidad -= 3.0
+                # Recalculamos el precio con la nueva rentabilidad ajustada
+                c36 = float(cost_row.get("total_costos", 0))
+                denom = 1.0 - (rentabilidad / 100.0)
+                if denom <= 0: denom = 0.01
+                unit_before = math.ceil(c36 / denom / float(band.redondeo)) * band.redondeo
             
             unit_with_iva = round(unit_before * 1.19)
 
