@@ -17,16 +17,19 @@ class QuoteInputs(BaseModel):
 
     dobles_cm: float = Field(0, ge=0, le=500)
 
-    caras: int = Field(0, ge=0, le=2)
-    tintas: int = Field(0, ge=0, le=10) # Para compatibilidad, seguirá representyando la cantidad de colores (max)
-    tintas_c1: int = Field(0, ge=0, le=10)
+    caras: int = Field(0, ge=0, le=2) # Impresión Cara 1 (Frente)
+    tintas_c1: int = Field(1, ge=0, le=10)
+    dtf_c1_active: bool = Field(False)
+    dtf_c1_w: float = Field(15.0, ge=0)
+    dtf_c1_h: float = Field(15.0, ge=0)
+
+    # Impresión Cara 2 (Trasera)
     tintas_c2: int = Field(0, ge=0, le=10)
+    dtf_c2_active: bool = Field(False)
+    dtf_c2_w: float = Field(15.0, ge=0)
+    dtf_c2_h: float = Field(15.0, ge=0)
+
     cola_produccion: float = Field(999999, ge=0)
-
-    print_type: str = Field("SERIGRAFIA", max_length=20) # SERIGRAFIA o DTF
-    dtf_ancho_cm: float = Field(10, ge=0)
-    dtf_alto_cm: float = Field(10, ge=0)
-
     material_code: str = Field("CAMBREL_70", max_length=100)
 
     # Parámetros opcionales para afinar “espejo” sin tocar código:

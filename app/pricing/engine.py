@@ -28,29 +28,26 @@ def quote(bag_type: str, material_code: str, inputs: dict):
 
         quote_inputs = QuoteInputs(**normalized_inputs)
         
-        # Calcular total de pasadas (Serigrafía)
-        total_pasadas = 0
-        costo_dtf_unitario = 0.0
-        
-        if quote_inputs.print_type == "DTF":
-            # Lógica DTF: 5800 cm2 por metro ($22.500) + $400 operario
-            w_eff = quote_inputs.dtf_ancho_cm + 3.0
-            h_eff = quote_inputs.dtf_alto_cm + 3.0
+        # --- LÓGICA DE IMPRESIÓN HÍBRIDA (Serigrafía + DTF) ---
+        def calc_dtf_unit(w, h):
+            w_eff, h_eff = w + 3.0, h + 3.0
             area_eff = w_eff * h_eff
-            if area_eff > 0:
-                logos_por_metro = math.floor(5800.0 / area_eff)
-                if logos_por_metro < 1: logos_por_metro = 1
-                costo_sticker = 22500.0 / logos_por_metro
-                costo_dtf_unitario = costo_sticker + 400.0
-            total_pasadas = 0 # No hay pasadas en DTF
-        else:
-            # Lógica Serigrafía existente
-            if quote_inputs.caras == 0:
-                total_pasadas = 0
-            elif quote_inputs.caras == 1:
-                total_pasadas = quote_inputs.tintas_c1
-            else:
-                total_pasadas = quote_inputs.tintas_c1 + quote_inputs.tintas_c2
+            if area_eff <= 0: return 0.0
+            logos_por_metro = math.floor(5800.0 / area_eff)
+            if logos_por_metro < 1: logos_por_metro = 1
+            return (22500.0 / logos_por_metro) + 400.0
+
+        num_caras = quote_inputs.caras
+        
+        # 1. Calcular Pasadas de Serigrafía
+        total_pasadas = 0
+        if num_caras >= 1: total_pasadas += quote_inputs.tintas_c1
+        if num_caras >= 2: total_pasadas += quote_inputs.tintas_c2
+
+        # 2. Calcular Costo DTF (Independiente por cara)
+        costo_dtf_c1 = calc_dtf_unit(quote_inputs.dtf_c1_w, quote_inputs.dtf_c1_h) if (num_caras >= 1 and quote_inputs.dtf_c1_active) else 0.0
+        costo_dtf_c2 = calc_dtf_unit(quote_inputs.dtf_c2_w, quote_inputs.dtf_c2_h) if (num_caras >= 2 and quote_inputs.dtf_c2_active) else 0.0
+        costo_dtf_total = costo_dtf_c1 + costo_dtf_c2
 
         raw = bag.compute(quote_inputs, config=cfg, material=material)
 
@@ -65,9 +62,7 @@ def quote(bag_type: str, material_code: str, inputs: dict):
         dto_l49 = float(discounts.dto_final_L49(E5, F5, P2))
         breakdown["L49_dto_final_pct"] = dto_l49
         breakdown["total_pasadas"] = total_pasadas
-        breakdown["print_type"] = quote_inputs.print_type
-        if quote_inputs.print_type == "DTF":
-            breakdown["costo_dtf_por_cara"] = costo_dtf_unitario
+        breakdown["costo_dtf_total"] = costo_dtf_total
 
         prices_before = {}
         prices_with_iva = {}
@@ -76,26 +71,20 @@ def quote(bag_type: str, material_code: str, inputs: dict):
             unit_before = float(cost_row.get("precio_final", 0))
             rentabilidad = float(cost_row.get("rentabilidad_pct", 30))
             
-            # Ajuste global por cola de producción (centralizado)
+            # Ajuste global por cola de producción
             if cfg.cola_produccion_global < 50000:
                 rentabilidad -= 3.0
-                # Recalculamos el precio con la nueva rentabilidad ajustada
                 c36 = float(cost_row.get("total_costos", 0))
                 denom = 1.0 - (rentabilidad / 100.0)
                 if denom <= 0: denom = 0.01
                 unit_before = math.ceil(c36 / denom / float(band.redondeo)) * band.redondeo
             
-            # Adición de Impresión (Serigrafía o DTF)
-            if quote_inputs.print_type == "DTF":
-                impresion_total = costo_dtf_unitario * quote_inputs.caras
-                precio_pasada = 0
-                costo_serigrafia_total = 0
-            else:
-                precio_pasada = cfg.serigrafia_precios.get(band.code, 0)
-                costo_serigrafia_total = total_pasadas * precio_pasada
-                impresion_total = costo_serigrafia_total
+            # Suma de Impresiones (Pueden coexistir)
+            precio_pasada = cfg.serigrafia_precios.get(band.code, 0)
+            costo_serigrafia_banda = total_pasadas * precio_pasada
             
-            unit_before += impresion_total
+            # El precio final de la bolsa incluye ambos costos
+            unit_before += (costo_serigrafia_banda + costo_dtf_total)
 
             unit_with_iva = round(unit_before * 1.19)
 
@@ -105,9 +94,9 @@ def quote(bag_type: str, material_code: str, inputs: dict):
                 "dto_L49_pct": dto_l49,
                 "margen_real_pct": rentabilidad,
                 "precio_unitario_sin_iva": int(round(unit_before)),
-                "costo_serigrafia": int(costo_serigrafia_total),
+                "costo_serigrafia": int(costo_serigrafia_banda),
                 "precio_pasada": int(precio_pasada),
-                "costo_dtf": int(impresion_total) if quote_inputs.print_type == "DTF" else 0,
+                "costo_dtf": int(costo_dtf_total),
                 "is_public": band.is_public
             }
             prices_with_iva[band.code] = {

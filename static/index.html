@@ -1225,63 +1225,80 @@
 
       <details class="adv">
         <summary>Opciones avanzadas (logo y producción)</summary>
-        <div class="subTitle">Configuración de Impresión</div>
+        <div class="subTitle">Personalización por Cara</div>
         
-        <div class="row" style="margin-bottom: 20px;">
-          <div>
-            <label>Técnica de Impresión</label>
-            <div id="print_type_chips" class="chips-group" style="margin-top: 5px;">
-              <button type="button" class="btn-chip active" data-val="SERIGRAFIA">Serigrafía (Tintas)</button>
-              <button type="button" class="btn-chip" data-val="DTF">DTF (Full Color)</button>
+        <!-- CARA 1 (FRENTE) -->
+        <div id="side_1_controls" style="background: rgba(248,250,252,0.8); padding: 12px; border-radius: 12px; border: 1px solid #e2e8f0; margin-bottom: 12px;">
+          <div style="font-weight: 800; font-size: 13px; color: #475569; margin-bottom: 10px; text-transform: uppercase; letter-spacing: 0.5px;">Cara Frente</div>
+          <div class="row" style="gap: 15px;">
+            <div style="flex: 1;">
+              <label>Serigrafía (Tintas)</label>
+              <select id="tintas_c1">
+                <option value="0">0 (Sin serigrafía)</option>
+                <option value="1" selected>1 color</option>
+                <option value="2">2 colores</option>
+                <option value="3">3 colores</option>
+                <option value="4">4 colores</option>
+              </select>
             </div>
-            <input type="hidden" id="print_type" value="SERIGRAFIA">
+            <div style="flex: 1; display: flex; flex-direction: column; justify-content: flex-end;">
+              <label style="display: flex; align-items: center; gap: 8px; cursor: pointer; margin-bottom: 8px;">
+                <input type="checkbox" id="dtf_c1_active" style="width: 18px; height: 18px;">
+                <b>Activar DTF (Full Color)</b>
+              </label>
+            </div>
+          </div>
+          
+          <div id="dtf_c1_dims" style="display:none; margin-top: 10px; padding-top: 10px; border-top: 1px dashed #cbd5e1;">
+            <div class="row" style="gap: 10px;">
+              <div><label>Ancho (cm)</label><input id="dtf_c1_w" type="number" value="15" min="1"></div>
+              <div><label>Alto (cm)</label><input id="dtf_c1_h" type="number" value="15" min="1"></div>
+            </div>
+          </div>
+
+          <div id="colors_c1" style="display:flex; gap: 8px; margin-top: 10px; flex-wrap: wrap;">
+            <div id="wrap_c1_1"><label>C1</label><input type="color" id="logo_c1_1" value="#FFFFFF"></div>
+            <div id="wrap_c1_2"><label>C2</label><input type="color" id="logo_c1_2" value="#000000"></div>
+            <div id="wrap_c1_3"><label>C3</label><input type="color" id="logo_c1_3" value="#FFFFFF"></div>
+            <div id="wrap_c1_4"><label>C4</label><input type="color" id="logo_c1_4" value="#FF7A00"></div>
           </div>
         </div>
 
-        <div id="dtf_settings" style="display:none; background: #f1f5f9; padding: 12px; border-radius: 8px; margin-bottom: 20px; border: 1px solid #cbd5e1;">
-          <div class="subTitle" style="margin-top:0; font-size: 13px;">Dimensiones del Logo DTF</div>
-          <div class="row">
-            <div><label>Ancho Logo (cm)</label><input id="dtf_ancho_cm" type="number" value="15" min="1" max="100"></div>
-            <div><label>Alto Logo (cm)</label><input id="dtf_alto_cm" type="number" value="15" min="1" max="100"></div>
+        <!-- CARA 2 (TRASERA) -->
+        <div id="side_2_controls" style="background: rgba(248,250,252,0.8); padding: 12px; border-radius: 12px; border: 1px solid #e2e8f0; margin-bottom: 12px;">
+          <div style="font-weight: 800; font-size: 13px; color: #475569; margin-bottom: 10px; text-transform: uppercase; letter-spacing: 0.5px;">Cara Trasera</div>
+          <div class="row" style="gap: 15px;">
+            <div style="flex: 1;">
+              <label>Serigrafía (Tintas)</label>
+              <select id="tintas_c2">
+                <option value="0">0 (Sin serigrafía)</option>
+                <option value="1">1 color</option>
+                <option value="2">2 colores</option>
+                <option value="3">3 colores</option>
+                <option value="4">4 colores</option>
+              </select>
+            </div>
+            <div style="flex: 1; display: flex; flex-direction: column; justify-content: flex-end;">
+              <label style="display: flex; align-items: center; gap: 8px; cursor: pointer; margin-bottom: 8px;">
+                <input type="checkbox" id="dtf_c2_active" style="width: 18px; height: 18px;">
+                <b>Activar DTF (Full Color)</b>
+              </label>
+            </div>
           </div>
-          <small style="color: #64748b; font-size: 11px; margin-top: 5px; display: block;">* El costo se calcula por cm² en base a un metro de 58x100cm.</small>
-        </div>
-
-        <div id="serigrafia_settings">
-          <div class="subTitle" style="font-size: 13px;">Logo por cara (Hasta 4 colores)</div>
-
-        <div class="row" id="row_tintas_c1">
-          <div>
-            <label>Tintas Cara Frente</label>
-            <select id="tintas_c1">
-              <option value="0">0 (Lisa)</option>
-              <option value="1" selected>1 color</option>
-              <option value="2">2 colores</option>
-              <option value="3">3 colores</option>
-              <option value="4">4 colores</option>
-            </select>
+          
+          <div id="dtf_c2_dims" style="display:none; margin-top: 10px; padding-top: 10px; border-top: 1px dashed #cbd5e1;">
+            <div class="row" style="gap: 10px;">
+              <div><label>Ancho (cm)</label><input id="dtf_c2_w" type="number" value="15" min="1"></div>
+              <div><label>Alto (cm)</label><input id="dtf_c2_h" type="number" value="15" min="1"></div>
+            </div>
           </div>
-          <div id="wrap_c1_1"><label>C1</label><input type="color" id="logo_c1_1" value="#FFFFFF"></div>
-          <div id="wrap_c1_2"><label>C2</label><input type="color" id="logo_c1_2" value="#000000"></div>
-          <div id="wrap_c1_3"><label>C3</label><input type="color" id="logo_c1_3" value="#FFFFFF"></div>
-          <div id="wrap_c1_4"><label>C4</label><input type="color" id="logo_c1_4" value="#FF7A00"></div>
-        </div>
 
-        <div class="row" id="row_tintas_c2">
-          <div>
-            <label>Tintas Cara Trasera</label>
-            <select id="tintas_c2">
-              <option value="0">0 (Lisa)</option>
-              <option value="1">1 color</option>
-              <option value="2">2 colores</option>
-              <option value="3">3 colores</option>
-              <option value="4">4 colores</option>
-            </select>
+          <div id="colors_c2" style="display:flex; gap: 8px; margin-top: 10px; flex-wrap: wrap;">
+            <div id="wrap_c2_1"><label>C1</label><input type="color" id="logo_c2_1" value="#FFD700"></div>
+            <div id="wrap_c2_2"><label>C2</label><input type="color" id="logo_c2_2" value="#000000"></div>
+            <div id="wrap_c2_3"><label>C3</label><input type="color" id="logo_c2_3" value="#FFFFFF"></div>
+            <div id="wrap_c2_4"><label>C4</label><input type="color" id="logo_c2_4" value="#FF7A00"></div>
           </div>
-          <div id="wrap_c2_1"><label>C1</label><input type="color" id="logo_c2_1" value="#FFD700"></div>
-          <div id="wrap_c2_2"><label>C2</label><input type="color" id="logo_c2_2" value="#000000"></div>
-          <div id="wrap_c2_3"><label>C3</label><input type="color" id="logo_c2_3" value="#FFFFFF"></div>
-          <div id="wrap_c2_4"><label>C4</label><input type="color" id="logo_c2_4" value="#FF7A00"></div>
         </div>
       </div><!-- end serigrafia_settings -->
 
@@ -1543,24 +1560,40 @@
 
     /** Mostrar/ocultar selectores según Caras y #colores */
     function syncLogoControlsUI() {
-      const caras = Math.max(0, Math.min(2, n("caras")));
-      const t1 = n("tintas_c1") || 0;
-      const t2 = n("tintas_c2") || 0;
+      const numCaras = n("caras");
+      
+      const s1 = document.getElementById("side_1_controls");
+      if (s1) s1.style.display = (numCaras >= 1) ? "block" : "none";
+      
+      if (numCaras >= 1) {
+        const t1 = n("tintas_c1") || 0;
+        const d1 = document.getElementById("dtf_c1_active")?.checked;
+        const c1 = document.getElementById("colors_c1");
+        const m1 = document.getElementById("dtf_c1_dims");
+        if (c1) c1.style.display = (t1 > 0) ? "flex" : "none";
+        if (m1) m1.style.setProperty("display", d1 ? "block" : "none", "important");
+        
+        for (let i = 1; i <= 4; i++) {
+          const w = document.getElementById(`wrap_c1_${i}`);
+          if (w) w.style.display = (t1 >= i) ? "block" : "none";
+        }
+      }
 
-      // Deshabilitar todo si Caras es 0
-      const row1 = document.getElementById("row_tintas_c1");
-      const subTitle = document.querySelector(".adv .subTitle");
-      if (row1) row1.style.display = (caras === 0) ? "none" : "flex";
-      if (subTitle) subTitle.style.display = (caras === 0) ? "none" : "block";
-
-      const row2 = document.getElementById("row_tintas_c2");
-      if (row2) row2.style.display = (caras === 2) ? "flex" : "none";
-
-      for (let i = 1; i <= 4; i++) {
-        const w1 = document.getElementById(`wrap_c1_${i}`);
-        if(w1) w1.style.display = (i <= t1 && caras > 0) ? "block" : "none";
-        const w2 = document.getElementById(`wrap_c2_${i}`);
-        if(w2) w2.style.display = (i <= t2 && caras === 2) ? "block" : "none";
+      const s2 = document.getElementById("side_2_controls");
+      if (s2) s2.style.display = (numCaras === 2) ? "block" : "none";
+      
+      if (numCaras === 2) {
+        const t2 = n("tintas_c2") || 0;
+        const d2 = document.getElementById("dtf_c2_active")?.checked;
+        const c2 = document.getElementById("colors_c2");
+        const m2 = document.getElementById("dtf_c2_dims");
+        if (c2) c2.style.display = (t2 > 0) ? "flex" : "none";
+        if (m2) m2.style.setProperty("display", d2 ? "block" : "none", "important");
+        
+        for (let i = 1; i <= 4; i++) {
+          const w = document.getElementById(`wrap_c2_${i}`);
+          if (w) w.style.display = (t2 >= i) ? "block" : "none";
+        }
       }
     }
 
@@ -1639,8 +1672,9 @@
       s = s.replace(/<text[^>]*>[^<]*Preview orientaci[oó]n[^<]*<\/text>\s*/gi, "");
       s = s.replace(/<text[^>]*>[^<]*fuelle[^<]*<\/text>\s*/gi, "");
       if (!showMeasures) {
-        s = s.replace(/<!--\s*Flecha ancho\s*-->[\s\S]*?(?=<!--\s*Flecha alto\s*-->|<\/svg>)/i, "");
-        s = s.replace(/<!--\s*Flecha alto\s*-->[\s\S]*?(?=<\/svg>)/i, "");
+        // Eliminar flechas y medidas de forma segura
+        s = s.replace(/<!--\s*Flecha ancho\s*-->[\s\S]*?<!--\s*Flecha alto\s*-->/i, "");
+        s = s.replace(/<!--\s*Flecha alto\s*-->[\s\S]*?<\/svg>/i, "</svg>");
         s = s.replace(/<text[^>]*>[^<]*ANCHO[^<]*<\/text>\s*/gi, "");
         s = s.replace(/<text[^>]*>[^<]*ALTO[^<]*<\/text>\s*/gi, "");
       }
@@ -1735,55 +1769,53 @@
       // Logo Text Setup
       const tx = w / 2;
       const ty = h / 2;
-      let logoSVG = "";
+      let logosGroup = "";
 
-      if (printType === "DTF") {
-        // Marcador visual Full Color para DTF
-        logoSVG = `
-          <g transform="scale(1.2)" transform-origin="${tx} ${ty}">
-            <rect x="${tx - 35}" y="${ty - 35}" width="70" height="70" rx="8" fill="url(#dtfGradient)" filter="drop-shadow(0 4px 6px rgba(0,0,0,0.2))" />
-            <defs>
-              <linearGradient id="dtfGradient" x1="0%" y1="0%" x2="100%" y2="100%">
-                <stop offset="0%" style="stop-color:#ff0000;stop-opacity:1" />
-                <stop offset="25%" style="stop-color:#ffff00;stop-opacity:1" />
-                <stop offset="50%" style="stop-color:#00ff00;stop-opacity:1" />
-                <stop offset="75%" style="stop-color:#00ffff;stop-opacity:1" />
-                <stop offset="100%" style="stop-color:#0000ff;stop-opacity:1" />
-              </linearGradient>
-            </defs>
-            <text x="${tx}" y="${ty + 5}" text-anchor="middle" font-size="12" font-family="Outfit, sans-serif" font-weight="900" fill="white" letter-spacing="1px">FULL COLOR</text>
-            <text x="${tx}" y="${ty + 20}" text-anchor="middle" font-size="8" font-family="Outfit, sans-serif" font-weight="600" fill="white" opacity="0.9">DISEÑO DTF</text>
-          </g>
-        `;
-      } else if (Array.isArray(logoColors) && logoColors.length > 0) {
+      // Dibujar logos para cada cara según configuración (Hybrid)
+      // Nota: Esta función asume Cara 1. Para Cara 2 se llama externamente o se ajusta.
+      // Aquí simplificamos para que la previsualización use los datos de la cara correspondiente.
+      
+      const isSide2 = n("caras") === 2 && !showMeasures; // Heurística simple para saber si es cara 2
+      const sidePrefix = isSide2 ? "c2" : "c1";
+      
+      const tintas = n(`tintas_${sidePrefix}`) || 0;
+      const dtfActive = document.getElementById(`dtf_${sidePrefix}_active`)?.checked;
+
+      // 1. Logo Serigrafía
+      if (tintas > 0 && Array.isArray(logoColors) && logoColors.length > 0) {
         const c1 = logoColors[0] || "#0833a2";
         const c2 = logoColors.length > 1 ? logoColors[1] : c1;
         const c3 = logoColors.length > 2 ? logoColors[2] : c1;
         const c4 = logoColors.length > 3 ? logoColors[3] : c2;
 
-        // Isotipo (Hoja geometrica)
-        const pieceA = `
-      <path d="M ${tx} ${ty - 40} C ${tx + 35} ${ty - 40}, ${tx + 35} ${ty - 5}, ${tx} ${ty - 5} C ${tx - 35} ${ty - 5}, ${tx - 35} ${ty - 40}, ${tx} ${ty - 40} Z" 
-            fill="${c1}"/>
-    `;
-        // Detalle Isotipo (Lenteja central)
-        const pieceB = `
-      <circle cx="${tx}" cy="${ty - 22.5}" r="7" fill="${c2}" />
-    `;
-        // Texto Supremo
-        const pieceC = `
-      <text x="${tx}" y="${ty + 18}" text-anchor="middle" font-size="16" font-family="Plus Jakarta Sans, sans-serif" font-weight="900" fill="${c3}" letter-spacing="0.5px">TU LOGO</text>
-    `;
-        // Texto Inferior
-        const pieceD = `
-      <text x="${tx}" y="${ty + 36}" text-anchor="middle" font-size="14" font-family="Plus Jakarta Sans, sans-serif" font-weight="700" fill="${c4}" opacity="0.8">AQUÍ</text>
-    `;
+        const pieceA = `<path d="M ${tx} ${ty - 40} C ${tx + 35} ${ty - 40}, ${tx + 35} ${ty - 5}, ${tx} ${ty - 5} C ${tx - 35} ${ty - 5}, ${tx - 35} ${ty - 40}, ${tx} ${ty - 40} Z" fill="${c1}"/>`;
+        const pieceB = `<circle cx="${tx}" cy="${ty - 22.5}" r="7" fill="${c2}" />`;
+        const pieceC = `<text x="${tx}" y="${ty + 18}" text-anchor="middle" font-size="16" font-family="Plus Jakarta Sans, sans-serif" font-weight="900" fill="${c3}" letter-spacing="0.5px">TU LOGO</text>`;
+        const pieceD = `<text x="${tx}" y="${ty + 36}" text-anchor="middle" font-size="14" font-family="Plus Jakarta Sans, sans-serif" font-weight="700" fill="${c4}" opacity="0.8">AQUÍ</text>`;
 
-        logoSVG = `
-      <g transform="scale(1.5)" transform-origin="${tx} ${ty}">
-        ${pieceA}${pieceB}${pieceC}${pieceD}
-      </g>
-    `;
+        logosGroup += `<g transform="scale(1.3)" transform-origin="${tx} ${ty}">${pieceA}${pieceB}${pieceC}${pieceD}</g>`;
+      }
+
+      // 2. Logo DTF (Badge decorativo)
+      if (dtfActive) {
+        const dtfW = n(`dtf_${sidePrefix}_w`) || 15;
+        const dtfH = n(`dtf_${sidePrefix}_h`) || 15;
+        
+        // Si hay serigrafía, desplazamos el badge DTF para que no se pise totalmente (opcional)
+        const dtfOffset = (tintas > 0) ? 50 : 0;
+        
+        logosGroup += `
+          <g transform="translate(0, ${dtfOffset}) scale(1.1)" transform-origin="${tx} ${ty}">
+            <rect x="${tx - 35}" y="${ty - 35}" width="70" height="70" rx="10" fill="url(#dtfGrad)" filter="drop-shadow(0 4px 5px rgba(0,0,0,0.25))" />
+            <defs>
+              <linearGradient id="dtfGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" stop-color="#ff0000" /><stop offset="50%" stop-color="#00ff00" /><stop offset="100%" stop-color="#0000ff" />
+              </linearGradient>
+            </defs>
+            <text x="${tx}" y="${ty + 5}" text-anchor="middle" font-size="11" font-weight="900" fill="white" font-family="Outfit">FULL COLOR</text>
+            <text x="${tx}" y="${ty + 20}" text-anchor="middle" font-size="7" font-weight="600" fill="white" opacity="0.8">DTF ${dtfW}x${dtfH}cm</text>
+          </g>
+        `;
       }
 
       // Medidas base para proporción y ViewBox (Compartidas para mantener el ZOOM idéntico)
@@ -1970,7 +2002,7 @@
       ${creases}
       <!-- Printed Logo Effect -->
       <g style="opacity: 0.9; filter: contrast(1.05) brightness(1.05);">
-        ${logoSVG}
+        ${logosGroup}
       </g>
     </svg>
   `;
@@ -2023,8 +2055,7 @@
 
         const svgBox = document.createElement("div");
         svgBox.className = "previewSvg";
-        const printType = v("print_type") || "SERIGRAFIA";
-        svgBox.innerHTML = generateModernBagSVG(fabricHex, logoColors, bagType, ancho, alto, showMeasures, document.getElementById("largo_arco_visual") ? Number(document.getElementById("largo_arco_visual").value) : 46, printType);
+        svgBox.innerHTML = generateModernBagSVG(fabricHex, logoColors, bagType, ancho, alto, showMeasures, document.getElementById("largo_arco_visual") ? Number(document.getElementById("largo_arco_visual").value) : 46);
 
         wrap.appendChild(svgBox);
         return wrap;
@@ -2078,21 +2109,26 @@
       const alto = n("alto_cm") || 0;
       const cantidad = Math.max(1, n("cantidad") || 1);
       const caras = Math.max(0, Math.min(2, n("caras")));
+      const isDTF1 = document.getElementById("dtf_c1_active")?.checked;
       const t1 = n("tintas_c1") || 0;
+      const isDTF2 = document.getElementById("dtf_c2_active")?.checked;
       const t2 = n("tintas_c2") || 0;
-      const isDTF = v("print_type") === "DTF";
-      let legend = "";
-      if (caras === 0) {
-        legend = "BOLSA LISA (SIN IMPRESIÓN)";
-      } else if (isDTF) {
-        legend = caras === 1 ? "INCLUYE LOGO FULL COLOR (DTF) - 1 CARA" : "LOGO FULL COLOR (DTF) - 2 CARAS";
-      } else if (t1 === 0 && t2 === 0) {
-        legend = "BOLSA LISA (SIN IMPRESIÓN)";
-      } else if (caras === 1) {
-        legend = `INCLUYE LOGO 1 CARA (${t1} TINTA${t1 > 1 ? 'S' : ''})`;
-      } else {
-        legend = `LOGO FRENTE (${t1} TINTA${t1 > 1 ? 'S' : ''}) · POSTERIOR (${t2} TINTA${t2 > 1 ? 'S' : ''})`;
+
+      let legendParts = [];
+      if (caras >= 1) {
+        let p1 = [];
+        if (t1 > 0) p1.push(`${t1} Tintas`);
+        if (isDTF1) p1.push(`DTF`);
+        if (p1.length > 0) legendParts.push(`FRENTE: ${p1.join(" + ")}`);
       }
+      if (caras === 2) {
+        let p2 = [];
+        if (t2 > 0) p2.push(`${t2} Tintas`);
+        if (isDTF2) p2.push(`DTF`);
+        if (p2.length > 0) legendParts.push(`RESPALDO: ${p2.join(" + ")}`);
+      }
+
+      let legend = legendParts.length > 0 ? legendParts.join(" · ") : "BOLSA LISA";
 
       // Bloque 1: Títulos (Jerarquía Invertida)
       document.getElementById("flyerTitle").textContent = bagTypeLabel;
@@ -2102,7 +2138,7 @@
       // Bloque 3: Beneficio condicional (Diseño incluido)
       const benefitDiseno = document.getElementById("benefit-diseno");
       if (benefitDiseno) {
-        benefitDiseno.style.display = (caras === 0 || t1 === 0) ? "none" : "flex";
+        benefitDiseno.style.display = (caras === 0 || (t1 === 0 && !isDTF1)) ? "none" : "flex";
       }
 
       // Pedido (derecha)
@@ -2179,10 +2215,14 @@
           ancho_manijas_cm: n("ancho_manijas_cm"),
           dobles_cm: n("dobles_cm"),
           caras: n("caras"),
-          print_type: v("print_type"),
-          dtf_ancho_cm: n("dtf_ancho_cm"),
-          dtf_alto_cm: n("dtf_alto_cm"),
-          tintas: Math.max(n("tintas_c1") || 0, n("tintas_c2") || 0),
+          
+          dtf_c1_active: document.getElementById("dtf_c1_active")?.checked || false,
+          dtf_c1_w: n("dtf_c1_w") || 15,
+          dtf_c1_h: n("dtf_c1_h") || 15,
+          dtf_c2_active: document.getElementById("dtf_c2_active")?.checked || false,
+          dtf_c2_w: n("dtf_c2_w") || 15,
+          dtf_c2_h: n("dtf_c2_h") || 15,
+
           tintas_c1: n("tintas_c1") || 0,
           tintas_c2: n("tintas_c2") || 0,
           cola_produccion: n("cola_produccion"),
@@ -2256,7 +2296,9 @@
       "bag_type", "material_code",
       "ancho_cm", "alto_cm", "fuelle_cm",
       "manija1_cm", "manija2_cm", "ancho_manijas_cm",
-      "dobles_cm", "caras", "cola_produccion", "tintas_c1", "tintas_c2"
+      "dobles_cm", "caras", "cola_produccion", "tintas_c1", "tintas_c2",
+      "dtf_c1_active", "dtf_c1_w", "dtf_c1_h",
+      "dtf_c2_active", "dtf_c2_w", "dtf_c2_h"
     ];
     backendIds.forEach(id => {
       const el = document.getElementById(id);
@@ -2266,7 +2308,7 @@
     });
 
     // Preview instantáneo (sin backend): tela, caras, colores
-    ["color_hex", "caras", "tintas_c1", "tintas_c2", "logo_c1_1", "logo_c1_2", "logo_c1_3", "logo_c1_4", "logo_c2_1", "logo_c2_2", "logo_c2_3", "logo_c2_4", "largo_arco_visual"].forEach(id => {
+    ["color_hex", "caras", "tintas_c1", "tintas_c2", "logo_c1_1", "logo_c1_2", "logo_c1_3", "logo_c1_4", "logo_c2_1", "logo_c2_2", "logo_c2_3", "logo_c2_4", "largo_arco_visual", "dtf_c1_active", "dtf_c2_active"].forEach(id => {
       const el = document.getElementById(id);
       if (!el) return;
       el.addEventListener("input", renderPreviewInstant);
@@ -2367,18 +2409,20 @@
       if(c2Listener) c2Listener.addEventListener("input", () => userCustomizedC2Color = true);
     }
 
-    function bindPrintTypeChips() {
-      const chips = document.querySelectorAll("#print_type_chips .btn-chip");
-      const input = document.getElementById("print_type");
+    function bindCarasChips() {
+      const chips = document.querySelectorAll("#caras_chips .btn-chip");
+      const input = document.getElementById("caras");
       if (!chips.length || !input) return;
 
       chips.forEach(btn => {
         btn.addEventListener("click", () => {
+          const oldVal = input.value;
           chips.forEach(c => c.classList.remove("active"));
           btn.classList.add("active");
           input.value = btn.dataset.val;
 
           syncLogoControlsUI();
+          smartInkToggle(true, oldVal);
 
           input.dispatchEvent(new Event("input", { bubbles: true }));
           input.dispatchEvent(new Event("change", { bubbles: true }));
@@ -2389,110 +2433,40 @@
       });
     }
 
-    function buildLogoSVGBlock(side, logoNum, logoData) {
-      const printType = v("print_type");
-      const isFullColor = printType === "DTF";
-
-      const logoId = `logo_c${side}_${logoNum}`;
-      const logoFile = v(logoId);
-      if (!logoFile) return "";
-
-      const tintas = n(`tintas_c${side}`);
-      const colorInputId = `logo_c${side}_${logoNum}_color`;
-      const color = v(colorInputId);
-
-      let filter = "";
-      if (!isFullColor && color) {
-        filter = `filter="url(#color-filter-${color.replace('#', '')})"`;
-      }
-
-      let svgContent = "";
-      if (logoFile.startsWith("data:image/svg+xml;base64,")) {
-        const decodedSvg = atob(logoFile.split(',')[1]);
-        if (!isFullColor && color) {
-          // For serigraphy, apply color filter to SVG content
-          svgContent = decodedSvg.replace(/fill="[^"]*"/g, `fill="${color}"`).replace(/stroke="[^"]*"/g, `stroke="${color}"`);
-        } else {
-          // For DTF or no color specified, use original SVG
-          svgContent = decodedSvg;
-        }
-      } else {
-        // For raster images (PNG, JPG) or external SVGs, embed as image
-        svgContent = `<image href="${logoFile}" x="0" y="0" width="100%" height="100%" />`;
-      }
-
-      return `
-        <g class="logo-group" data-logo-id="${logoId}" data-side="${side}" data-logo-num="${logoNum}">
-          ${!isFullColor && color ? `<defs><filter id="color-filter-${color.replace('#', '')}"><feColorMatrix type="matrix" values="0 0 0 0 ${parseInt(color.substring(1,3), 16) / 255} 0 0 0 0 ${parseInt(color.substring(3,5), 16) / 255} 0 0 0 0 ${parseInt(color.substring(5,7), 16) / 255} 0 0 0 1 0"/></filter></defs>` : ''}
-          <g ${filter}>
-            ${svgContent}
-          </g>
-        </g>
-      `;
-    }
-
     function syncLogoControlsUI() {
-      const caras = n("caras");
-      const printType = v("print_type");
-
-      // Show/hide serigrafia settings based on print type
-      const serigrafiaSettings = document.getElementById("serigrafia_settings");
-      if (serigrafiaSettings) {
-        if (printType === "SERIGRAFIA") {
-          serigrafiaSettings.style.display = "block";
-        } else {
-          serigrafiaSettings.style.display = "none";
+      const numCaras = n("caras");
+      
+      const s1 = document.getElementById("side_1_controls");
+      if (s1) s1.style.display = (numCaras >= 1) ? "block" : "none";
+      
+      if (numCaras >= 1) {
+        const t1 = n("tintas_c1") || 0;
+        const d1 = document.getElementById("dtf_c1_active")?.checked;
+        const c1 = document.getElementById("colors_c1");
+        const m1 = document.getElementById("dtf_c1_dims");
+        if (c1) c1.style.display = (t1 > 0) ? "flex" : "none";
+        if (m1) m1.style.display = d1 ? "block" : "none";
+        
+        for (let i = 1; i <= 4; i++) {
+          const w = document.getElementById(`wrap_c1_${i}`);
+          if (w) w.style.display = (t1 >= i) ? "block" : "none";
         }
       }
 
-      // Show/hide DTF settings based on print type
-      const dtfSettings = document.getElementById("dtf_settings");
-      if (dtfSettings) {
-        if (printType === "DTF") {
-          dtfSettings.style.display = "block";
-        } else {
-          dtfSettings.style.display = "none";
-        }
-      }
-
-      // Update tintas dropdowns based on print type
-      const tintasC1 = document.getElementById("tintas_c1");
-      const tintasC2 = document.getElementById("tintas_c2");
-      if (tintasC1) {
-        if (printType === "DTF") {
-          tintasC1.value = "4"; // Full color
-          tintasC1.disabled = true;
-        } else {
-          tintasC1.disabled = false;
-        }
-      }
-      if (tintasC2) {
-        if (printType === "DTF") {
-          tintasC2.value = "4"; // Full color
-          tintasC2.disabled = true;
-        } else {
-          tintasC2.disabled = false;
-        }
-      }
-
-      // Show/hide logo upload and color pickers based on caras and print type
-      for (let side = 1; side <= 2; side++) {
-        const sideVisible = caras >= side;
-        const sideDiv = document.getElementById(`side_${side}_controls`);
-        if (sideDiv) sideDiv.style.display = sideVisible ? "block" : "none";
-
-        for (let logoNum = 1; logoNum <= 4; logoNum++) {
-          const logoUpload = document.getElementById(`logo_c${side}_${logoNum}_upload`);
-          const logoColor = document.getElementById(`logo_c${side}_${logoNum}_color_group`);
-
-          if (logoUpload) logoUpload.style.display = sideVisible ? "block" : "none";
-          if (logoColor) {
-            if (sideVisible && printType === "SERIGRAFIA") {
-              logoColor.style.display = "block";
-            } else {
-              logoColor.style.display = "none";
-            }
-          }
+      const s2 = document.getElementById("side_2_controls");
+      if (s2) s2.style.display = (numCaras === 2) ? "block" : "none";
+      
+      if (numCaras === 2) {
+        const t2 = n("tintas_c2") || 0;
+        const d2 = document.getElementById("dtf_c2_active")?.checked;
+        const c2 = document.getElementById("colors_c2");
+        const m2 = document.getElementById("dtf_c2_dims");
+        if (c2) c2.style.display = (t2 > 0) ? "flex" : "none";
+        if (m2) m2.style.display = d2 ? "block" : "none";
+        
+        for (let i = 1; i <= 4; i++) {
+          const w = document.getElementById(`wrap_c2_${i}`);
+          if (w) w.style.display = (t2 >= i) ? "block" : "none";
         }
       }
     }
@@ -2501,7 +2475,6 @@
       await fetchFondos();
       ["color_hex"].forEach(initColorSwatches);
       bindCarasChips();
-      bindPrintTypeChips();
       fetchFondos().then(() => scheduleAutoQuote());
       syncLogoControlsUI();
       updatePreviewBackground(v("color_hex"));

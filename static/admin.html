@@ -55,19 +55,18 @@
       <div class="form-group"><label>Ancho (cm)</label><input type="number" id="ancho" value="35"></div>
       <div class="form-group"><label>Alto (cm)</label><input type="number" id="alto" value="40"></div>
       <div class="form-group"><label>Fuelle (cm)</label><input type="number" id="fuelle" value="0"></div>
-      <div class="form-group">
-        <label>Técnica</label>
-        <select id="print_type">
-          <option value="SERIGRAFIA">Serigrafía</option>
-          <option value="DTF">DTF (Full Color)</option>
-        </select>
+      <div style="grid-column: span 3; background: #f0f9ff; padding: 10px; border-radius: 4px; border: 1px solid #bae6fd; margin-bottom: 10px; display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px;">
+        <div style="font-weight: bold; grid-column: span 3;">Configuración de Impresión (Híbrida)</div>
+        
+        <div class="form-group"><label>Tintas C1</label><input type="number" id="t1" value="1" min="0"></div>
+        <div class="form-group" style="display: flex; align-items: center; gap: 5px;"><label>DTF C1</label><input type="checkbox" id="dtf_c1_active"></div>
+        <div class="form-group" style="display: flex; gap: 5px;"><input type="number" id="dtf_c1_w" placeholder="W" style="width:50px"> x <input type="number" id="dtf_c1_h" placeholder="H" style="width:50px"></div>
+
+        <div class="form-group"><label>Tintas C2</label><input type="number" id="t2" value="0" min="0"></div>
+        <div class="form-group" style="display: flex; align-items: center; gap: 5px;"><label>DTF C2</label><input type="checkbox" id="dtf_c2_active"></div>
+        <div class="form-group" style="display: flex; gap: 5px;"><input type="number" id="dtf_c2_w" placeholder="W" style="width:50px"> x <input type="number" id="dtf_c2_h" placeholder="H" style="width:50px"></div>
       </div>
-      <div id="dtf_dims" style="display:none; grid-column: span 2; gap: 10px; align-items: center; background: #fefce8; padding: 10px; border-radius: 4px; border: 1px solid #fef08a;">
-        <div class="form-group"><label>Logo Ancho (cm)</label><input type="number" id="dtf_w" value="15"></div>
-        <div class="form-group"><label>Logo Alto (cm)</label><input type="number" id="dtf_h" value="15"></div>
-      </div>
-      <div class="form-group"><label>Tintas Cara 1</label><input type="number" id="t1" value="1" min="0"></div>
-      <div class="form-group"><label>Tintas Cara 2</label><input type="number" id="t2" value="0" min="0"></div>
+      <div class="form-group"><label>Caras Impr.</label><input type="number" id="caras" value="1" min="0" max="2"></div>
       <div class="form-group"><label>Cantidad</label><input type="number" id="qty" value="500"></div>
     </div>
   </div>
@@ -125,9 +124,7 @@
     ancho: document.getElementById('ancho'),
     alto: document.getElementById('alto'),
     fuelle: document.getElementById('fuelle'),
-    printType: document.getElementById('print_type'),
-    dtfW: document.getElementById('dtf_w'),
-    dtfH: document.getElementById('dtf_h'),
+    caras: document.getElementById('caras'),
     t1: document.getElementById('t1'),
     t2: document.getElementById('t2'),
     qty: document.getElementById('qty'),
@@ -159,12 +156,18 @@
         manija2_cm: DOM.bagType.value === 'PLANA_MANIJA' ? 60 : 0,
         ancho_manijas_cm: DOM.bagType.value === 'PLANA_MANIJA' ? 5 : 0,
         dobles_cm: DOM.bagType.value === 'PLANA_TROQUEL' ? 6 : 3,
-        print_type: DOM.printType.value,
-        dtf_ancho_cm: Number(DOM.dtfW.value),
-        dtf_alto_cm: Number(DOM.dtfH.value),
-        caras: (Number(DOM.t1.value) > 0 || DOM.printType.value === 'DTF' ? 1 : 0) + (Number(DOM.t2.value) > 0 ? 1 : 0),
+        
+        caras: Number(DOM.caras.value),
         tintas_c1: Number(DOM.t1.value),
+        dtf_c1_active: document.getElementById('dtf_c1_active')?.checked || false,
+        dtf_c1_w: Number(document.getElementById('dtf_c1_w')?.value || 15),
+        dtf_c1_h: Number(document.getElementById('dtf_c1_h')?.value || 15),
+        
         tintas_c2: Number(DOM.t2.value),
+        dtf_c2_active: document.getElementById('dtf_c2_active')?.checked || false,
+        dtf_c2_w: Number(document.getElementById('dtf_c2_w')?.value || 15),
+        dtf_c2_h: Number(document.getElementById('dtf_c2_h')?.value || 15),
+        
         cantidad: Number(DOM.qty.value)
       }
     };
@@ -225,9 +228,9 @@
         <td>${r1.label}</td>
         <td class="val-money col-red">${money(cst.costo_real || 0)}</td>
         <td class="val-pct">${pct(r1.margen_base_pct)}</td>
-        <td class="val-money">${breakdown.print_type === 'DTF' ? 'DTF' : (breakdown.total_pasadas || 0)}</td>
-        <td class="val-money">${breakdown.print_type === 'DTF' ? money(breakdown.costo_dtf_por_cara || 0) : money(r1.precio_pasada || 0)}</td>
-        <td class="val-money" style="color:#0891b2">${money(breakdown.print_type === 'DTF' ? r1.costo_dtf : r1.costo_serigrafia)}</td>
+        <td class="val-money">${breakdown.total_pasadas || 0}</td>
+        <td class="val-money">${money(r1.precio_pasada || 0)}</td>
+        <td class="val-money" style="color:#0891b2">${money(r1.costo_serigrafia)} + ${money(r1.costo_dtf)}</td>
         <td class="val-pct col-green">${pct(r1.dto_L49_pct)}</td>
         <td class="val-pct fw-bold">${pct(r1.margen_real_pct)}</td>
         <td class="val-money fw-bold">${money(r1.precio_unitario_sin_iva)}</td>
