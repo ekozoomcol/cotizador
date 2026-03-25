@@ -2,6 +2,7 @@
 <html lang="es">
 
 <head>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Cotizador EKOZOOM</title>
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap');
@@ -398,6 +399,9 @@
       width: 100%;
       height: 100%;
       display: block;
+      transform: translateY(18%) scale(0.82);
+      filter: drop-shadow(0 25px 35px rgba(0, 0, 0, 0.4)) !important;
+      transition: transform 0.4s ease-out;
     }
 
     .previewLabel {
@@ -763,6 +767,42 @@
         width: 100%;
         height: 100%;
       }
+
+    }
+
+    /* Controles de fondo en línea - movido fuera de media query para disponibilidad global */
+    .bg-controls-inline {
+      display: flex;
+      gap: 8px;
+      background: #fff;
+      padding: 4px 8px;
+      border-radius: 8px;
+      border: 1px solid #ddd;
+      box-shadow: var(--shadow-sm);
+      align-items: center;
+      margin-top: 4px;
+    }
+
+    .bg-controls-inline button {
+      width: 32px;
+      height: 28px;
+      border-radius: 4px;
+      border: 1px solid #ccc;
+      background: #f8fafc;
+      color: #1e293b;
+      font-weight: 800;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.2s;
+      font-size: 14px;
+    }
+
+    .bg-controls-inline button:hover {
+      background: var(--brand);
+      color: white;
+      border-color: var(--brand);
     }
   </style>
   <style>
@@ -1159,6 +1199,14 @@
           </select>
           <span class="compact-hint">* Cambia al instante.</span>
         </div>
+        <div>
+          <label>Fondo Realista</label>
+          <div class="bg-controls-inline">
+            <button type="button" onclick="prevFondo()" title="Fondo anterior">&larr;</button>
+            <button type="button" onclick="toggleFondo()" id="btnToggleFondo" title="Quitar/Poner fondo">🖼️</button>
+            <button type="button" onclick="nextFondo()" title="Siguiente fondo">&rarr;</button>
+          </div>
+        </div>
         <div id="row_manijas"><label>Largo Manija</label><input id="largo_arco_visual" type="number" value="40" min="10" max="300"></div>
         <div>
           <label>Material</label>
@@ -1218,7 +1266,9 @@
         </div>
       </details>
 
-      <p id="status" class="muted">Listo.</p>
+      <div style="display: flex; align-items: center; justify-content: space-between; gap: 10px; flex-wrap: wrap;">
+        <p id="status" class="muted" style="margin:0;">Listo.</p>
+      </div>
     </div>
 
     <div class="board">
@@ -1230,8 +1280,7 @@
           <div id="flyerBadge" class="badge-promo">✔ Incluye logo 1 tinta (1 cara)</div>
         </div>
 
-        <!-- BLOQUE 5: IMAGEN HERO -->
-        <div class="commercial-block image-block" style="flex: 1 1 auto; min-height: 150px; padding: 0;">
+        <div class="commercial-block image-block" style="flex: 1 1 auto; min-height: 150px; padding: 0; position: relative;">
           <div id="previewWrap">
             <div id="previewGrid"></div>
           </div>
@@ -1310,25 +1359,101 @@
       return rgbToHex(r * factor, g * factor, b * factor);
     }
 
-    /** Fondo oscuro SOLO para tela blanca */
+    /** Fondo de mesa con zoom dinámico según altura de la bolsa */
+    let gBackgrounds = []; 
+    let gCurrentFondoIdx = 0;
+    let gFondoHidden = true; // Por defecto sin fondo realista
+
+    async function fetchFondos() {
+      try {
+        const res = await fetch("/lista-de-fondos");
+        const data = await res.json();
+        if (Array.isArray(data) && data.length > 0) {
+          gBackgrounds = data;
+        }
+      } catch (e) {
+        console.error("Error cargando lista de fondos:", e);
+      }
+    }
+
+    function nextFondo() {
+      if (gBackgrounds.length === 0) return;
+      gCurrentFondoIdx = (gCurrentFondoIdx + 1) % gBackgrounds.length;
+      gFondoHidden = false;
+      updatePreviewBackground();
+    }
+
+    function prevFondo() {
+      if (gBackgrounds.length === 0) return;
+      gCurrentFondoIdx = (gCurrentFondoIdx - 1 + gBackgrounds.length) % gBackgrounds.length;
+      gFondoHidden = false;
+      updatePreviewBackground();
+    }
+
+    function toggleFondo() {
+      gFondoHidden = !gFondoHidden;
+      updatePreviewBackground();
+      const btn = document.getElementById("btnToggleFondo");
+      if (btn) btn.style.opacity = gFondoHidden ? "0.5" : "1";
+    }
+
     function updatePreviewBackground(colorHex) {
       const wrap = document.getElementById("previewWrap");
       const orderWrap = document.getElementById("orderPreviewWrap");
-      const isWhite = (colorHex || "").toUpperCase() === "#FFFFFF";
+      const alto = n("alto_cm") || 50;
       
-      const bgWhite = "linear-gradient(135deg, #cbd5e1 0%, #94a3b8 100%)";
-      const bgNormal = "#ffffff";
+      // Si el fondo está oculto, usamos un fondo sólido o degradado suave que no sea invasivo
+      if (gFondoHidden) {
+          const bgNone = "white";
+          if (wrap) {
+              const target = wrap.parentElement && wrap.parentElement.classList.contains("image-block") ? wrap.parentElement : wrap;
+              target.style.background = bgNone;
+          }
+          if (orderWrap) {
+              orderWrap.style.background = bgNone;
+          }
+          // No retornamos porque queremos seguir aplicando el bagScale dinámico
+      } else {
+          // Background Zoom: 50cm = 100%, 20cm = 214% (más agresivo)
+          const zoomFactor = Math.min(Math.max(100 + (50 - alto) * 3.8, 80), 220);
+          
+          let bgTable = "white"; // Fallback
+          if (gBackgrounds.length > 0) {
+            const currentBg = gBackgrounds[gCurrentFondoIdx];
+            bgTable = `url('/fondos/${currentBg}') center 82% / ${zoomFactor.toFixed(1)}% no-repeat`;
+          }
 
+          if (wrap) {
+            const target = wrap.parentElement && wrap.parentElement.classList.contains("image-block") ? wrap.parentElement : wrap;
+            target.style.background = bgTable;
+            target.style.borderColor = "#94a3b8";
+            target.style.transition = "background 0.4s ease-out, border-color 0.3s";
+          }
+          if (orderWrap) {
+            orderWrap.style.background = bgTable;
+            orderWrap.style.borderRadius = "8px";
+            orderWrap.style.transition = "background 0.4s ease-out, border-color 0.3s";
+          }
+      }
+
+      // Bag scale adjustment: 50cm = 1.0, 20cm = 0.88 (menos reducción para efecto macro)
+      const bagScale = Math.min(Math.max(1.0 + (alto - 50) * 0.004, 0.88), 1.15);
+      
       if (wrap) {
-        const target = wrap.parentElement && wrap.parentElement.classList.contains("image-block") ? wrap.parentElement : wrap;
-        target.style.background = isWhite ? bgWhite : bgNormal;
-        target.style.borderColor = isWhite ? "#94a3b8" : "#f0f0f0";
-        target.style.transition = "background-color 0.3s, background-image 0.3s, border-color 0.3s";
+        // Apply scaling to the container instead of individual SVGs to avoid layout shifts
+        const grid = document.getElementById("previewGrid");
+        if (grid) {
+            grid.style.transform = `scale(${bagScale})`;
+            grid.style.transformOrigin = "center center";
+            grid.style.transition = "transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1)";
+        }
       }
       if (orderWrap) {
-        orderWrap.style.background = isWhite ? bgWhite : bgNormal;
-        orderWrap.style.borderRadius = "8px"; // Para redondear bonito
-        orderWrap.style.transition = "background-color 0.3s, background-image 0.3s, border-color 0.3s";
+        const orderGrid = document.getElementById("orderPreviewGrid");
+        if (orderGrid) {
+            orderGrid.style.transform = `scale(${bagScale * 0.9})`; // slightly smaller for pedido view
+            orderGrid.style.transformOrigin = "center center";
+        }
       }
     }
 
@@ -2068,6 +2193,7 @@
       debounceTimer = setTimeout(cotizarAuto, 250);
     }
 
+
     // Inputs que disparan backend (debounced)
     const backendIds = [
       "bag_type", "material_code",
@@ -2094,8 +2220,8 @@
     ].forEach(id => {
       const el = document.getElementById(id);
       if (!el) return;
-      el.addEventListener("input", () => renderDesignSummary(lastQuoteData));
-      el.addEventListener("change", () => renderDesignSummary(lastQuoteData));
+      el.addEventListener("input", () => { renderDesignSummary(lastQuoteData); updatePreviewBackground(); });
+      el.addEventListener("change", () => { renderDesignSummary(lastQuoteData); updatePreviewBackground(); });
     });
 
     let userCustomizedC1Color = false;
@@ -2184,13 +2310,18 @@
       if(c2Listener) c2Listener.addEventListener("input", () => userCustomizedC2Color = true);
     }
 
-    window.addEventListener("load", () => {
+    window.addEventListener("load", async () => {
+      await fetchFondos();
       ["color_hex"].forEach(initColorSwatches);
       bindCarasChips();
       syncFuelleField();
       syncLogoControlsUI();
       updatePreviewBackground(v("color_hex"));
       cotizarAuto();
+      
+      // Sincronizar opacidad del botón de fondo inicial
+      const btn = document.getElementById("btnToggleFondo");
+      if (btn) btn.style.opacity = gFondoHidden ? "0.5" : "1";
     });
   </script>
 </body>

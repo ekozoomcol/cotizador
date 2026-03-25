@@ -1,9 +1,15 @@
+import os
 from fastapi import FastAPI
 from pydantic import BaseModel
 from app.pricing.engine import quote
 
 
 app = FastAPI()
+
+
+@app.get("/ping")
+def ping():
+    return "pong"
 
 
 class QuoteRequest(BaseModel):
