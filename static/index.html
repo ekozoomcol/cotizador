@@ -669,13 +669,11 @@
       }
 
       .board>.card {
-        container-type: inline-size;
-        aspect-ratio: 3 / 4.4;
         display: flex;
         flex-direction: column;
-        overflow: hidden;
         padding: 24px;
-        /* Make it essentially a standalone poster */
+        min-height: 480px;
+        /* Free height layout without forced constraints */
       }
 
       #previewWrap {
