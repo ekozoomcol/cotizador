@@ -1,5 +1,5 @@
 {
-  "cola_produccion_global": 5000.0,
+  "cola_produccion_global": 55000.0,
   "nomina_diaria": 1500000.0,
   "material_costs_per_m2": {
     "CAMBREL_70": 1100.0,

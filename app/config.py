@@ -29,7 +29,7 @@ def default_config() -> GlobalConfig:
     import os
 
     base_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-    ref_file = os.path.join(base_dir, "precios_referencia.json")
+    ref_file = os.path.join(base_dir, "data", "precios_referencia.json")
     
     cola_produccion_global = 5000.0
     nomina_diaria = 1500000.0

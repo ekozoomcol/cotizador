@@ -11,7 +11,7 @@ print(f"DEBUG: app instance: {id(app)}")
 def list_fondos_new():
     import os
     base_dir = os.path.dirname(os.path.abspath(__file__))
-    fondos_dir = os.path.join(base_dir, "fondos")
+    fondos_dir = os.path.join(base_dir, "static", "fondos")
     if not os.path.exists(fondos_dir):
         return []
     valid_exts = ('.png', '.jpg', '.jpeg', '.webp')
@@ -21,6 +21,6 @@ def list_fondos_new():
 
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 
-app.mount("/fondos", StaticFiles(directory=os.path.join(BASE_DIR, "fondos")), name="fondos")
+app.mount("/fondos", StaticFiles(directory=os.path.join(BASE_DIR, "static", "fondos")), name="fondos")
 
 app.mount("/", StaticFiles(directory=os.path.join(BASE_DIR, "static"), html=True), name="static")
