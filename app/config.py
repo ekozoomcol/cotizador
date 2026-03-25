@@ -92,7 +92,7 @@ def default_config() -> GlobalConfig:
         PricingBand(code="B50000P",      label="50000+",     margen_base_pct=25, redondeo=5, is_public=False),
         PricingBand(code="B30000_49999", label="30000-49999",margen_base_pct=26, redondeo=5, is_public=False),
         PricingBand(code="B11000_29999", label="11000-29999",margen_base_pct=27, redondeo=5, is_public=False),
-        PricingBand(code="B5500_10999",  label="5500-10999", margen_base_pct=28, redondeo=5, is_public=True),
+        PricingBand(code="B5500_10999",  label="5500-10999", margen_base_pct=28, redondeo=10, is_public=True),
         PricingBand(code="B1500_5499",   label="1500-5499",  margen_base_pct=33, redondeo=10, is_public=True),
         PricingBand(code="B500_1499",    label="500-1499",   margen_base_pct=38, redondeo=10, is_public=True),
         PricingBand(code="B300_499",     label="300-499",    margen_base_pct=43, redondeo=20, is_public=True),

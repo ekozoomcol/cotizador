@@ -86,7 +86,11 @@ def quote(bag_type: str, material_code: str, inputs: dict):
             # El precio final de la bolsa incluye ambos costos
             unit_before += (costo_serigrafia_banda + costo_dtf_total)
 
-            unit_with_iva = round(unit_before * 1.19)
+            # Redondeo final hacia arriba (según tabla de usuario) - SOLO ANTES DE IVA
+            f_round = float(band.redondeo)
+            unit_before = math.ceil(unit_before / f_round) * f_round
+            
+            unit_with_iva = unit_before * 1.19
 
             prices_before[band.code] = {
                 "label": band.label,
@@ -101,7 +105,7 @@ def quote(bag_type: str, material_code: str, inputs: dict):
             }
             prices_with_iva[band.code] = {
                 "label": band.label,
-                "precio_unitario_con_iva": int(unit_with_iva),
+                "precio_unitario_con_iva": int(round(unit_with_iva)),
                 "is_public": band.is_public
             }
 
