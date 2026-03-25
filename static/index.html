@@ -5,6 +5,7 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>Cotizador EKOZOOM</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap');
 
@@ -278,7 +279,7 @@
       width: 100%;
       text-align: center;
       background: linear-gradient(135deg, #10b981 0%, #059669 100%);
-      font-size: min(6vw, 44px);
+      font-size: min(4.5vw, 44px);
       border-radius: var(--radius-lg);
       padding: 12px 0px;
       line-height: 1.1;
@@ -422,7 +423,7 @@
 
     .orderTitle {
       text-align: center;
-      font-size: min(7vw, 38px);
+      font-size: min(5vw, 38px);
       word-break: break-word;
       line-height: normal !important;
       padding-bottom: 2px !important;
@@ -474,7 +475,7 @@
       border-top: 2px solid var(--brand);
       padding-top: 16px !important;
       color: var(--brand);
-      font-size: min(7vw, 52px);
+      font-size: min(5vw, 52px);
       line-height: 1.1;
       font-weight: 900;
       text-align: center;
@@ -776,7 +777,7 @@
     }
 
     .block-title-area h2 {
-      font-size: min(6.5vw, 32px);
+      font-size: min(4vw, 32px);
       word-break: break-word;
       font-weight: 900;
       color: #1a1a1a;
@@ -1199,6 +1200,13 @@
 
   </div>
 
+  <div style="text-align: center; margin-bottom: 40px; padding: 0 20px;">
+    <button type="button" id="btnShot" style="background:#25D366; color:white; padding:16px 32px; border:none; border-radius:12px; font-weight:800; font-size:16px; cursor:pointer; box-shadow:0 4px 6px rgba(37,211,102,0.3); display:inline-flex; align-items:center; gap:8px;">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+      Guardar Poster HD (Para WhatsApp)
+    </button>
+  </div>
+
   <script>
     function v(id) { return document.getElementById(id).value; }
     function n(id) { return Number(v(id)); }
@@ -1316,6 +1324,26 @@
       setActive(normalizeHex(select.value));
       select.addEventListener("change", () => setActive(normalizeHex(select.value)));
     }
+
+    document.getElementById('btnShot').addEventListener('click', async () => {
+      const btn = document.getElementById('btnShot');
+      btn.innerText = "Generando Imagen...";
+      const flyer = document.getElementById('commercialFlyer');
+      const originalShadow = flyer.style.boxShadow;
+      flyer.style.boxShadow = 'none';
+      try {
+        const canvas = await html2canvas(flyer, { scale: 2, useCORS: true, backgroundColor: '#ffffff' });
+        flyer.style.boxShadow = originalShadow;
+        const link = document.createElement("a");
+        link.download = "Cotizacion_EKOZOOM.png";
+        link.href = canvas.toDataURL("image/png");
+        link.click();
+        btn.innerHTML = "✅ ¡Descargado! Busca en tu galería";
+      } catch (e) {
+        btn.innerHTML = `Error: ${e.message}`;
+      }
+      setTimeout(() => { btn.innerHTML = "Guardar Poster HD (Para WhatsApp)"; }, 3000);
+    });
 
     /** Mostrar/ocultar selectores según Caras y #colores */
     function syncLogoControlsUI() {
