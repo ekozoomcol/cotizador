@@ -3,7 +3,7 @@ import httpx
 import time
 from collections import Counter
 
-API_URL = "http://127.0.0.1:8001/quote"
+API_URL = "https://cotizador-772286866733.us-central1.run.app/quote"
 
 base_payload = {
     "bag_type": "PLANA_MANIJA",
