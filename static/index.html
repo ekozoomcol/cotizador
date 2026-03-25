@@ -1770,56 +1770,76 @@
       const tx = w / 2;
       const ty = h / 2;
       let logosGroup = "";
-
-      // Dibujar logos para cada cara según configuración (Hybrid)
-      // Nota: Esta función asume Cara 1. Para Cara 2 se llama externamente o se ajusta.
-      // Aquí simplificamos para que la previsualización use los datos de la cara correspondiente.
       
-      const isSide2 = n("caras") === 2 && !showMeasures; // Heurística simple para saber si es cara 2
+      // Medidas base para proporción
+      const cmToSvg = w / (Number(anchoCm) || 30);
+      
+      const isSide2 = n("caras") === 2 && !showMeasures;
       const sidePrefix = isSide2 ? "c2" : "c1";
-      
       const tintas = n(`tintas_${sidePrefix}`) || 0;
       const dtfActive = document.getElementById(`dtf_${sidePrefix}_active`)?.checked;
 
-      // 1. Logo Serigrafía
-      if (tintas > 0 && Array.isArray(logoColors) && logoColors.length > 0) {
+      const hasSeri = (tintas > 0);
+      const hasDtf = dtfActive;
+      const seriScale = (hasSeri && hasDtf) ? 0.75 : 1.3;
+      const gap = 30; // Más espacio entre logos
+
+      const dtfW_cm = dtfActive ? Math.min(n(`dtf_${sidePrefix}_w`) || 15, anchoCm * 0.85) : 0;
+      const dtfH_cm = dtfActive ? Math.min(n(`dtf_${sidePrefix}_h`) || 15, altoCm * 0.6) : 0;
+      const dtfW_svg = dtfW_cm * cmToSvg;
+      const dtfH_svg = dtfH_cm * cmToSvg;
+      
+      const seriH_svg = hasSeri ? (80 * seriScale) : 0;
+      let totalH = seriH_svg + (hasSeri && hasDtf ? gap : 0) + dtfH_svg;
+      
+      // Escala de seguridad: Si los logos juntos superan el 80% del alto de la bolsa, reducimos todo.
+      let safetyScale = 1.0;
+      const maxHAllowed = h * 0.75;
+      if (totalH > maxHAllowed) {
+        safetyScale = maxHAllowed / totalH;
+        totalH = maxHAllowed;
+      }
+
+      const startY = ty - (totalH / 2);
+
+      if (hasSeri && Array.isArray(logoColors) && logoColors.length > 0) {
         const c1 = logoColors[0] || "#0833a2";
         const c2 = logoColors.length > 1 ? logoColors[1] : c1;
         const c3 = logoColors.length > 2 ? logoColors[2] : c1;
         const c4 = logoColors.length > 3 ? logoColors[3] : c2;
 
-        const pieceA = `<path d="M ${tx} ${ty - 40} C ${tx + 35} ${ty - 40}, ${tx + 35} ${ty - 5}, ${tx} ${ty - 5} C ${tx - 35} ${ty - 5}, ${tx - 35} ${ty - 40}, ${tx} ${ty - 40} Z" fill="${c1}"/>`;
-        const pieceB = `<circle cx="${tx}" cy="${ty - 22.5}" r="7" fill="${c2}" />`;
-        const pieceC = `<text x="${tx}" y="${ty + 18}" text-anchor="middle" font-size="16" font-family="Plus Jakarta Sans, sans-serif" font-weight="900" fill="${c3}" letter-spacing="0.5px">TU LOGO</text>`;
-        const pieceD = `<text x="${tx}" y="${ty + 36}" text-anchor="middle" font-size="14" font-family="Plus Jakarta Sans, sans-serif" font-weight="700" fill="${c4}" opacity="0.8">AQUÍ</text>`;
-
-        logosGroup += `<g transform="scale(1.3)" transform-origin="${tx} ${ty}">${pieceA}${pieceB}${pieceC}${pieceD}</g>`;
-      }
-
-      // 2. Logo DTF (Badge decorativo)
-      if (dtfActive) {
-        const dtfW = n(`dtf_${sidePrefix}_w`) || 15;
-        const dtfH = n(`dtf_${sidePrefix}_h`) || 15;
-        
-        // Si hay serigrafía, desplazamos el badge DTF para que no se pise totalmente (opcional)
-        const dtfOffset = (tintas > 0) ? 50 : 0;
+        const seriY = startY + (seriH_svg * safetyScale / 2);
         
         logosGroup += `
-          <g transform="translate(0, ${dtfOffset}) scale(1.1)" transform-origin="${tx} ${ty}">
-            <rect x="${tx - 35}" y="${ty - 35}" width="70" height="70" rx="10" fill="url(#dtfGrad)" filter="drop-shadow(0 4px 5px rgba(0,0,0,0.25))" />
+          <g transform="translate(0, ${seriY - ty}) scale(${seriScale * safetyScale})" transform-origin="${tx} ${ty}">
+            <path d="M ${tx} ${ty - 40} C ${tx + 35} ${ty - 40}, ${tx + 35} ${ty - 5}, ${tx} ${ty - 5} C ${tx - 35} ${ty - 5}, ${tx - 35} ${ty - 40}, ${tx} ${ty - 40} Z" fill="${c1}"/>
+            <circle cx="${tx}" cy="${ty - 22.5}" r="7" fill="${c2}" />
+            <text x="${tx}" y="${ty + 18}" text-anchor="middle" font-size="16" font-family="Plus Jakarta Sans, sans-serif" font-weight="900" fill="${c3}" letter-spacing="0.5px">TU LOGO</text>
+            <text x="${tx}" y="${ty + 36}" text-anchor="middle" font-size="14" font-family="Plus Jakarta Sans, sans-serif" font-weight="700" fill="${c4}" opacity="0.8">AQUÍ</text>
+          </g>
+        `;
+      }
+
+      if (hasDtf) {
+        const dtfY = startY + (hasSeri ? (seriH_svg + gap) * safetyScale : 0) + (dtfH_svg * safetyScale / 2);
+        const fontSize1 = Math.min(dtfW_svg * 0.18, 14);
+        const fontSize2 = Math.min(dtfW_svg * 0.12, 10);
+        const textY1 = ty + (dtfH_svg * 0.05);
+        const textY2 = ty + (dtfH_svg * 0.25);
+        
+        logosGroup += `
+          <g transform="translate(0, ${dtfY - ty}) scale(${safetyScale})" transform-origin="${tx} ${ty}">
+            <rect x="${tx - dtfW_svg / 2}" y="${ty - dtfH_svg / 2}" width="${dtfW_svg}" height="${dtfH_svg}" rx="8" fill="url(#dtfGrad)" filter="drop-shadow(0 4px 5px rgba(0,0,0,0.25))" />
             <defs>
               <linearGradient id="dtfGrad" x1="0%" y1="0%" x2="100%" y2="100%">
                 <stop offset="0%" stop-color="#ff0000" /><stop offset="50%" stop-color="#00ff00" /><stop offset="100%" stop-color="#0000ff" />
               </linearGradient>
             </defs>
-            <text x="${tx}" y="${ty + 5}" text-anchor="middle" font-size="11" font-weight="900" fill="white" font-family="Outfit">FULL COLOR</text>
-            <text x="${tx}" y="${ty + 20}" text-anchor="middle" font-size="7" font-weight="600" fill="white" opacity="0.8">DTF ${dtfW}x${dtfH}cm</text>
+            <text x="${tx}" y="${textY1}" text-anchor="middle" font-size="${fontSize1}" font-weight="900" fill="white" font-family="Outfit">FULL COLOR</text>
+            <text x="${tx}" y="${textY2}" text-anchor="middle" font-size="${fontSize2}" font-weight="600" fill="white" opacity="0.8">DTF ${dtfW_cm}x${dtfH_cm}cm</text>
           </g>
         `;
       }
-
-      // Medidas base para proporción y ViewBox (Compartidas para mantener el ZOOM idéntico)
-      const cmToSvg = w / (Number(anchoCm) || 30);
       const gruesoCm = 2.5;
       const separacionInternaCm = 8;
       const archW = (separacionInternaCm + gruesoCm) * cmToSvg;
