@@ -1147,18 +1147,24 @@
         .compact-row:last-of-type { margin-bottom: 0; }
         .compact-row > div { flex: 1; min-width: 0; }
         .compact-form label { font-size: 11px !important; margin-bottom: 2px !important; white-space: nowrap; font-weight: 600; display: block; }
-        .compact-form input, .compact-form select { padding: 4px 6px !important; font-size: 12px !important; height: 28px !important; box-sizing: border-box; width: 100%; border: 1px solid #ccc; border-radius: 4px; text-transform: none; }
-        .compact-form select { appearance: auto; }
-        .compact-hint { font-size: 10px !important; margin-top: 2px !important; color: #666; display: block; }
-        .row-chips { display: flex; gap: 4px; height: 28px; width: 100%; box-sizing: border-box; }
-        .btn-chip { flex: 1; background: #fff; border: 1px solid #ccc; border-radius: 4px; cursor: pointer; font-size: 13px; font-weight: 700; color: #475569; transition: all 0.2s; padding: 0; display:flex; align-items:center; justify-content:center; }
-        .btn-chip:hover { border-color: #94a3b8; background: #f8fafc; }
-        .btn-chip.active { background: #4f46e5; border-color: #4f46e5; color: white; }
+        /* Forced Row Layouts */
+        .forced-row { display: grid; gap: 10px; align-items: flex-end; margin-bottom: 8px; }
+        .grid-4 { grid-template-columns: repeat(4, 1fr); }
+        .grid-2 { grid-template-columns: 1fr 1fr; }
+
+        /* Compact Swatches */
+        .color-swatch-group { display: flex; flex-direction: column; gap: 2px; flex: 1; }
+        .swatch-grid { display: grid; grid-template-columns: repeat(14, 1fr); gap: 3px; width: 100%; border: 1px solid #f1f5f9; padding: 4px; border-radius: 6px; background: #fff; }
+        .swatch { width: 22px !important; height: 22px !important; border-width: 1.5px !important; }
+        .swatch.active { border-color: #4f46e5 !important; box-shadow: 0 0 0 1px rgba(79, 70, 229, 0.2) !important; }
+        
+        .compact-row div { min-width: 0 !important; } /* Force shrink */
       </style>
       <h3>Datos de cotización (arriba)</h3>
 
-      <div class="row compact-row">
-        <div>
+      <!-- Fila 1: Bolsa y Medidas -->
+      <div class="forced-row grid-4 compact-row">
+        <div style="grid-column: span 1;">
           <label>Tipo de bolsa</label>
           <select id="bag_type">
             <option value="PLANA_MANIJA">Bolsa Plana Manija</option>
@@ -1166,11 +1172,12 @@
           </select>
         </div>
         <div><label>Ancho (cm)</label><input id="ancho_cm" type="number" value="35"></div>
-      </div>
-
-      <div class="row compact-row">
         <div><label>Alto (cm)</label><input id="alto_cm" type="number" value="40"></div>
         <div><label>Fuelle (cm)</label><input id="fuelle_cm" type="number" value="20"></div>
+      </div>
+
+      <!-- Fila 2: Caras, Cantidad, Material, Largo -->
+      <div class="forced-row grid-4 compact-row">
         <div>
           <label>Caras</label>
           <div class="row-chips" id="caras_chips">
@@ -1181,15 +1188,25 @@
           <input id="caras" type="hidden" value="1">
         </div>
         <div><label>Cantidad</label><input id="cantidad" type="number" value="500" min="1"></div>
+        <div>
+          <label>Material</label>
+          <select id="material_code">
+            <option value="CAMBREL_70">Cambrel 70gr</option>
+            <option value="CAMBREL_80">Cambrel 80gr</option>
+          </select>
+        </div>
+        <div id="row_manijas"><label>Largo Manija</label><input id="largo_arco_visual" type="number" value="40" min="10" max="300"></div>
       </div>
 
-      <div class="row compact-row">
-        <div>
-          <label>Color tela</label>
-          <select id="color_hex">
+      <!-- Fila 3: Colores Tela y Manija (Compacto) -->
+      <div class="forced-row grid-2 compact-row" style="align-items: flex-start; gap: 15px;">
+        <div class="color-swatch-group">
+          <label style="margin-bottom: 4px;">Color tela</label>
+          <div id="swatches_color_hex" class="swatch-grid"></div>
+          <select id="color_hex" style="display:none;">
             <option value="#FFFFFF">Blanco</option>
             <option value="#F5F5DC">Hueso</option>
-            <option value="#FFFFF0">Marfil</option>
+            <option value="#EFDFBE">Marfil</option>
             <option value="#D4BE8D">Beige</option>
             <option value="#2D2926" selected>Negro</option>
             <option value="#808080">Gris</option>
@@ -1198,8 +1215,8 @@
             <option value="#FF8200">Naranja</option>
             <option value="#E03A3E">Rojo</option>
             <option value="#0041C2">Azul Rey</option>
-            <option value="#0066FF">Azul Cobalto</option>
-            <option value="#374151">Azul Oscuro</option>
+            <option value="#0055D4">Azul Cobalto</option>
+            <option value="#1B365D">Azul Oscuro</option>
             <option value="#7FFFD4">Azul Agua Marina</option>
             <option value="#89CFF0">Azul Bebé</option>
             <option value="#228B22">Verde Cali</option>
@@ -1215,30 +1232,30 @@
             <option value="#E19DAC">Palo de Rosa</option>
             <option value="#FB3592">Hot Pink</option>
           </select>
-          <span class="compact-hint">* Cambia al instante.</span>
         </div>
-        <div>
+
+        <div id="handle_color_container" class="color-swatch-group" style="display: none;">
+          <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 4px;">
+            <label style="margin: 0;">Color manija</label>
+            <label style="font-size: 11px; font-weight: normal; cursor: pointer; display: flex; align-items: center; gap: 4px; color: #666;">
+              <input type="checkbox" id="sync_handle_color" checked> Igual que tela
+            </label>
+          </div>
+          <div id="swatches_handle_color_hex" class="swatch-grid"></div>
+          <select id="handle_color_hex" style="display:none;"></select>
+        </div>
+      </div>
+
+      <!-- Fila 4: Fondo Realista -->
+      <div class="row compact-row">
+        <div style="flex: 1;">
           <label>Fondo Realista</label>
-          <div class="bg-controls-inline">
+          <div class="bg-controls-inline" style="justify-content: flex-start; gap: 10px;">
             <button type="button" onclick="prevFondo()" title="Fondo anterior">&larr;</button>
-            <button type="button" onclick="toggleFondo()" id="btnToggleFondo" title="Quitar/Poner fondo">🖼️</button>
+            <button type="button" onclick="toggleFondo()" id="btnToggleFondo" title="Quitar/Poner fondo">🖼️ Fondo</button>
             <button type="button" onclick="nextFondo()" title="Siguiente fondo">&rarr;</button>
           </div>
         </div>
-        <div id="row_manijas"><label>Largo Manija</label><input id="largo_arco_visual" type="number" value="40" min="10" max="300"></div>
-        <div>
-          <label>Material</label>
-          <select id="material_code">
-            <option value="CAMBREL_70">Cambrel 70gr</option>
-            <option value="CAMBREL_80">Cambrel 80gr (+$100/m²)</option>
-          </select>
-        </div>
-        
-        <!-- Ocultos -->
-        <div style="display:none;"><label>Manija 1</label><input id="manija1_cm" type="number" value="60"></div>
-        <div style="display:none;"><label>Manija 2</label><input id="manija2_cm" type="number" value="60"></div>
-        <div style="display:none;"><label>Ancho manijas</label><input id="ancho_manijas_cm" type="number" value="5"></div>
-        <div style="display:none;"><label>Dobles</label><input id="dobles_cm" type="number" value="3"></div>
       </div>
 
       <details class="adv">
@@ -1383,8 +1400,16 @@
   </div>
 
   <script>
-    function v(id) { return document.getElementById(id).value; }
-    function n(id) { return Number(v(id)); }
+    function v(id) { 
+      const el = document.getElementById(id); 
+      if (!el) return "";
+      return el.value; 
+    }
+    function n(id) { 
+      const raw = v(id);
+      if (!raw) return 0;
+      return Number(raw); 
+    }
     function setStatus(html) { document.getElementById("status").innerHTML = html; }
     function money(value) {
       return new Intl.NumberFormat("es-CO", { style: "currency", currency: "COP", maximumFractionDigits: 0 }).format(Number(value || 0));
@@ -1538,17 +1563,20 @@
       if (!select) return;
       select.classList.add("color-select");
 
-      let swatchWrap = select.parentElement.querySelector(".swatchGroup");
+      let swatchWrap = document.getElementById(`swatches_${selectId}`);
+      if (!swatchWrap) {
+        swatchWrap = select.parentElement.querySelector(".swatchGroup") || select.parentElement.querySelector(".swatch-grid");
+      }
       if (!swatchWrap) {
         swatchWrap = document.createElement("div");
-        swatchWrap.className = "swatchGroup";
+        swatchWrap.className = "swatch-grid";
         select.parentElement.appendChild(swatchWrap);
       }
       swatchWrap.innerHTML = "";
 
       const setActive = (valueHex) => {
-        [...swatchWrap.querySelectorAll(".swatchBtn")].forEach(btn => {
-          btn.classList.toggle("active", btn.dataset.value === valueHex);
+        [...swatchWrap.querySelectorAll(".swatch")].forEach(btn => {
+          btn.classList.toggle("active", btn.dataset.value === (valueHex || "").toUpperCase());
         });
       };
 
@@ -1556,9 +1584,9 @@
         const color = normalizeHex(opt.value);
         const btn = document.createElement("button");
         btn.type = "button";
-        btn.className = "swatchBtn";
+        btn.className = "swatch";
         btn.title = opt.textContent || color;
-        btn.dataset.value = color;
+        btn.dataset.value = color.toUpperCase();
         btn.style.background = color;
         if (isLightHex(color)) {
           btn.style.borderColor = "rgba(0,0,0,0.4)";
@@ -1773,8 +1801,10 @@
      * - Si 1 cara: dims completas (incluye fuelle)
      */
 
-    function generateModernBagSVG(fabricHex, logoColors, bagType, anchoCm, altoCm, showMeasures = true, archVisualCm = 46, printType = "SERIGRAFIA") {
-      const isTroquel = /TROQUEL/i.test(String(bagType || ""));
+    function generateModernBagSVG(fabricHex, manualLogoList = [], bagType, anchoCm, altoCm, showMeasures = true, handleArcoLogico = 46, handleHex = null) {
+      const isTroquel = (bagType === "PLANA_TROQUEL");
+      // Si es troquel, forzamos que no haya manija visible, aunque handleHex esté definido
+      const realHandleHex = handleHex || fabricHex;
       const w = 240;
       const ratio = (altoCm && anchoCm) ? (Number(altoCm) / Number(anchoCm)) : 1.25;
       const h = w * Math.min(Math.max(ratio, 0.8), 1.8);
@@ -1792,18 +1822,16 @@
       // Medidas base para proporción
       const cmToSvg = w / (Number(anchoCm) || 30);
       
-      const isSide2 = n("caras") === 2 && !showMeasures;
-      const sidePrefix = isSide2 ? "c2" : "c1";
-      const tintas = n(`tintas_${sidePrefix}`) || 0;
-      const dtfActive = document.getElementById(`dtf_${sidePrefix}_active`)?.checked;
+      const isSide2 = manualLogoList.length > 0 && manualLogoList[0] && !manualLogoList[0].showMeasures;
 
-      const hasSeri = (tintas > 0);
-      const hasDtf = dtfActive;
+      const hasSeri = manualLogoList.some(l => l.type === 'serigrafia');
+      const dtfLogo = manualLogoList.find(l => l.type === 'dtf');
+      const hasDtf = !!dtfLogo;
       const seriScale = (hasSeri && hasDtf) ? 0.75 : 1.3;
       const gap = 30; // Más espacio entre logos
 
-      const dtfW_cm = dtfActive ? Math.min(n(`dtf_${sidePrefix}_w`) || 15, anchoCm * 0.85) : 0;
-      const dtfH_cm = dtfActive ? Math.min(n(`dtf_${sidePrefix}_h`) || 15, altoCm * 0.6) : 0;
+      const dtfW_cm = dtfLogo ? Math.min(dtfLogo.width || 15, anchoCm * 0.85) : 0;
+      const dtfH_cm = dtfLogo ? Math.min(dtfLogo.height || 15, altoCm * 0.6) : 0;
       const dtfW_svg = dtfW_cm * cmToSvg;
       const dtfH_svg = dtfH_cm * cmToSvg;
       
@@ -1820,11 +1848,12 @@
 
       const startY = ty - (totalH / 2);
 
-      if (hasSeri && Array.isArray(logoColors) && logoColors.length > 0) {
-        const c1 = logoColors[0] || "#0833a2";
-        const c2 = logoColors.length > 1 ? logoColors[1] : c1;
-        const c3 = logoColors.length > 2 ? logoColors[2] : c1;
-        const c4 = logoColors.length > 3 ? logoColors[3] : c2;
+      if (hasSeri) {
+        const seriColors = manualLogoList.filter(l => l.type === 'serigrafia').map(l => l.color);
+        const c1 = seriColors[0] || "#0833a2";
+        const c2 = seriColors.length > 1 ? seriColors[1] : c1;
+        const c3 = seriColors.length > 2 ? seriColors[2] : c1;
+        const c4 = seriColors.length > 3 ? seriColors[3] : c2;
 
         const seriY = startY + (seriH_svg * safetyScale / 2);
         
@@ -1833,7 +1862,7 @@
             <path d="M ${tx} ${ty - 40} C ${tx + 35} ${ty - 40}, ${tx + 35} ${ty - 5}, ${tx} ${ty - 5} C ${tx - 35} ${ty - 5}, ${tx - 35} ${ty - 40}, ${tx} ${ty - 40} Z" fill="${c1}"/>
             <circle cx="${tx}" cy="${ty - 22.5}" r="7" fill="${c2}" />
             <text x="${tx}" y="${ty + 18}" text-anchor="middle" font-size="16" font-family="Plus Jakarta Sans, sans-serif" font-weight="900" fill="${c3}" letter-spacing="0.5px">TU LOGO</text>
-            <text x="${tx}" y="${ty + 36}" text-anchor="middle" font-size="14" font-family="Plus Jakarta Sans, sans-serif" font-weight="700" fill="${c4}" opacity="0.8">AQUÍ</text>
+            <text x="${tx}" y="${ty + 36}" text-anchor="middle" font-family="Plus Jakarta Sans, sans-serif" font-weight="700" fill="${c4}" opacity="0.8">AQUÍ</text>
           </g>
         `;
       }
@@ -1863,6 +1892,7 @@
       const archW = (separacionInternaCm + gruesoCm) * cmToSvg;
       const archX = (w - archW) / 2;
 
+      const archVisualCm = manualLogoList.some(l => l.showMeasures) ? (document.getElementById("largo_arco_visual") ? Number(document.getElementById("largo_arco_visual").value) : 46) : 46;
       const visualH = (Number(archVisualCm) / 2) * cmToSvg;
       const archH = visualH * 1.33;
       const strokeWidthSVG = gruesoCm * cmToSvg;
@@ -1891,9 +1921,8 @@
       } else {
         // Manija calculada por proporciones exactas en cm
         manijaSVG = `
-      <path d="M ${archX} ${yAnchor} C ${archX} ${yAnchor - archH}, ${archX + archW} ${yAnchor - archH}, ${archX + archW} ${yAnchor}" fill="none" stroke="${fabricHex}" stroke-width="${strokeWidthSVG}" stroke-linecap="round" />
-      <path d="M ${archX} ${yAnchor} C ${archX} ${yAnchor - archH}, ${archX + archW} ${yAnchor - archH}, ${archX + archW} ${yAnchor}" fill="none" stroke="${strokeColor}" stroke-width="${strokeWidthSVG + 3}" stroke-linecap="round" stroke-dasharray="0" opacity="0.3" style="mix-blend-mode: multiply;" />
-      <path d="M ${archX} ${yAnchor} C ${archX} ${yAnchor - archH}, ${archX + archW} ${yAnchor - archH}, ${archX + archW} ${yAnchor}" fill="none" stroke="${fabricHex}" stroke-width="${strokeWidthSVG}" stroke-linecap="round" />
+      <path d="M ${archX} ${yAnchor} C ${archX} ${yAnchor - archH}, ${archX + archW} ${yAnchor - archH}, ${archX + archW} ${yAnchor}" fill="none" stroke="${realHandleHex}" stroke-width="${strokeWidthSVG}" stroke-linecap="round" />
+      <path d="M ${archX} ${yAnchor} C ${archX} ${yAnchor - archH}, ${archX + archW} ${yAnchor - archH}, ${archX + archW} ${yAnchor}" fill="none" stroke="${strokeColor}" stroke-width="${strokeWidthSVG + 3}" stroke-linecap="round" opacity="0.1" style="mix-blend-mode: multiply;" />
       <!-- Textura Cambrel para la Manija -->
       <path d="M ${archX} ${yAnchor} C ${archX} ${yAnchor - archH}, ${archX + archW} ${yAnchor - archH}, ${archX + archW} ${yAnchor}" fill="none" stroke="url(#cambrelNoise-${Math.round(tx)})" stroke-width="${strokeWidthSVG}" stroke-linecap="round" style="mix-blend-mode: multiply;" />
     `;
@@ -1962,6 +1991,7 @@
             <rect x="9.99" y="61.4" width="2.27" height="7.09" transform="translate(-26.93 118.73) rotate(-135)"/>
             <rect x="18.99" y="52.4" width="2.27" height="7.09" transform="translate(-5.2 109.73) rotate(-135)"/>
             <rect x="27.99" y="43.41" width="2.27" height="7.09" transform="translate(16.51 100.74) rotate(-135)"/>
+            <rect x="10.45" y="40.16" width="2.83" height="8.5" transform="translate(-32.55 56.28) rotate(-90)"/>
           </g>
         `;
         maskSVG = `
@@ -2046,8 +2076,65 @@
   `;
     }
 
+    function getCalculatedLogoList() {
+      const caras = Math.max(0, Math.min(2, n("caras")));
+      const logoList = [];
+
+      if (caras >= 1) {
+        const t1 = n("tintas_c1") || 0;
+        const dtf1Active = document.getElementById("dtf_c1_active")?.checked;
+        const dtf1W = n("dtf_c1_w") || 15;
+        const dtf1H = n("dtf_c1_h") || 15;
+
+        for (let i = 1; i <= t1; i++) {
+          logoList.push({
+            cara: 1,
+            type: 'serigrafia',
+            color: document.getElementById(`logo_c1_${i}`)?.value || "#000",
+            showMeasures: true // Only Cara 1 shows measures
+          });
+        }
+        if (dtf1Active) {
+          logoList.push({
+            cara: 1,
+            type: 'dtf',
+            width: dtf1W,
+            height: dtf1H,
+            showMeasures: true
+          });
+        }
+      }
+
+      if (caras === 2) {
+        const t2 = n("tintas_c2") || 0;
+        const dtf2Active = document.getElementById("dtf_c2_active")?.checked;
+        const dtf2W = n("dtf_c2_w") || 15;
+        const dtf2H = n("dtf_c2_h") || 15;
+
+        for (let i = 1; i <= t2; i++) {
+          logoList.push({
+            cara: 2,
+            type: 'serigrafia',
+            color: document.getElementById(`logo_c2_${i}`)?.value || "#000",
+            showMeasures: false // Cara 2 does not show measures
+          });
+        }
+        if (dtf2Active) {
+          logoList.push({
+            cara: 2,
+            type: 'dtf',
+            width: dtf2W,
+            height: dtf2H,
+            showMeasures: false
+          });
+        }
+      }
+      return logoList;
+    }
+
     function renderPreviewInstant() {
       const fabricHex = v("color_hex");
+      const handleHex = v("handle_color_hex") || fabricHex;
       updatePreviewBackground(fabricHex);
       syncFuelleField();
       syncLogoControlsUI();
@@ -2056,8 +2143,6 @@
       const orderGrid = document.getElementById("orderPreviewGrid");
       grid.innerHTML = "";
       if (orderGrid) orderGrid.innerHTML = "";
-
-
 
       const ancho = n("ancho_cm");
       const alto = n("alto_cm");
@@ -2070,30 +2155,19 @@
       if (orderGrid) orderGrid.classList.toggle("is-one-face", caras <= 1);
       if (orderGrid) orderGrid.classList.toggle("two-faces", caras === 2);
 
-      const dimsTextCara1_2Caras = `ANCHO ${ancho} cm · ALTO ${alto} cm`;
+      const fullLogoList = getCalculatedLogoList();
       const dimsText1Cara = `ANCHO ${ancho} cm · ALTO ${alto} cm · FUELLE ${fuelle} cm`;
 
-      const getLogoColors = (caraIdx) => {
-        const cVal = n("caras");
-        if (cVal === 0) return [];
-        if (cVal === 1 && caraIdx === 2) return [];
-
-        const t = caraIdx === 1 ? (n("tintas_c1") || 0) : (n("tintas_c2") || 0);
-        if (t === 0) return [];
-        let arr = [];
-        for (let i = 1; i <= t; i++) {
-          arr.push(document.getElementById(`logo_c${caraIdx}_${i}`)?.value || "#000");
-        }
-        return arr;
-      };
-
-      const makeItem = (_label, _showDims, _dimsText, logoColors, showMeasures = true) => {
+      const makeItem = (_label, _showDims, _dimsText, caraIdx = 1, showMeasures = true) => {
         const wrap = document.createElement("div");
         wrap.className = "previewItem";
 
         const svgBox = document.createElement("div");
         svgBox.className = "previewSvg";
-        svgBox.innerHTML = generateModernBagSVG(fabricHex, logoColors, bagType, ancho, alto, showMeasures, document.getElementById("largo_arco_visual") ? Number(document.getElementById("largo_arco_visual").value) : 46);
+        const handleHex = v("handle_color_hex") || fabricHex;
+        const logosThisCara = fullLogoList.filter(l => l.cara === caraIdx);
+        
+        svgBox.innerHTML = generateModernBagSVG(fabricHex, logosThisCara, bagType, ancho, alto, showMeasures, document.getElementById("largo_arco_visual") ? Number(document.getElementById("largo_arco_visual").value) : 46, handleHex);
 
         wrap.appendChild(svgBox);
         return wrap;
@@ -2105,14 +2179,12 @@
       };
 
       if (caras === 0) {
-        // Para bolsa lisa, mostramos solo una cara sin logos.
-        // getLogoColors(1) devolverá [] si t1=0, pero para estar seguros pasamos []
-        appendToBoards(makeItem("Vista Previa", true, dimsText1Cara, [], true));
+        appendToBoards(makeItem("Vista Previa", true, dimsText1Cara, 1, true));
       } else if (caras === 1) {
-        appendToBoards(makeItem("Cara 1", true, dimsText1Cara, getLogoColors(1), true));
+        appendToBoards(makeItem("Cara 1", true, dimsText1Cara, 1, true));
       } else {
-        appendToBoards(makeItem("Cara 1", true, dimsTextCara1_2Caras, getLogoColors(1), true));
-        appendToBoards(makeItem("Cara 2", false, "", getLogoColors(2), false));
+        appendToBoards(makeItem("Cara 1", true, dimsText1Cara, 1, true));
+        appendToBoards(makeItem("Cara 2", false, "", 2, false));
       }
     }
 
@@ -2263,6 +2335,7 @@
 
           tintas_c1: n("tintas_c1") || 0,
           tintas_c2: n("tintas_c2") || 0,
+          cantidad: n("cantidad") || 500,
           cola_produccion: n("cola_produccion"),
           material_code: v("material_code")
         }
@@ -2270,10 +2343,14 @@
       payload.material = v("material_code");
 
       const payloadKey = JSON.stringify(payload);
-      if (payloadKey === lastPayloadKey) return;
+      if (payloadKey === lastPayloadKey && lastPayloadKey !== "") {
+        console.log("Blocking redundant quote");
+        return;
+      }
       lastPayloadKey = payloadKey;
 
       setStatus("Calculando...");
+      console.log("Sending payload:", payload);
 
       let res;
       try {
@@ -2283,19 +2360,33 @@
           body: payloadKey
         });
       } catch (err) {
+        console.error("Fetch error:", err);
         setStatus("<span class='warn'>Error</span> No se pudo conectar al backend.");
         return;
       }
 
       if (!res.ok) {
         const t = await res.text();
+        console.error("Backend error response:", t);
         setStatus("<span class='warn'>Error</span> " + t);
         return;
       }
 
       const data = await res.json();
+      console.log("Quote response received:", data);
       lastQuoteData = data;
       setStatus("<span class='ok'>OK</span> Cotización actualizada");
+
+      // Manejar capacidades dinámicas (Personalización de manija)
+      const cap = data.capabilities || {};
+      const hasHandles = !!cap.has_handles;
+      console.log("Capabilities check:", { cap, hasHandles });
+
+      const handleContainer = document.getElementById("handle_color_container");
+      if (handleContainer) {
+        handleContainer.style.display = hasHandles ? "flex" : "none";
+        console.log("Setting handleContainer display to:", handleContainer.style.display);
+      }
 
       lastRawSVG = data.svg_preview || "";
       renderPreviewInstant();
@@ -2447,29 +2538,7 @@
       if(c2Listener) c2Listener.addEventListener("input", () => userCustomizedC2Color = true);
     }
 
-    function bindCarasChips() {
-      const chips = document.querySelectorAll("#caras_chips .btn-chip");
-      const input = document.getElementById("caras");
-      if (!chips.length || !input) return;
-
-      chips.forEach(btn => {
-        btn.addEventListener("click", () => {
-          const oldVal = input.value;
-          chips.forEach(c => c.classList.remove("active"));
-          btn.classList.add("active");
-          input.value = btn.dataset.val;
-
-          syncLogoControlsUI();
-          smartInkToggle(true, oldVal);
-
-          input.dispatchEvent(new Event("input", { bubbles: true }));
-          input.dispatchEvent(new Event("change", { bubbles: true }));
-          
-          if (typeof scheduleAutoQuote === "function") scheduleAutoQuote();
-          if (typeof renderPreviewInstant === "function") renderPreviewInstant();
-        });
-      });
-    }
+    // Se removió duplicado
 
     function syncLogoControlsUI() {
       const numCaras = n("caras");
@@ -2510,17 +2579,69 @@
     }
 
     window.addEventListener("load", async () => {
-      await fetchFondos();
-      ["color_hex"].forEach(initColorSwatches);
-      bindCarasChips();
-      fetchFondos().then(() => scheduleAutoQuote());
-      syncLogoControlsUI();
-      updatePreviewBackground(v("color_hex"));
-      cotizarAuto();
-      
-      // Sincronizar opacidad del botón de fondo inicial
-      const btn = document.getElementById("btnToggleFondo");
-      if (btn) btn.style.opacity = gFondoHidden ? "0.5" : "1";
+      console.log("DOM Load start");
+      try {
+        await fetchFondos();
+        console.log("Fondos loaded");
+
+        // Poblar opciones de color de manija clonando las de tela
+        const handleSelect = document.getElementById("handle_color_hex");
+        const colorSelect = document.getElementById("color_hex");
+        if (handleSelect && colorSelect) {
+          handleSelect.innerHTML = colorSelect.innerHTML;
+          console.log("Handle select populated");
+        }
+
+        ["color_hex", "handle_color_hex"].forEach(id => {
+          console.log("Initializing swatches for:", id);
+          initColorSwatches(id);
+        });
+        
+        bindCarasChips();
+        console.log("Chips bound");
+        
+        syncLogoControlsUI();
+        updatePreviewBackground(v("color_hex"));
+        
+        // Listener para sincronización de colores
+        if (colorSelect && handleSelect) {
+          colorSelect.addEventListener("change", () => {
+            const sync = document.getElementById("sync_handle_color")?.checked;
+            if (sync) {
+              handleSelect.value = colorSelect.value;
+              handleSelect.dispatchEvent(new Event("change", { bubbles: true }));
+            }
+          });
+          
+          handleSelect.addEventListener("change", (e) => {
+            const syncCheck = document.getElementById("sync_handle_color");
+            if (syncCheck && syncCheck.checked) {
+              if (handleSelect.value !== colorSelect.value) {
+                syncCheck.checked = false;
+              }
+            }
+            if (typeof renderPreviewInstant === "function") renderPreviewInstant();
+          });
+
+          document.getElementById("sync_handle_color")?.addEventListener("change", (e) => {
+            if (e.target.checked) {
+              handleSelect.value = colorSelect.value;
+            }
+            if (typeof renderPreviewInstant === "function") renderPreviewInstant();
+          });
+          console.log("Listeners bound");
+        }
+
+        console.log("Triggering initial quote...");
+        cotizarAuto();
+        
+        const btn = document.getElementById("btnToggleFondo");
+        if (btn) btn.style.opacity = gFondoHidden ? "0.5" : "1";
+        console.log("Init complete");
+
+      } catch (err) {
+        console.error("CRITICAL ERROR during init:", err);
+      }
     });
   </script>
 </body>

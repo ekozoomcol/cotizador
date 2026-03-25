@@ -61,17 +61,18 @@ def default_config() -> GlobalConfig:
         except Exception as e:
             print("Error loading precios_referencia.json:", e)
             
-    # Always write back to ensure newly introduced keys (like nomina_diaria) are visible to the user
-    try:
-        with open(ref_file, "w", encoding="utf-8") as f:
-            json.dump({
-                "cola_produccion_global": cola_produccion_global,
-                "nomina_diaria": nomina_diaria,
-                "material_costs_per_m2": material_costs,
-                "fixed_costs": f_costs
-            }, f, indent=2)
-    except Exception as e:
-        print("Error saving precios_referencia.json:", e)
+    # Writing back only if it didn't exist to avoid infinite reload loops during development
+    if not os.path.exists(ref_file):
+        try:
+            with open(ref_file, "w", encoding="utf-8") as f:
+                json.dump({
+                    "cola_produccion_global": cola_produccion_global,
+                    "nomina_diaria": nomina_diaria,
+                    "material_costs_per_m2": material_costs,
+                    "fixed_costs": f_costs
+                }, f, indent=2)
+        except Exception as e:
+            print("Error saving initial precios_referencia.json:", e)
 
     fixed = FixedCosts(
         maquila_bolsas=float(f_costs.get("maquila_bolsas", 25.0)),

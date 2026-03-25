@@ -15,5 +15,12 @@ class BagCalculator(ABC):
     """
 
     @abstractmethod
-    def compute(self, inputs: QuoteInputs, fixed_costs: FixedCosts, material: Material) -> Dict[str, Any]:
+    def compute(self, inputs: QuoteInputs, config: Any, material: Material) -> Dict[str, Any]:
+        """Calcula costos y genera el SVG base."""
         raise NotImplementedError
+
+    def get_capabilities(self) -> Dict[str, Any]:
+        """Retorna las características técnicas de la bolsa (ej: tiene manijas)."""
+        return {
+            "has_handles": False
+        }

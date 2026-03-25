@@ -122,6 +122,7 @@ def quote(bag_type: str, material_code: str, inputs: dict):
             "bag_type": bag_type,
             "material_code": material_code,
             "chosen_band_code": chosen_band_code,
+            "capabilities": bag.get_capabilities(),
             "breakdown": breakdown,
             "costs_by_band": costs_by_band,
             "prices_by_band_before_iva": prices_before,

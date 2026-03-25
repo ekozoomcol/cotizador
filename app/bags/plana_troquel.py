@@ -118,3 +118,8 @@ class PlanaTroquelCalculator(PlanaManijaCalculator):
             "costs_by_band": costs_by_band,
             "svg_preview": svg,
         }
+
+    def get_capabilities(self) -> Dict[str, Any]:
+        return {
+            "has_handles": False
+        }

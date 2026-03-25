@@ -141,6 +141,11 @@ class PlanaManijaCalculator(BagCalculator):
             "svg_preview": svg,
         }
 
+    def get_capabilities(self) -> Dict[str, Any]:
+        return {
+            "has_handles": True
+        }
+
     def _svg_preview(self, ancho_cm: float, alto_cm: float, fuelle_cm: float) -> str:
         # Simple: rectángulo proporcional + flechas con texto
         # Normalizamos a un canvas 300x260
