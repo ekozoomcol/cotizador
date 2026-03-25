@@ -197,8 +197,10 @@
       if (data.chosen_band_code === code) {
         tr.style.background = '#e0f2fe';
         tr.style.fontWeight = 'bold';
-      } else if (r1.is_public === false) {
-        tr.style.display = 'none';
+      }
+      // Marcar visualmente los rangos corporativos privados con un texto tenue
+      if (r1.is_public === false) {
+        tr.style.opacity = '0.7';
       }
 
       tr.innerHTML = `
