@@ -226,10 +226,11 @@
     }
 
     .board>.card {
+      aspect-ratio: 3 / 4.5;
       display: flex;
       flex-direction: column;
-      overflow: visible;
-      padding: 24px;
+      overflow: hidden;
+      padding: 16px;
       /* Make it essentially a standalone poster */
     }
 
@@ -437,7 +438,7 @@
       background: rgba(255, 255, 255, 0.7);
       border: 2px solid var(--line);
       border-radius: var(--radius-lg);
-      padding: 24px;
+      padding: 14px;
       font-size: clamp(16px, 1.4vw, 20px);
       line-height: 1.6;
       margin-top: auto;
@@ -447,7 +448,7 @@
       display: flex;
       justify-content: space-between;
       border-bottom: 1px dashed var(--line);
-      padding: 8px 0;
+      padding: 4px 0;
     }
 
     .orderPanel div:last-of-type,
@@ -467,9 +468,9 @@
     }
 
     .total {
-      margin-top: 16px;
+      margin-top: 4px;
       border-top: 2px solid var(--brand);
-      padding-top: 16px !important;
+      padding-top: 8px !important;
       color: var(--brand);
       font-size: min(5vw, 52px);
       line-height: 1.1;
@@ -897,7 +898,7 @@
       display: flex;
       justify-content: space-between;
       align-items: center;
-      padding: 4px 0;
+      padding: 2px 0;
       border-bottom: 1px dashed #ddd;
     }
 
