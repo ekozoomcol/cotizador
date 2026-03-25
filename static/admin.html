@@ -192,106 +192,75 @@
   }
 
   function renderData(data) {
-    // 1. Render RAW JSON format
-    DOM.jsonV.textContent = JSON.stringify(data, null, 2);
+    try {
+      console.log("DEBUG: renderData received data", data);
+      // 1. Render RAW JSON format
+      if (DOM.jsonV) DOM.jsonV.textContent = JSON.stringify(data, null, 2);
 
-    // 2. Render Band Tables
-    const breakdown = data.breakdown || {};
-    const before = data.prices_by_band_before_iva || {};
-    const withIva = data.prices_by_band_with_iva || {};
-    const costs = data.costs_by_band || {};
-    
-    // Si no hay banda elegida predeterminada, escogemos la base
-    const chosenBandCode = data.chosen_band_code || Object.keys(before)[0];
-    const chosenCosts = costs[chosenBandCode] || {};
-    
-    DOM.tBands.innerHTML = '';
-    Object.keys(before).forEach(code => {
-      const r1 = before[code];
-      const r2 = withIva[code] || {};
-      const cst = costs[code] || {};
+      // 2. Render Band Tables
+      const breakdown = data.breakdown || {};
+      const before = data.prices_by_band_before_iva || {};
+      const withIva = data.prices_by_band_with_iva || {};
+      const costs = data.costs_by_band || {};
       
-      const tr = document.createElement('tr');
-      // Highlight row if qty falls in this band
-      const match = r1.label ? r1.label.match(/\d+/) : null;
-      const minQty = match ? Number(match[0]) : 0;
-      if (data.chosen_band_code === code) {
-        tr.style.background = '#e0f2fe';
-        tr.style.fontWeight = 'bold';
+      const chosenBandCode = data.chosen_band_code || (Object.keys(before).length > 0 ? Object.keys(before)[0] : null);
+      
+      if (DOM.tBands) {
+        DOM.tBands.innerHTML = '';
+        Object.keys(before).forEach(code => {
+          const r1 = before[code];
+          const r2 = withIva[code] || {};
+          const cst = costs[code] || {};
+          
+          const tr = document.createElement('tr');
+          if (data.chosen_band_code === code) {
+            tr.style.background = '#e0f2fe';
+            tr.style.fontWeight = 'bold';
+          }
+          if (r1.is_public === false) {
+            tr.style.opacity = '0.7';
+          }
+
+          tr.innerHTML = `
+            <td>${r1.label}</td>
+            <td class="val-money col-red">${money(cst.costo_real || 0)}</td>
+            <td class="val-pct">${pct(r1.margen_base_pct)}</td>
+            <td class="val-money">${breakdown.total_pasadas || 0}</td>
+            <td class="val-money">${money(r1.precio_pasada || 0)}</td>
+            <td class="val-money" style="color:#0891b2">${money(r1.costo_serigrafia || 0)} + ${money(r1.costo_dtf || 0)}</td>
+            <td class="val-pct col-green">${pct(r1.dto_L49_pct || 0)}</td>
+            <td class="val-pct fw-bold">${pct(r1.margen_real_pct || 0)}</td>
+            <td class="val-money fw-bold">${money(r1.precio_unitario_sin_iva || 0)}</td>
+            <td class="val-money" style="color:#9ca3af">${money((r2.precio_unitario_con_iva || 0) - (r1.precio_unitario_sin_iva || 0))}</td>
+            <td class="val-money fw-bold" style="color:#4f46e5">${money(r2.precio_unitario_con_iva || 0)}</td>
+          `;
+          DOM.tBands.appendChild(tr);
+        });
       }
-      // Marcar visualmente los rangos corporativos privados con un texto tenue
-      if (r1.is_public === false) {
-        tr.style.opacity = '0.7';
+
+      // 3. Render Anatomy
+      const areaFrente = breakdown.C14_area_frente || 0;
+      const areaAtras = breakdown.C16_area_atras || 0;
+      const areaDobles = breakdown.C15_area_dobles || 0;
+      const areaCuerpo = areaFrente + areaAtras + areaDobles;
+      
+      if (DOM.tAnat) {
+        DOM.tAnat.innerHTML = `
+          <tr><td>Área Fieltro Cuerpo (m²)</td><td class="val-money">${float(areaCuerpo)} m²</td></tr>
+          <tr><td>Área Manijas (m²)</td><td class="val-money">${float(breakdown.C13_area_2_manijas || 0)} m²</td></tr>
+          <tr><td>Área Total Material (m²)</td><td class="val-money">${float(breakdown.C17_area_total || 0)} m²</td></tr>
+          <tr><td>Costo Ref. M² del Material</td><td class="val-money">${money(breakdown.material_costo_por_m2 || 0)}</td></tr>
+          <tr style="background:#f9fafb;"><td class="fw-bold">TELA (C24)</td><td class="val-money col-red fw-bold">${money(breakdown.C24_tela || 0)}</td></tr>
+          <tr><td>DESPERDICIO TELA 10% (C25)</td><td class="val-money col-red">${money(breakdown.C25_desperdicio || 0)}</td></tr>
+          <tr style="background:#f4f4f5; border-bottom: 2px solid #e5e7eb;"><td class="fw-bold">TOTAL TELA (C26)</td><td class="val-money col-red fw-bold">${money(breakdown.C26_total_tela || 0)}</td></tr>
+          <tr><td>GASTOS FIJOS (C32) <br><small style="color:#6b7280; font-size:11px; font-weight:normal;">Maquila, Luz, Agua, Arriendo</small></td><td class="val-money col-red">${money(breakdown.C32_gastos_fijos || 0)}</td></tr>
+          <tr><td>OPERARIOS + OFICINA (C34)</td><td class="val-money col-red">${money(breakdown.C34_operarios_oficina || 0)}</td></tr>
+          <tr style="background:#fef2f2; border-top: 2px solid #ef4444;"><td class="fw-bold col-red">TOTAL COSTOS (C36)</td><td class="val-money col-red fw-bold" style="font-size:15px;">${money(breakdown.C36_total_costos || 0)}</td></tr>
+        `;
       }
-
-      tr.innerHTML = `
-        <td>${r1.label}</td>
-        <td class="val-money col-red">${money(cst.costo_real || 0)}</td>
-        <td class="val-pct">${pct(r1.margen_base_pct)}</td>
-        <td class="val-money">${breakdown.total_pasadas || 0}</td>
-        <td class="val-money">${money(r1.precio_pasada || 0)}</td>
-        <td class="val-money" style="color:#0891b2">${money(r1.costo_serigrafia)} + ${money(r1.costo_dtf)}</td>
-        <td class="val-pct col-green">${pct(r1.dto_L49_pct)}</td>
-        <td class="val-pct fw-bold">${pct(r1.margen_real_pct)}</td>
-        <td class="val-money fw-bold">${money(r1.precio_unitario_sin_iva)}</td>
-        <td class="val-money" style="color:#9ca3af">${money((r2.precio_unitario_con_iva || 0) - (r1.precio_unitario_sin_iva || 0))}</td>
-        <td class="val-money fw-bold" style="color:#4f46e5">${money(r2.precio_unitario_con_iva)}</td>
-      `;
-      DOM.tBands.appendChild(tr);
-    });
-
-    // 3. Render Anatomy (using exactly the Python schema keys)
-    const areaFrente = breakdown.C14_area_frente || 0;
-    const areaAtras = breakdown.C16_area_atras || 0;
-    const areaDobles = breakdown.C15_area_dobles || 0;
-    const areaCuerpo = areaFrente + areaAtras + areaDobles;
-    
-    const qty = Number(DOM.qty.value) || 1;
-    const qtyStr = qty > 100 ? data.chosen_band_code : 'Tramo Básico';
-
-    const anatomyHtml = `
-      <tr>
-        <td>Área Fieltro Cuerpo (m²)</td>
-        <td class="val-money">${float(areaCuerpo)} m²</td>
-      </tr>
-      <tr>
-        <td>Área Manijas (m²)</td>
-        <td class="val-money">${float(breakdown.C13_area_2_manijas || 0)} m²</td>
-      </tr>
-      <tr>
-        <td>Área Total Material (m²)</td>
-        <td class="val-money">${float(breakdown.C17_area_total || 0)} m²</td>
-      </tr>
-      <tr>
-        <td>Costo Ref. M² del Material</td>
-        <td class="val-money">${money(breakdown.material_costo_por_m2 || 0)}</td>
-      </tr>
-      <tr style="background:#f9fafb;">
-        <td class="fw-bold">TELA (C24)</td>
-        <td class="val-money col-red fw-bold">${money(breakdown.C24_tela || 0)}</td>
-      </tr>
-      <tr>
-        <td>DESPERDICIO TELA 10% (C25)</td>
-        <td class="val-money col-red">${money(breakdown.C25_desperdicio || 0)}</td>
-      </tr>
-      <tr style="background:#f4f4f5; border-bottom: 2px solid #e5e7eb;">
-        <td class="fw-bold">TOTAL TELA (C26)</td>
-        <td class="val-money col-red fw-bold">${money(breakdown.C26_total_tela || 0)}</td>
-      </tr>
-      <tr>
-        <td>GASTOS FIJOS (C32) <br><small style="color:#6b7280; font-size:11px; font-weight:normal;">Maquila, Luz, Agua, Arriendo</small></td>
-        <td class="val-money col-red">${money(breakdown.C32_gastos_fijos || 0)}</td>
-      </tr>
-      <tr>
-        <td>OPERARIOS + OFICINA (C34)</td>
-        <td class="val-money col-red">${money(breakdown.C34_operarios_oficina || 0)}</td>
-      </tr>
-      <tr style="background:#fef2f2; border-top: 2px solid #ef4444;">
-        <td class="fw-bold col-red">TOTAL COSTOS (C36)</td>
-        <td class="val-money col-red fw-bold" style="font-size:15px;">${money(breakdown.C36_total_costos || 0)}</td>
-      </tr>
-    `;
-    DOM.tAnat.innerHTML = anatomyHtml;
+    } catch (e) {
+      console.error("ERROR in renderData:", e);
+    }
   }
 
   function schedule() {
@@ -301,30 +270,28 @@
 
   // Bind events
   Object.values(DOM).forEach(el => {
-    if (el.tagName === 'INPUT' || el.tagName === 'SELECT') {
+    if (el && (el.tagName === 'INPUT' || el.tagName === 'SELECT')) {
       el.addEventListener('input', schedule);
     }
   });
 
   // Init
-  DOM.bagType.addEventListener('change', (e) => {
-    // Al cambiar tipo, sugerimos dimensiones estándar de prueba pero el usuario puede editarlas
-    if (e.target.value === 'PLANA_TROQUEL') {
-      DOM.ancho.value = 14;
-      DOM.alto.value = 20;
-    } else {
-      DOM.ancho.value = 35;
-      DOM.alto.value = 40;
-    }
-    schedule();
-  });
+  if (DOM.bagType) {
+    DOM.bagType.addEventListener('change', (e) => {
+      // Al cambiar tipo, sugerimos dimensiones estándar de prueba pero el usuario puede editarlas
+      if (e.target.value === 'PLANA_TROQUEL') {
+        DOM.ancho.value = 14;
+        DOM.alto.value = 20;
+      } else {
+        DOM.ancho.value = 35;
+        DOM.alto.value = 40;
+      }
+      schedule();
+    });
+  }
 
-  DOM.printType.addEventListener('change', (e) => {
-    document.getElementById('dtf_dims').style.display = (e.target.value === 'DTF' ? 'flex' : 'none');
-    schedule();
-  });
-
-  window.onload = fetchQuote;
+  // Ejecución inicial: Forzamos un fetch al cargar
+  fetchQuote();
 </script>
 </body>
 </html>
