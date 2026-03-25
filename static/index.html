@@ -2,10 +2,7 @@
 <html lang="es">
 
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>Cotizador EKOZOOM</title>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap');
 
@@ -670,10 +667,37 @@
 
       .board>.card {
         aspect-ratio: 3 / 4.5;
+        width: 100%;
+        max-width: 330px;
+        margin: 0 auto;
         display: flex;
         flex-direction: column;
         overflow: visible;
-        padding: 24px;
+        padding: 14px;
+      }
+      
+      .commercial-block {
+        margin-bottom: 6px;
+      }
+      
+      .priceHighlight {
+        padding: 8px 0;
+        margin-bottom: 8px;
+        font-size: min(5vw, 40px);
+      }
+      
+      .orderTitle {
+        margin-bottom: 8px;
+        padding-bottom: 0px !important;
+      }
+      
+      .price-table-area {
+        padding: 10px;
+        margin-bottom: 6px;
+      }
+      
+      .price-row {
+        padding: 2px 0;
       }
 
       #previewWrap {
@@ -1200,13 +1224,6 @@
 
   </div>
 
-  <div style="text-align: center; margin-bottom: 40px; padding: 0 20px;">
-    <button type="button" id="btnShot" style="background:#25D366; color:white; padding:16px 32px; border:none; border-radius:12px; font-weight:800; font-size:16px; cursor:pointer; box-shadow:0 4px 6px rgba(37,211,102,0.3); display:inline-flex; align-items:center; gap:8px;">
-      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
-      Guardar Poster HD (Para WhatsApp)
-    </button>
-  </div>
-
   <script>
     function v(id) { return document.getElementById(id).value; }
     function n(id) { return Number(v(id)); }
@@ -1324,26 +1341,6 @@
       setActive(normalizeHex(select.value));
       select.addEventListener("change", () => setActive(normalizeHex(select.value)));
     }
-
-    document.getElementById('btnShot').addEventListener('click', async () => {
-      const btn = document.getElementById('btnShot');
-      btn.innerText = "Generando Imagen...";
-      const flyer = document.getElementById('commercialFlyer');
-      const originalShadow = flyer.style.boxShadow;
-      flyer.style.boxShadow = 'none';
-      try {
-        const canvas = await html2canvas(flyer, { scale: 2, useCORS: true, backgroundColor: '#ffffff' });
-        flyer.style.boxShadow = originalShadow;
-        const link = document.createElement("a");
-        link.download = "Cotizacion_EKOZOOM.png";
-        link.href = canvas.toDataURL("image/png");
-        link.click();
-        btn.innerHTML = "✅ ¡Descargado! Busca en tu galería";
-      } catch (e) {
-        btn.innerHTML = `Error: ${e.message}`;
-      }
-      setTimeout(() => { btn.innerHTML = "Guardar Poster HD (Para WhatsApp)"; }, 3000);
-    });
 
     /** Mostrar/ocultar selectores según Caras y #colores */
     function syncLogoControlsUI() {
