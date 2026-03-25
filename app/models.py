@@ -6,22 +6,22 @@ BagType = Literal["PLANA_MANIJA", "PLANA_TROQUEL"]
 
 
 class QuoteInputs(BaseModel):
-    ancho_cm: float = Field(..., gt=0)
-    alto_cm: float = Field(..., gt=0)
-    fuelle_cm: float = Field(0, ge=0)
+    ancho_cm: float = Field(..., gt=0, le=2000)
+    alto_cm: float = Field(..., gt=0, le=2000)
+    fuelle_cm: float = Field(0, ge=0, le=1000)
 
     # Solo aplican a PLANA_MANIJA; para PLANA_TROQUEL se ignoran
-    manija1_cm: float = Field(0, ge=0)
-    manija2_cm: float = Field(0, ge=0)
-    ancho_manijas_cm: float = Field(0, ge=0)
+    manija1_cm: float = Field(0, ge=0, le=500)
+    manija2_cm: float = Field(0, ge=0, le=500)
+    ancho_manijas_cm: float = Field(0, ge=0, le=100)
 
-    dobles_cm: float = Field(0, ge=0)
+    dobles_cm: float = Field(0, ge=0, le=500)
 
-    caras: int = Field(0, ge=0)
-    tintas: int = Field(0, ge=0)
+    caras: int = Field(0, ge=0, le=2)
+    tintas: int = Field(0, ge=0, le=10)
     cola_produccion: float = Field(999999, ge=0)
 
-    material_code: str = Field("CAMBREL_70")
+    material_code: str = Field("CAMBREL_70", max_length=100)
 
     # Parámetros opcionales para afinar “espejo” sin tocar código:
     # (equivalentes a celdas que no estén claras aún)

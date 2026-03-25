@@ -9,7 +9,7 @@
   "fixed_costs": {
     "maquila_bolsas": 25.0,
     "luz": 50.0,
-    "agua": 10.0,
-    "arriendo": 75.0
+    "agua": 5.0,
+    "arriendo": 100.0
   }
 }
