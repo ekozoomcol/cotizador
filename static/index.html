@@ -426,8 +426,8 @@
     .orderTitle {
       text-align: center;
       font-size: clamp(26px, 2.8vw, 42px);
-      line-height: 1.45 !important;
-      padding-bottom: 12px !important;
+      line-height: normal !important;
+      padding-bottom: 2px !important;
       margin: 0 0 16px;
       color: #1e293b;
       font-weight: 800;
@@ -435,6 +435,7 @@
       letter-spacing: -0.5px;
       flex-shrink: 0;
       overflow: visible !important;
+      min-height: 38px;
     }
 
     .orderPanel {
@@ -781,12 +782,13 @@
       font-weight: 900;
       color: #1a1a1a;
       margin: 0;
-      line-height: 1.45 !important;
-      padding-bottom: 12px !important;
+      line-height: normal !important;
+      padding-bottom: 2px !important;
       text-transform: uppercase;
       flex-shrink: 0;
       word-wrap: break-word;
       overflow: visible !important;
+      min-height: 32px;
     }
 
     .block-title-area p {
@@ -1005,11 +1007,12 @@
     }
 
     #orderPreviewWrap {
-      flex: 1 1 30%;
-      min-height: 220px !important;
-      max-height: 55vh !important;
-      height: 100%;
+      flex: 1 1 auto;
+      min-height: 150px;
+      width: 100%;
+      height: auto;
       padding: 0;
+      margin: 10px 0;
       box-sizing: border-box;
       display: flex;
       align-items: center;
@@ -1153,8 +1156,8 @@
           <div id="flyerBadge" class="badge-promo">✔ Incluye logo 1 tinta (1 cara)</div>
         </div>
 
-        <!-- BLOQUE 5: IMAGEN HERO (MOVIDO ARRIBA) -->
-        <div class="commercial-block image-block" style="height: 250px; min-height: 250px; padding: 0;">
+        <!-- BLOQUE 5: IMAGEN HERO -->
+        <div class="commercial-block image-block" style="flex: 1 1 auto; min-height: 150px; padding: 0;">
           <div id="previewWrap">
             <div id="previewGrid"></div>
           </div>
