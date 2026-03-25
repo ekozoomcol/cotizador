@@ -261,7 +261,7 @@
       color: var(--brand-dark);
       border: 1px solid #c7d2fe;
       border-radius: var(--radius-md);
-      font-size: clamp(18px, 6vw, 24px);
+      font-size: clamp(14px, 1.1vw, 18px);
       font-weight: 700;
       padding: 8px 16px;
       margin: 0 auto 16px;
@@ -276,7 +276,7 @@
       width: 100%;
       text-align: center;
       background: linear-gradient(135deg, #10b981 0%, #059669 100%);
-      font-size: clamp(32px, 9vw, 48px);
+      font-size: min(4.5vw, 44px);
       border-radius: var(--radius-lg);
       padding: 12px 0px;
       line-height: 1.1;
@@ -411,7 +411,7 @@
     }
 
     .previewDims {
-      font-size: clamp(20px, 6vw, 24px);
+      font-size: 13px;
       color: #64748b;
       text-align: center;
       font-weight: 600;
@@ -420,7 +420,7 @@
 
     .orderTitle {
       text-align: center;
-      font-size: clamp(28px, 9vw, 46px);
+      font-size: min(5vw, 38px);
       word-break: break-word;
       line-height: normal !important;
       padding-bottom: 2px !important;
@@ -439,7 +439,7 @@
       border: 2px solid var(--line);
       border-radius: var(--radius-lg);
       padding: 24px;
-      font-size: clamp(22px, 7vw, 28px);
+      font-size: clamp(16px, 1.4vw, 20px);
       line-height: 1.6;
       margin-top: auto;
     }
@@ -472,7 +472,7 @@
       border-top: 2px solid var(--brand);
       padding-top: 16px !important;
       color: var(--brand);
-      font-size: clamp(40px, 12vw, 64px);
+      font-size: min(5vw, 52px);
       line-height: 1.1;
       font-weight: 900;
       text-align: center;
@@ -684,12 +684,53 @@
       .priceHighlight {
         padding: 10px 0;
         margin-bottom: 12px;
-        font-size: clamp(32px, 9.5vw, 48px);
+        font-size: clamp(28px, 9vw, 40px) !important;
       }
       
       .orderTitle {
         margin-bottom: 8px;
         padding-bottom: 0px !important;
+        font-size: clamp(26px, 8vw, 38px) !important;
+      }
+      
+      .total {
+        font-size: clamp(36px, 10vw, 52px) !important;
+      }
+
+      .block-title-area h2 {
+        font-size: clamp(26px, 8vw, 36px) !important;
+      }
+
+      .badge-promo {
+        font-size: clamp(18px, 6vw, 24px) !important;
+      }
+
+      .price-qty {
+        font-size: clamp(22px, 7.5vw, 28px) !important;
+      }
+
+      .price-val {
+        font-size: clamp(26px, 8.5vw, 36px) !important;
+      }
+
+      .orderPanel {
+        font-size: clamp(22px, 7vw, 28px) !important;
+      }
+
+      .benefit-item {
+        font-size: clamp(18px, 6vw, 24px) !important;
+      }
+
+      .previewDims {
+        font-size: clamp(20px, 6vw, 24px) !important;
+      }
+
+      .logoLegend {
+        font-size: clamp(20px, 6vw, 24px) !important;
+      }
+
+      .price-table-title {
+        font-size: clamp(18px, 5vw, 22px) !important;
       }
       
       .price-table-area {
@@ -701,20 +742,12 @@
         padding: 2px 0;
       }
 
-      #previewWrap {
-        border-radius: 20px;
-        border: none;
-        background: transparent;
-        padding: 0;
-        flex: 1 1 auto;
-        min-height: 250px;
-        max-height: 400px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        overflow: hidden;
-        margin: 0;
-        width: 100%;
+      .image-block, #orderPreviewWrap {
+        flex: 1 1 auto !important;
+        aspect-ratio: 1 / 1 !important;
+        max-height: 480px !important;
+        max-width: 440px !important;
+        margin: 0 auto !important;
       }
 
       #previewWrap {
@@ -722,15 +755,13 @@
         border: none;
         background: transparent;
         padding: 0;
-        flex: 1 1 auto;
-        min-height: 250px;
-        max-height: 400px;
         display: flex;
         align-items: center;
         justify-content: center;
         overflow: hidden;
         margin: 0;
         width: 100%;
+        height: 100%;
       }
     }
   </style>
@@ -802,7 +833,7 @@
     }
 
     .block-title-area h2 {
-      font-size: clamp(28px, 9vw, 42px);
+      font-size: min(4vw, 32px);
       word-break: break-word;
       font-weight: 900;
       color: #1a1a1a;
@@ -817,7 +848,7 @@
     }
 
     .block-title-area p {
-      font-size: clamp(16px, 5vw, 20px);
+      font-size: 14px;
       opacity: 0.7;
       margin: 4px 0 0 0;
       font-weight: 500;
@@ -829,7 +860,7 @@
       color: #2e7d32;
       padding: 6px 14px;
       border-radius: 20px;
-      font-size: clamp(18px, 6vw, 24px);
+      font-size: 13px;
       font-weight: 700;
       margin-top: 12px;
       border: 1px solid #c8e6c9;
@@ -843,7 +874,7 @@
     }
 
     .price-table-title {
-      font-size: clamp(16px, 5vw, 20px);
+      font-size: 11px;
       font-weight: 800;
       color: #888;
       text-transform: uppercase;
@@ -872,13 +903,12 @@
     .price-qty {
       font-weight: 600;
       color: #444;
-      font-size: clamp(20px, 7.5vw, 28px);
     }
 
     .price-val {
       font-weight: 900;
       color: #111827;
-      font-size: clamp(26px, 8.5vw, 36px);
+      font-size: clamp(12px, 4vw, 24px);
       letter-spacing: -0.5px;
     }
 
@@ -893,7 +923,7 @@
       display: flex;
       align-items: center;
       gap: 8px;
-      font-size: clamp(18px, 6vw, 24px);
+      font-size: 12px;
       font-weight: 600;
       color: #444;
     }
@@ -1034,12 +1064,11 @@
 
     #orderPreviewWrap {
       flex: 1 1 auto;
-      max-height: 480px;
-      aspect-ratio: 1 / 1;
+      min-height: 150px;
       width: 100%;
       height: auto;
       padding: 0;
-      margin: 10px auto;
+      margin: 10px 0;
       box-sizing: border-box;
       display: flex;
       align-items: center;
@@ -1184,7 +1213,7 @@
         </div>
 
         <!-- BLOQUE 5: IMAGEN HERO -->
-        <div class="commercial-block image-block" style="flex: 1 1 auto; aspect-ratio: 1 / 1; max-width: 440px; max-height: 480px; margin: 0 auto; padding: 0;">
+        <div class="commercial-block image-block" style="flex: 1 1 auto; min-height: 150px; padding: 0;">
           <div id="previewWrap">
             <div id="previewGrid"></div>
           </div>
