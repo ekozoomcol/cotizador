@@ -8,7 +8,7 @@ from app.pricing.bands import PricingBand
 class FixedCosts:
     maquila_bolsas: float = 25
     luz: float = 50
-    agua: float = 5
+    agua: float = 10.0
     arriendo: float = 75.0
 
     @property
@@ -41,7 +41,7 @@ def default_config() -> GlobalConfig:
     f_costs = {
         "maquila_bolsas": 25.0,
         "luz": 50.0,
-        "agua": 5.0,
+        "agua": 10.0,
         "arriendo": 75.0
     }
 
