@@ -228,8 +228,7 @@
     }
 
     .board>.card {
-      container-type: inline-size;
-      aspect-ratio: 9 / 16;
+      aspect-ratio: 3 / 4.5;
       display: flex;
       flex-direction: column;
       overflow: hidden;
@@ -279,7 +278,7 @@
       width: 100%;
       text-align: center;
       background: linear-gradient(135deg, #10b981 0%, #059669 100%);
-      font-size: clamp(10px, 4.5vw, 44px);
+      font-size: min(6vw, 44px);
       border-radius: var(--radius-lg);
       padding: 12px 0px;
       line-height: 1.1;
@@ -423,7 +422,8 @@
 
     .orderTitle {
       text-align: center;
-      font-size: clamp(10px, 4vw, 38px);
+      font-size: min(7vw, 38px);
+      word-break: break-word;
       line-height: normal !important;
       padding-bottom: 2px !important;
       margin: 0 0 16px;
@@ -474,7 +474,7 @@
       border-top: 2px solid var(--brand);
       padding-top: 16px !important;
       color: var(--brand);
-      font-size: clamp(16px, 5.5vw, 52px);
+      font-size: min(7vw, 52px);
       line-height: 1.1;
       font-weight: 900;
       text-align: center;
@@ -668,11 +668,10 @@
       }
 
       .board>.card {
-        container-type: inline-size;
-        aspect-ratio: 9 / 16;
+        aspect-ratio: 3 / 4.5;
         display: flex;
         flex-direction: column;
-        overflow: hidden;
+        overflow: visible;
         padding: 24px;
       }
 
@@ -777,7 +776,8 @@
     }
 
     .block-title-area h2 {
-      font-size: clamp(10px, 4vw, 32px);
+      font-size: min(6.5vw, 32px);
+      word-break: break-word;
       font-weight: 900;
       color: #1a1a1a;
       margin: 0;
