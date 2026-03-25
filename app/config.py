@@ -23,6 +23,7 @@ class GlobalConfig:
     cola_produccion_global: float = 5000.0
     nomina_diaria: float = 1500000.0
     extra_global_discount_pct: float = 0.0
+    serigrafia_precios: Dict[str, float] = None # Se inicializa en default_config
 
 def default_config() -> GlobalConfig:
     import json
@@ -98,11 +99,23 @@ def default_config() -> GlobalConfig:
         PricingBand(code="B200_299",     label="200-299",    margen_base_pct=48, redondeo=20, is_public=True),
     ]
 
+    serigrafia_precios = {
+        "B50000P": 210.0,
+        "B30000_49999": 210.0,
+        "B11000_29999": 210.0,
+        "B5500_10999": 230.0,
+        "B1500_5499": 230.0,
+        "B500_1499": 250.0,
+        "B300_499": 250.0,
+        "B200_299": 300.0,
+    }
+
     return GlobalConfig(
         fixed_costs=fixed,
         materials=materials,
         bands=bands,
         cola_produccion_global=cola_produccion_global,
         nomina_diaria=nomina_diaria,
-        extra_global_discount_pct=0.0
+        extra_global_discount_pct=0.0,
+        serigrafia_precios=serigrafia_precios
     )

@@ -27,6 +27,31 @@ def quote(bag_type: str, material_code: str, inputs: dict):
         normalized_inputs["cantidad"] = cantidad
 
         quote_inputs = QuoteInputs(**normalized_inputs)
+        
+        # Calcular total de pasadas (Serigrafía)
+        total_pasadas = 0
+        costo_dtf_unitario = 0.0
+        
+        if quote_inputs.print_type == "DTF":
+            # Lógica DTF: 5800 cm2 por metro ($22.500) + $400 operario
+            w_eff = quote_inputs.dtf_ancho_cm + 3.0
+            h_eff = quote_inputs.dtf_alto_cm + 3.0
+            area_eff = w_eff * h_eff
+            if area_eff > 0:
+                logos_por_metro = math.floor(5800.0 / area_eff)
+                if logos_por_metro < 1: logos_por_metro = 1
+                costo_sticker = 22500.0 / logos_por_metro
+                costo_dtf_unitario = costo_sticker + 400.0
+            total_pasadas = 0 # No hay pasadas en DTF
+        else:
+            # Lógica Serigrafía existente
+            if quote_inputs.caras == 0:
+                total_pasadas = 0
+            elif quote_inputs.caras == 1:
+                total_pasadas = quote_inputs.tintas_c1
+            else:
+                total_pasadas = quote_inputs.tintas_c1 + quote_inputs.tintas_c2
+
         raw = bag.compute(quote_inputs, config=cfg, material=material)
 
         breakdown = dict(raw.get("excel", {}))
@@ -39,6 +64,10 @@ def quote(bag_type: str, material_code: str, inputs: dict):
         P2 = float(cfg.cola_produccion_global)
         dto_l49 = float(discounts.dto_final_L49(E5, F5, P2))
         breakdown["L49_dto_final_pct"] = dto_l49
+        breakdown["total_pasadas"] = total_pasadas
+        breakdown["print_type"] = quote_inputs.print_type
+        if quote_inputs.print_type == "DTF":
+            breakdown["costo_dtf_por_cara"] = costo_dtf_unitario
 
         prices_before = {}
         prices_with_iva = {}
@@ -56,6 +85,18 @@ def quote(bag_type: str, material_code: str, inputs: dict):
                 if denom <= 0: denom = 0.01
                 unit_before = math.ceil(c36 / denom / float(band.redondeo)) * band.redondeo
             
+            # Adición de Impresión (Serigrafía o DTF)
+            if quote_inputs.print_type == "DTF":
+                impresion_total = costo_dtf_unitario * quote_inputs.caras
+                precio_pasada = 0
+                costo_serigrafia_total = 0
+            else:
+                precio_pasada = cfg.serigrafia_precios.get(band.code, 0)
+                costo_serigrafia_total = total_pasadas * precio_pasada
+                impresion_total = costo_serigrafia_total
+            
+            unit_before += impresion_total
+
             unit_with_iva = round(unit_before * 1.19)
 
             prices_before[band.code] = {
@@ -64,6 +105,9 @@ def quote(bag_type: str, material_code: str, inputs: dict):
                 "dto_L49_pct": dto_l49,
                 "margen_real_pct": rentabilidad,
                 "precio_unitario_sin_iva": int(round(unit_before)),
+                "costo_serigrafia": int(costo_serigrafia_total),
+                "precio_pasada": int(precio_pasada),
+                "costo_dtf": int(impresion_total) if quote_inputs.print_type == "DTF" else 0,
                 "is_public": band.is_public
             }
             prices_with_iva[band.code] = {

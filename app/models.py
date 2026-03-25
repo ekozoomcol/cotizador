@@ -18,8 +18,14 @@ class QuoteInputs(BaseModel):
     dobles_cm: float = Field(0, ge=0, le=500)
 
     caras: int = Field(0, ge=0, le=2)
-    tintas: int = Field(0, ge=0, le=10)
+    tintas: int = Field(0, ge=0, le=10) # Para compatibilidad, seguirá representyando la cantidad de colores (max)
+    tintas_c1: int = Field(0, ge=0, le=10)
+    tintas_c2: int = Field(0, ge=0, le=10)
     cola_produccion: float = Field(999999, ge=0)
+
+    print_type: str = Field("SERIGRAFIA", max_length=20) # SERIGRAFIA o DTF
+    dtf_ancho_cm: float = Field(10, ge=0)
+    dtf_alto_cm: float = Field(10, ge=0)
 
     material_code: str = Field("CAMBREL_70", max_length=100)
 
