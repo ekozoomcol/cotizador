@@ -75,7 +75,8 @@
 
     .card {
       border: 1px solid var(--card-border);
-      border-radius: 8px; /* Tighter for WhatsApp screenshots */
+      border-radius: 8px;
+      /* Tighter for WhatsApp screenshots */
       background: var(--card-bg);
       backdrop-filter: blur(24px);
       -webkit-backdrop-filter: blur(24px);
@@ -680,23 +681,23 @@
         overflow: visible;
         padding: 24px;
       }
-      
+
       .commercial-block {
         margin-bottom: 6px;
       }
-      
+
       .priceHighlight {
         padding: 10px 0;
         margin-bottom: 12px;
         font-size: clamp(28px, 9vw, 40px) !important;
       }
-      
+
       .orderTitle {
         margin-bottom: 8px;
         padding-bottom: 0px !important;
         font-size: clamp(26px, 8vw, 38px) !important;
       }
-      
+
       .total {
         font-size: clamp(36px, 10vw, 52px) !important;
       }
@@ -736,17 +737,18 @@
       .price-table-title {
         font-size: clamp(18px, 5vw, 22px) !important;
       }
-      
+
       .price-table-area {
         padding: 10px;
         margin-bottom: 6px;
       }
-      
+
       .price-row {
         padding: 2px 0;
       }
 
-      .image-block, #orderPreviewWrap {
+      .image-block,
+      #orderPreviewWrap {
         flex: 1 1 auto !important;
         aspect-ratio: 1 / 1 !important;
         max-height: 480px !important;
@@ -773,36 +775,55 @@
     /* Controles de fondo en línea - movido fuera de media query para disponibilidad global */
     .bg-controls-inline {
       display: flex;
-      gap: 8px;
-      background: #fff;
-      padding: 4px 8px;
-      border-radius: 8px;
-      border: 1px solid #ddd;
-      box-shadow: var(--shadow-sm);
+      gap: 6px;
+      background: #f1f5f9;
+      padding: 4px;
+      border-radius: 10px;
+      border: 1px solid #e2e8f0;
+      width: fit-content;
       align-items: center;
-      margin-top: 4px;
+      margin-top: 6px;
     }
 
     .bg-controls-inline button {
-      width: 32px;
-      height: 28px;
-      border-radius: 4px;
-      border: 1px solid #ccc;
-      background: #f8fafc;
+      height: 32px;
+      border-radius: 6px;
+      border: none;
+      background: #ffffff;
       color: #1e293b;
-      font-weight: 800;
+      font-weight: 700;
       cursor: pointer;
       display: flex;
       align-items: center;
       justify-content: center;
       transition: all 0.2s;
-      font-size: 14px;
+      font-size: 13px;
+      box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+      font-family: 'Plus Jakarta Sans', sans-serif;
     }
 
     .bg-controls-inline button:hover {
-      background: var(--brand);
-      color: white;
-      border-color: var(--brand);
+      background: #f8fafc;
+      color: var(--brand);
+      transform: translateY(-1px);
+      box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+    }
+
+    .bg-controls-inline button:active {
+      transform: translateY(0);
+      box-shadow: none;
+    }
+
+    #btnToggleFondo {
+      padding: 0 12px;
+      gap: 8px;
+      min-width: 90px;
+    }
+
+    .bg-controls-inline button[onclick*="prev"],
+    .bg-controls-inline button[onclick*="next"] {
+      width: 32px;
+      font-size: 16px;
     }
   </style>
   <style>
@@ -864,6 +885,7 @@
     #previewGrid .previewSvg svg {
       transform: scale(1.12) translateY(1%);
     }
+
     #orderPreviewGrid .previewSvg svg {
       transform: scale(1.05);
     }
@@ -1072,7 +1094,7 @@
     }
 
     .image-block .previewItem {
-      width: 90%;
+      width: 100%;
       height: 100%;
       display: flex;
       flex-direction: column;
@@ -1099,7 +1121,8 @@
     }
 
     /* HERO IMAGE SCALING DESKTOP & GLOBAL */
-    .image-block, #orderPreviewWrap {
+    .image-block,
+    #orderPreviewWrap {
       aspect-ratio: 1 / 1 !important;
       min-height: 0 !important;
       flex: 1 1 auto !important;
@@ -1109,7 +1132,7 @@
       justify-content: center;
       align-items: center;
     }
-    
+
     /* Ensure the wraps are constrained heavily */
     #previewWrap {
       width: 100%;
@@ -1141,24 +1164,148 @@
 
     <div class="card topForm compact-form">
       <style>
-        .compact-form { padding: 12px 16px !important; margin-bottom: 12px !important; }
-        .compact-form h3 { margin: 0 0 10px 0 !important; font-size: 14px !important; border-bottom: none !important;}
-        .compact-row { display: flex; gap: 10px; margin-bottom: 8px; }
-        .compact-row:last-of-type { margin-bottom: 0; }
-        .compact-row > div { flex: 1; min-width: 0; }
-        .compact-form label { font-size: 11px !important; margin-bottom: 2px !important; white-space: nowrap; font-weight: 600; display: block; }
-        /* Forced Row Layouts */
-        .forced-row { display: grid; gap: 10px; align-items: flex-end; margin-bottom: 8px; }
-        .grid-4 { grid-template-columns: repeat(4, 1fr); }
-        .grid-2 { grid-template-columns: 1fr 1fr; }
+        .compact-form {
+          padding: 12px 16px !important;
+          margin-bottom: 12px !important;
+        }
 
-        /* Compact Swatches */
-        .color-swatch-group { display: flex; flex-direction: column; gap: 2px; flex: 1; }
-        .swatch-grid { display: grid; grid-template-columns: repeat(14, 1fr); gap: 3px; width: 100%; border: 1px solid #f1f5f9; padding: 4px; border-radius: 6px; background: #fff; }
-        .swatch { width: 22px !important; height: 22px !important; border-width: 1.5px !important; }
-        .swatch.active { border-color: #4f46e5 !important; box-shadow: 0 0 0 1px rgba(79, 70, 229, 0.2) !important; }
-        
-        .compact-row div { min-width: 0 !important; } /* Force shrink */
+        .compact-form h3 {
+          margin: 0 0 10px 0 !important;
+          font-size: 14px !important;
+          border-bottom: none !important;
+        }
+
+        .compact-row {
+          display: flex;
+          gap: 10px;
+          margin-bottom: 8px;
+        }
+
+        .compact-row:last-of-type {
+          margin-bottom: 0;
+        }
+
+        .compact-row>div {
+          flex: 1;
+          min-width: 0;
+        }
+
+        .compact-form label {
+          font-size: 11px !important;
+          margin-bottom: 2px !important;
+          white-space: nowrap;
+          font-weight: 600;
+          display: block;
+        }
+
+        /* Forced Row Layouts */
+        .forced-row {
+          display: grid;
+          gap: 10px;
+          align-items: flex-end;
+          margin-bottom: 8px;
+        }
+
+        .grid-4 {
+          grid-template-columns: repeat(4, 1fr);
+        }
+
+        .grid-2 {
+          grid-template-columns: 1fr 1fr;
+        }
+
+        /* Premium Chips (Segmented Control) */
+        .row-chips {
+          display: flex;
+          background: #f1f5f9;
+          padding: 3px;
+          border-radius: 10px;
+          gap: 2px;
+          border: 1px solid #e2e8f0;
+          width: fit-content;
+          margin-top: 4px;
+        }
+
+        .btn-chip {
+          border: none;
+          background: transparent;
+          padding: 6px 14px;
+          border-radius: 7px;
+          font-size: 13px;
+          font-weight: 700;
+          color: #64748b;
+          cursor: pointer;
+          transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+          min-width: 40px;
+          font-family: 'Plus Jakarta Sans', sans-serif;
+        }
+
+        .btn-chip:hover {
+          background: rgba(255, 255, 255, 0.6);
+          color: #1e293b;
+        }
+
+        .btn-chip.active {
+          background: #ffffff;
+          color: var(--brand);
+          box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05), 0 1px 2px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Enhanced Swatches */
+        .color-swatch-group {
+          display: flex;
+          flex-direction: column;
+          gap: 2px;
+          flex: 1;
+        }
+
+        .swatch-grid {
+          display: grid;
+          grid-template-columns: repeat(14, 1fr);
+          gap: 3px;
+          width: 100%;
+          border: 1px solid #f1f5f9;
+          padding: 4px;
+          border-radius: 6px;
+          background: #fff;
+        }
+
+        .swatch {
+          width: 22px !important;
+          height: 22px !important;
+          border-width: 1.5px !important;
+          border-radius: 4px !important;
+          cursor: pointer;
+          transition: transform 0.2s ease, border-color 0.2s ease;
+        }
+
+        .swatch:hover {
+          transform: scale(1.1);
+        }
+
+        .swatch.active {
+          border-color: var(--brand) !important;
+          box-shadow: 0 0 0 2px #fff, 0 0 0 4px var(--brand-light) !important;
+          transform: scale(1.2);
+          z-index: 5;
+        }
+
+        .selected-color-badge {
+          font-size: 10px;
+          background: var(--brand-light);
+          color: var(--brand-dark);
+          padding: 1px 6px;
+          border-radius: 999px;
+          margin-left: 6px;
+          font-weight: 700;
+          text-transform: uppercase;
+        }
+
+        .compact-row div {
+          min-width: 0 !important;
+        }
+
+        /* Force shrink */
       </style>
       <h3>Datos de cotización (arriba)</h3>
 
@@ -1195,13 +1342,15 @@
             <option value="CAMBREL_80">Cambrel 80gr</option>
           </select>
         </div>
-        <div id="row_manijas"><label>Largo Manija</label><input id="largo_arco_visual" type="number" value="40" min="10" max="300"></div>
+        <div id="row_manijas"><label>Largo Manija</label><input id="largo_arco_visual" type="number" value="40" min="10"
+            max="300"></div>
       </div>
 
       <!-- Fila 3: Colores Tela y Manija (Compacto) -->
       <div class="forced-row grid-2 compact-row" style="align-items: flex-start; gap: 15px;">
         <div class="color-swatch-group">
-          <label style="margin-bottom: 4px;">Color tela</label>
+          <label style="margin-bottom: 4px; display: flex; align-items: center;">Color tela <span id="label_color_hex"
+              class="selected-color-badge"></span></label>
           <div id="swatches_color_hex" class="swatch-grid"></div>
           <select id="color_hex" style="display:none;">
             <option value="#FFFFFF">Blanco</option>
@@ -1239,8 +1388,10 @@
 
         <div id="handle_color_container" class="color-swatch-group" style="display: none;">
           <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 4px;">
-            <label style="margin: 0;">Color manija</label>
-            <label style="font-size: 11px; font-weight: normal; cursor: pointer; display: flex; align-items: center; gap: 4px; color: #666;">
+            <label style="margin: 0; display: flex; align-items: center;">Color manija <span id="label_handle_color_hex"
+                class="selected-color-badge"></span></label>
+            <label
+              style="font-size: 11px; font-weight: normal; cursor: pointer; display: flex; align-items: center; gap: 4px; color: #666;">
               <input type="checkbox" id="sync_handle_color" checked> Igual que tela
             </label>
           </div>
@@ -1253,9 +1404,17 @@
       <div class="row compact-row">
         <div style="flex: 1;">
           <label>Fondo Realista</label>
-          <div class="bg-controls-inline" style="justify-content: flex-start; gap: 10px;">
+          <div class="bg-controls-inline">
             <button type="button" onclick="prevFondo()" title="Fondo anterior">&larr;</button>
-            <button type="button" onclick="toggleFondo()" id="btnToggleFondo" title="Quitar/Poner fondo">🖼️ Fondo</button>
+            <button type="button" onclick="toggleFondo()" id="btnToggleFondo" title="Quitar/Poner fondo">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                stroke-linecap="round" stroke-linejoin="round">
+                <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
+                <circle cx="8.5" cy="8.5" r="1.5"></circle>
+                <polyline points="21 15 16 10 5 21"></polyline>
+              </svg>
+              Fondo
+            </button>
             <button type="button" onclick="nextFondo()" title="Siguiente fondo">&rarr;</button>
           </div>
         </div>
@@ -1264,10 +1423,13 @@
       <details class="adv">
         <summary>Opciones avanzadas (logo y producción)</summary>
         <div class="subTitle">Personalización por Cara</div>
-        
+
         <!-- CARA 1 (FRENTE) -->
-        <div id="side_1_controls" style="background: rgba(248,250,252,0.8); padding: 12px; border-radius: 12px; border: 1px solid #e2e8f0; margin-bottom: 12px;">
-          <div style="font-weight: 800; font-size: 13px; color: #475569; margin-bottom: 10px; text-transform: uppercase; letter-spacing: 0.5px;">Cara Frente</div>
+        <div id="side_1_controls"
+          style="background: rgba(248,250,252,0.8); padding: 12px; border-radius: 12px; border: 1px solid #e2e8f0; margin-bottom: 12px;">
+          <div
+            style="font-weight: 800; font-size: 13px; color: #475569; margin-bottom: 10px; text-transform: uppercase; letter-spacing: 0.5px;">
+            Cara Frente</div>
           <div class="row" style="gap: 15px;">
             <div style="flex: 1;">
               <label>Serigrafía (Tintas)</label>
@@ -1286,8 +1448,9 @@
               </label>
             </div>
           </div>
-          
-          <div id="dtf_c1_dims" style="display:none; margin-top: 10px; padding-top: 10px; border-top: 1px dashed #cbd5e1;">
+
+          <div id="dtf_c1_dims"
+            style="display:none; margin-top: 10px; padding-top: 10px; border-top: 1px dashed #cbd5e1;">
             <div class="row" style="gap: 10px;">
               <div><label>Ancho (cm)</label><input id="dtf_c1_w" type="number" value="15" min="1"></div>
               <div><label>Alto (cm)</label><input id="dtf_c1_h" type="number" value="15" min="1"></div>
@@ -1303,8 +1466,11 @@
         </div>
 
         <!-- CARA 2 (TRASERA) -->
-        <div id="side_2_controls" style="background: rgba(248,250,252,0.8); padding: 12px; border-radius: 12px; border: 1px solid #e2e8f0; margin-bottom: 12px;">
-          <div style="font-weight: 800; font-size: 13px; color: #475569; margin-bottom: 10px; text-transform: uppercase; letter-spacing: 0.5px;">Cara Trasera</div>
+        <div id="side_2_controls"
+          style="background: rgba(248,250,252,0.8); padding: 12px; border-radius: 12px; border: 1px solid #e2e8f0; margin-bottom: 12px;">
+          <div
+            style="font-weight: 800; font-size: 13px; color: #475569; margin-bottom: 10px; text-transform: uppercase; letter-spacing: 0.5px;">
+            Cara Trasera</div>
           <div class="row" style="gap: 15px;">
             <div style="flex: 1;">
               <label>Serigrafía (Tintas)</label>
@@ -1323,8 +1489,9 @@
               </label>
             </div>
           </div>
-          
-          <div id="dtf_c2_dims" style="display:none; margin-top: 10px; padding-top: 10px; border-top: 1px dashed #cbd5e1;">
+
+          <div id="dtf_c2_dims"
+            style="display:none; margin-top: 10px; padding-top: 10px; border-top: 1px dashed #cbd5e1;">
             <div class="row" style="gap: 10px;">
               <div><label>Ancho (cm)</label><input id="dtf_c2_w" type="number" value="15" min="1"></div>
               <div><label>Alto (cm)</label><input id="dtf_c2_h" type="number" value="15" min="1"></div>
@@ -1338,80 +1505,87 @@
             <div id="wrap_c2_4"><label>C4</label><input type="color" id="logo_c2_4" value="#FF7A00"></div>
           </div>
         </div>
-      </div><!-- end serigrafia_settings -->
+    </div><!-- end serigrafia_settings -->
 
-        <div class="row">
-          <div><label>Cola producción (P2)</label><input id="cola_produccion" type="number" value="25000"></div>
+    <div class="row">
+      <div><label>Cola producción (P2)</label><input id="cola_produccion" type="number" value="25000"></div>
+    </div>
+    </details>
+
+    <div style="display: flex; align-items: center; justify-content: space-between; gap: 10px; flex-wrap: wrap;">
+      <p id="status" class="muted" style="margin:0;">Listo.</p>
+    </div>
+  </div>
+
+  <div class="board">
+    <div class="card" id="commercialFlyer">
+      <!-- BLOQUE 1: TÍTULO + VALOR -->
+      <div class="commercial-block block-title-area">
+        <h2 id="flyerTitle">BOLSA CAMBREL</h2>
+        <p id="flyerSubtitle">Manija reforzada • Termosellada</p>
+        <div id="flyerBadge" class="badge-promo">✔ Incluye logo 1 tinta (1 cara)</div>
+      </div>
+
+      <div class="commercial-block image-block"
+        style="flex: 1 1 auto; min-height: 150px; padding: 0; position: relative;">
+        <div id="previewWrap">
+          <div id="previewGrid"></div>
         </div>
-      </details>
+      </div>
 
-      <div style="display: flex; align-items: center; justify-content: space-between; gap: 10px; flex-wrap: wrap;">
-        <p id="status" class="muted" style="margin:0;">Listo.</p>
+      <!-- BLOQUE 2: PRECIOS POR CANTIDAD -->
+      <div class="commercial-block price-table-area">
+        <span class="price-table-title" style="color: #4f46e5; font-size: 13px;">💪 TU MEJOR ESCALA DE PRECIOS:</span>
+        <div id="flyerPriceGrid" class="price-grid"></div>
+        <p id="flyerIvaNote"
+          style="font-size: 16px; margin-top: 5px; font-weight: 800; color: #666; text-align: right;">+ IVA</p>
+      </div>
+
+      <!-- BLOQUE 3: ANCLA COMERCIAL SIMPLIFICADA -->
+      <div class="commercial-block"
+        style="background:#eef2ff; padding: 12px; border-radius: 8px; text-align: center; border: 1px dashed #c7d2fe; margin-bottom: 0;">
+        <span id="benefit-diseno"
+          style="font-size: 14px; font-weight: 800; color: #4338ca; display: flex; align-items: center; justify-content: center; gap: 6px;">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"
+            stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="20 6 9 17 4 12"></polyline>
+          </svg>
+          Diseño Profesional Incluido
+        </span>
+        <span style="font-size: 12px; font-weight: 700; color: #6366f1; margin-top: 4px; display: block;">⚡ Producción
+          rápida · 📦 Envíos a todo el país</span>
       </div>
     </div>
-
-    <div class="board">
-      <div class="card" id="commercialFlyer">
-        <!-- BLOQUE 1: TÍTULO + VALOR -->
-        <div class="commercial-block block-title-area">
-          <h2 id="flyerTitle">BOLSA CAMBREL</h2>
-          <p id="flyerSubtitle">Manija reforzada • Termosellada</p>
-          <div id="flyerBadge" class="badge-promo">✔ Incluye logo 1 tinta (1 cara)</div>
-        </div>
-
-        <div class="commercial-block image-block" style="flex: 1 1 auto; min-height: 150px; padding: 0; position: relative;">
-          <div id="previewWrap">
-            <div id="previewGrid"></div>
-          </div>
-        </div>
-
-        <!-- BLOQUE 2: PRECIOS POR CANTIDAD -->
-        <div class="commercial-block price-table-area">
-          <span class="price-table-title" style="color: #4f46e5; font-size: 13px;">💪 TU MEJOR ESCALA DE PRECIOS:</span>
-          <div id="flyerPriceGrid" class="price-grid"></div>
-          <p id="flyerIvaNote"
-            style="font-size: 16px; margin-top: 5px; font-weight: 800; color: #666; text-align: right;">+ IVA</p>
-        </div>
-
-        <!-- BLOQUE 3: ANCLA COMERCIAL SIMPLIFICADA -->
-        <div class="commercial-block" style="background:#eef2ff; padding: 12px; border-radius: 8px; text-align: center; border: 1px dashed #c7d2fe; margin-bottom: 0;">
-          <span id="benefit-diseno" style="font-size: 14px; font-weight: 800; color: #4338ca; display: flex; align-items: center; justify-content: center; gap: 6px;">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
-            Diseño Profesional Incluido
-          </span>
-          <span style="font-size: 12px; font-weight: 700; color: #6366f1; margin-top: 4px; display: block;">⚡ Producción rápida · 📦 Envíos a todo el país</span>
-        </div>
+    <div class="card">
+      <div class="orderTitle">PEDIDO</div>
+      <div class="logoLegend" id="orderLegend">INCLUYE LOGO A 1 CARA A 1 TINTA</div>
+      <div id="orderPreviewWrap">
+        <div id="orderPreviewGrid"></div>
       </div>
-      <div class="card">
-        <div class="orderTitle">PEDIDO</div>
-        <div class="logoLegend" id="orderLegend">INCLUYE LOGO A 1 CARA A 1 TINTA</div>
-        <div id="orderPreviewWrap">
-          <div id="orderPreviewGrid"></div>
-        </div>
-        <div class="orderPanel">
-          <div><strong>Cantidad:</strong> <span id="sumCantidad">500 bolsas</span></div>
-          <div><strong>Medidas:</strong> <span id="sumMedidas">40 cm Ancho x 45 Alto</span></div>
-          <div><strong>Precio por bolsa:</strong> <span id="sumPrecioBolsa">$0</span></div>
-          <div><strong>Subtotal (sin IVA):</strong> <span id="sumSubtotal">$0</span></div>
-          <div><strong>IVA 19%:</strong> <span id="sumIva">$0</span></div>
-          <div class="total" id="sumTotal">$0</div>
-          <div class="totalNote">IVA Incluido</div>
-        </div>
+      <div class="orderPanel">
+        <div><strong>Cantidad:</strong> <span id="sumCantidad">500 bolsas</span></div>
+        <div><strong>Medidas:</strong> <span id="sumMedidas">40 cm Ancho x 45 Alto</span></div>
+        <div><strong>Precio por bolsa:</strong> <span id="sumPrecioBolsa">$0</span></div>
+        <div><strong>Subtotal (sin IVA):</strong> <span id="sumSubtotal">$0</span></div>
+        <div><strong>IVA 19%:</strong> <span id="sumIva">$0</span></div>
+        <div class="total" id="sumTotal">$0</div>
+        <div class="totalNote">IVA Incluido</div>
       </div>
     </div>
+  </div>
 
   </div>
 
   <script>
-    function v(id) { 
-      const el = document.getElementById(id); 
+    function v(id) {
+      const el = document.getElementById(id);
       if (!el) return "";
-      return el.value; 
+      return el.value;
     }
-    function n(id) { 
+    function n(id) {
       const raw = v(id);
       if (!raw) return 0;
-      return Number(raw); 
+      return Number(raw);
     }
     function setStatus(html) { document.getElementById("status").innerHTML = html; }
     function money(value) {
@@ -1422,6 +1596,21 @@
       if (!m) return null;
       return Number(m[1].replace(/\./g, "").replace(",", "."));
     }
+
+    /**
+     * Trigger the native color picker for a logo color input.
+     * @param {number} cara - Face index (1 or 2)
+     * @param {number} tintaIdx - Ink index (1 to 4)
+     */
+    window.triggerLogoColorPicker = function (cara, tintaIdx) {
+      const inputId = `logo_c${cara}_${tintaIdx}`;
+      const input = document.getElementById(inputId);
+      if (input) {
+        input.click();
+      } else {
+        console.warn(`Color input not found: ${inputId}`);
+      }
+    };
 
     function hexToRgb(hex) {
       const h = (hex || "").replace("#", "").trim();
@@ -1447,7 +1636,7 @@
     }
 
     /** Fondo de mesa con zoom dinámico según altura de la bolsa */
-    let gBackgrounds = []; 
+    let gBackgrounds = [];
     let gCurrentFondoIdx = 0;
     let gFondoHidden = true; // Por defecto sin fondo realista
 
@@ -1467,79 +1656,94 @@
       if (gBackgrounds.length === 0) return;
       gCurrentFondoIdx = (gCurrentFondoIdx + 1) % gBackgrounds.length;
       gFondoHidden = false;
-      updatePreviewBackground();
+      renderPreviewInstant();
     }
 
     function prevFondo() {
       if (gBackgrounds.length === 0) return;
       gCurrentFondoIdx = (gCurrentFondoIdx - 1 + gBackgrounds.length) % gBackgrounds.length;
       gFondoHidden = false;
-      updatePreviewBackground();
+      renderPreviewInstant();
     }
 
     function toggleFondo() {
       gFondoHidden = !gFondoHidden;
-      updatePreviewBackground();
+      renderPreviewInstant();
       const btn = document.getElementById("btnToggleFondo");
       if (btn) btn.style.opacity = gFondoHidden ? "0.5" : "1";
     }
 
-    function updatePreviewBackground(colorHex) {
+    function updatePreviewBackground() {
       const wrap = document.getElementById("previewWrap");
       const orderWrap = document.getElementById("orderPreviewWrap");
       const alto = n("alto_cm") || 50;
-      
-      // Si el fondo está oculto, usamos un fondo sólido o degradado suave que no sea invasivo
+      const ancho = n("ancho_cm") || 30;
+      const fabricHex = normalizeHex(document.getElementById("color_hex")?.value);
+
+      let bagScale = 1.0;
+
+      // Fondo y Contraste
       if (gFondoHidden) {
-          const bgNone = "white";
-          if (wrap) {
-              const target = wrap.parentElement && wrap.parentElement.classList.contains("image-block") ? wrap.parentElement : wrap;
-              target.style.background = bgNone;
-          }
-          if (orderWrap) {
-              orderWrap.style.background = bgNone;
-          }
-          // No retornamos porque queremos seguir aplicando el bagScale dinámico
-      } else {
-          // Background Zoom: 50cm = 100%, 20cm = 214% (más agresivo)
-          const zoomFactor = Math.min(Math.max(100 + (50 - alto) * 3.8, 80), 220);
-          
-          let bgTable = "white"; // Fallback
-          if (gBackgrounds.length > 0) {
-            const currentBg = gBackgrounds[gCurrentFondoIdx];
-            bgTable = `url('/fondos/${currentBg}') center 82% / ${zoomFactor.toFixed(1)}% no-repeat`;
-          }
+        const isLight = isLightHex(fabricHex);
+        // Darker contrast background for light fabrics (Blanco, Marfil, Hueso)
+        const bgNone = isLight ? "#e2e8f0" : "white";
 
-          if (wrap) {
-            const target = wrap.parentElement && wrap.parentElement.classList.contains("image-block") ? wrap.parentElement : wrap;
-            target.style.background = bgTable;
-            target.style.borderColor = "#94a3b8";
-            target.style.transition = "background 0.4s ease-out, border-color 0.3s";
-          }
-          if (orderWrap) {
-            orderWrap.style.background = bgTable;
-            orderWrap.style.borderRadius = "8px";
-            orderWrap.style.transition = "background 0.4s ease-out, border-color 0.3s";
-          }
-      }
-
-      // Bag scale adjustment: 50cm = 1.0, 20cm = 0.88 (menos reducción para efecto macro)
-      const bagScale = Math.min(Math.max(1.0 + (alto - 50) * 0.004, 0.88), 1.15);
-      
-      if (wrap) {
-        // Apply scaling to the container instead of individual SVGs to avoid layout shifts
-        const grid = document.getElementById("previewGrid");
-        if (grid) {
-            grid.style.transform = `scale(${bagScale})`;
-            grid.style.transformOrigin = "center center";
-            grid.style.transition = "transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1)";
+        if (wrap) {
+          const target = wrap.parentElement && wrap.parentElement.classList.contains("image-block") ? wrap.parentElement : wrap;
+          target.style.background = bgNone;
+          target.style.borderColor = isLight ? "#cbd5e1" : "transparent";
+          target.style.transition = "background 0.4s ease-out, border-color 0.3s";
         }
+        if (orderWrap) {
+          orderWrap.style.background = bgNone;
+          orderWrap.style.transition = "background 0.4s ease-out";
+        }
+        bagScale = 1.0; // Sin escala forzada en modo plano
+      } else {
+        const zoomFactor = Math.min(Math.max(100 + (50 - alto) * 3.8, 80), 220);
+
+        let bgTable = "white";
+        if (gBackgrounds.length > 0) {
+          const currentBg = gBackgrounds[gCurrentFondoIdx];
+          bgTable = `url('/fondos/${currentBg}') center 82% / ${zoomFactor.toFixed(1)}% no-repeat`;
+        }
+
+        if (wrap) {
+          const target = wrap.parentElement && wrap.parentElement.classList.contains("image-block") ? wrap.parentElement : wrap;
+          target.style.background = bgTable;
+          target.style.borderColor = "#94a3b8";
+          target.style.transition = "background 0.4s ease-out, border-color 0.3s";
+        }
+        if (orderWrap) {
+          orderWrap.style.background = bgTable;
+          orderWrap.style.borderRadius = "8px";
+          orderWrap.style.transition = "background 0.4s ease-out, border-color 0.3s";
+        }
+        // Escala dinámica (Macro) solo con fondo realista
+        bagScale = Math.min(Math.max(1.0 + (alto - 50) * 0.004, 0.88), 1.15);
       }
-      if (orderWrap) {
-        const orderGrid = document.getElementById("orderPreviewGrid");
-        if (orderGrid) {
-            orderGrid.style.transform = `scale(${bagScale * 0.9})`; // slightly smaller for pedido view
-            orderGrid.style.transformOrigin = "center center";
+
+      // Aplicar transformaciones
+      const grid = document.getElementById("previewGrid");
+      if (grid) {
+        if (gFondoHidden) {
+          grid.style.transform = "none";
+          grid.style.width = "100%";
+          grid.style.height = "100%";
+        } else {
+          grid.style.transform = `scale(${bagScale})`;
+          grid.style.transformOrigin = "center center";
+        }
+        grid.style.transition = "transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1)";
+      }
+
+      const orderGrid = document.querySelector("#orderPreviewWrap .previewGrid");
+      if (orderGrid) {
+        if (gFondoHidden) {
+          orderGrid.style.transform = "none";
+        } else {
+          orderGrid.style.transform = `scale(${bagScale * 0.9})`;
+          orderGrid.style.transformOrigin = "center center";
         }
       }
     }
@@ -1568,7 +1772,7 @@
 
       let swatchWrap = document.getElementById(`swatches_${selectId}`);
       if (!swatchWrap) {
-        swatchWrap = select.parentElement.querySelector(".swatchGroup") || select.parentElement.querySelector(".swatch-grid");
+        swatchWrap = select.parentElement.querySelector(".swatch-grid") || select.parentElement.querySelector(".swatchGroup");
       }
       if (!swatchWrap) {
         swatchWrap = document.createElement("div");
@@ -1577,43 +1781,60 @@
       }
       swatchWrap.innerHTML = "";
 
+      // Helper para actualizar el badge de nombre
+      function updateColorBadge(id, hex) {
+        const badge = document.getElementById("label_" + id);
+        if (!badge) return;
+        let name = hex;
+        for (const opt of select.options) {
+          if (normalizeHex(opt.value) === normalizeHex(hex)) {
+            name = opt.text;
+            break;
+          }
+        }
+        badge.textContent = name;
+      }
+
       const setActive = (valueHex) => {
-        [...swatchWrap.querySelectorAll(".swatch")].forEach(btn => {
-          btn.classList.toggle("active", btn.dataset.value === (valueHex || "").toUpperCase());
+        const normalized = (valueHex || "").toUpperCase();
+        [...swatchWrap.querySelectorAll(".swatch")].forEach(sw => {
+          sw.classList.toggle("active", normalizeHex(sw.dataset.value).toUpperCase() === normalized);
         });
+        updateColorBadge(selectId, valueHex);
       };
 
       [...select.options].forEach(opt => {
         const color = normalizeHex(opt.value);
-        const btn = document.createElement("button");
-        btn.type = "button";
-        btn.className = "swatch";
-        btn.title = opt.textContent || color;
-        btn.dataset.value = color.toUpperCase();
-        btn.style.background = color;
-        if (isLightHex(color)) {
-          btn.style.borderColor = "rgba(0,0,0,0.4)";
+        const sw = document.createElement("div");
+        sw.className = "swatch";
+        sw.dataset.value = color;
+        sw.style.backgroundColor = color;
+        sw.title = opt.textContent || color;
+
+        if (normalizeHex(select.value) === color) {
+          sw.classList.add("active");
+          updateColorBadge(selectId, color);
         }
-        btn.addEventListener("click", () => {
-          select.value = color;
+
+        sw.onclick = () => {
+          select.value = opt.value;
           setActive(color);
-          select.dispatchEvent(new Event("input", { bubbles: true }));
           select.dispatchEvent(new Event("change", { bubbles: true }));
-        });
-        swatchWrap.appendChild(btn);
+          select.dispatchEvent(new Event("input", { bubbles: true }));
+        };
+        swatchWrap.appendChild(sw);
       });
 
-      setActive(normalizeHex(select.value));
       select.addEventListener("change", () => setActive(normalizeHex(select.value)));
     }
 
     /** Mostrar/ocultar selectores según Caras y #colores */
     function syncLogoControlsUI() {
       const numCaras = n("caras");
-      
+
       const s1 = document.getElementById("side_1_controls");
       if (s1) s1.style.display = (numCaras >= 1) ? "block" : "none";
-      
+
       if (numCaras >= 1) {
         const t1 = n("tintas_c1") || 0;
         const d1 = document.getElementById("dtf_c1_active")?.checked;
@@ -1621,7 +1842,7 @@
         const m1 = document.getElementById("dtf_c1_dims");
         if (c1) c1.style.display = (t1 > 0) ? "flex" : "none";
         if (m1) m1.style.setProperty("display", d1 ? "block" : "none", "important");
-        
+
         for (let i = 1; i <= 4; i++) {
           const w = document.getElementById(`wrap_c1_${i}`);
           if (w) w.style.display = (t1 >= i) ? "block" : "none";
@@ -1630,7 +1851,7 @@
 
       const s2 = document.getElementById("side_2_controls");
       if (s2) s2.style.display = (numCaras === 2) ? "block" : "none";
-      
+
       if (numCaras === 2) {
         const t2 = n("tintas_c2") || 0;
         const d2 = document.getElementById("dtf_c2_active")?.checked;
@@ -1638,7 +1859,7 @@
         const m2 = document.getElementById("dtf_c2_dims");
         if (c2) c2.style.display = (t2 > 0) ? "flex" : "none";
         if (m2) m2.style.setProperty("display", d2 ? "block" : "none", "important");
-        
+
         for (let i = 1; i <= 4; i++) {
           const w = document.getElementById(`wrap_c2_${i}`);
           if (w) w.style.display = (t2 >= i) ? "block" : "none";
@@ -1723,7 +1944,7 @@
       if (!showMeasures) {
         // Eliminar flechas y medidas de forma segura
         s = s.replace(/<!--\s*Flecha ancho\s*-->[\s\S]*?<!--\s*Flecha alto\s*-->/i, "");
-        s = s.replace(/<!--\s*Flecha alto\s*-->[\s\S]*?<\/svg>/i, "</svg>");
+          s = s.replace(/<!--\s*Flecha alto\s*-->[\s\S]*?<\/svg>/i, "</svg>");
         s = s.replace(/<text[^>]*>[^<]*ANCHO[^<]*<\/text>\s*/gi, "");
         s = s.replace(/<text[^>]*>[^<]*ALTO[^<]*<\/text>\s*/gi, "");
       }
@@ -1804,7 +2025,7 @@
      * - Si 1 cara: dims completas (incluye fuelle)
      */
 
-    function generateModernBagSVG(fabricHex, manualLogoList = [], bagType, anchoCm, altoCm, showMeasures = true, handleArcoLogico = 46, handleHex = null) {
+    function generateModernBagSVG(fabricHex, manualLogoList = [], bagType, anchoCm, altoCm, showMeasures = true, handleArcoLogico = 46, handleHex = null, caraIdx = 1) {
       const isTroquel = (bagType === "PLANA_TROQUEL");
       const realHandleHex = handleHex || fabricHex;
       const w = 240;
@@ -1814,13 +2035,13 @@
       const isWhite = normalizeHex(fabricHex) === "#FFFFFF";
       const strokeColor = isWhite ? "rgba(0,0,0,0.12)" : "rgba(0,0,0,0.15)";
       const shadowColor = isWhite ? "rgba(0,0,0,0.06)" : "rgba(0,0,0,0.15)";
-      
+
       const tx = w / 2;
       const ty = h / 2;
       let logosGroup = "";
-      
+
       const cmToSvg = w / (Number(anchoCm) || 30);
-      
+
       const isSide2 = manualLogoList.length > 0 && manualLogoList[0] && !manualLogoList[0].showMeasures;
 
       const hasSeri = manualLogoList.some(l => l.type === 'serigrafia');
@@ -1833,10 +2054,10 @@
       const dtfH_cm = dtfLogo ? Math.min(dtfLogo.height || 15, altoCm * 0.6) : 0;
       const dtfW_svg = dtfW_cm * cmToSvg;
       const dtfH_svg = dtfH_cm * cmToSvg;
-      
+
       const seriH_svg = hasSeri ? (80 * seriScale) : 0;
       let totalH = seriH_svg + (hasSeri && hasDtf ? gap : 0) + dtfH_svg;
-      
+
       let safetyScale = 1.0;
       const maxHAllowed = h * 0.75;
       if (totalH > maxHAllowed) {
@@ -1845,7 +2066,6 @@
       }
 
       const startY = ty - (totalH / 2);
-      const caraIdx = manualLogoList.length > 0 ? manualLogoList[0].cara : 1;
 
       if (hasSeri) {
         const seriColors = manualLogoList.filter(l => l.type === 'serigrafia').map(l => l.color);
@@ -1855,13 +2075,13 @@
         const c4 = seriColors.length > 3 ? seriColors[3] : c2;
 
         const seriY = startY + (seriH_svg * safetyScale / 2);
-        
+
         logosGroup += `
           <g transform="translate(0, ${seriY - ty}) scale(${seriScale * safetyScale})" transform-origin="${tx} ${ty}">
             <path d="M ${tx} ${ty - 40} C ${tx + 35} ${ty - 40}, ${tx + 35} ${ty - 5}, ${tx} ${ty - 5} C ${tx - 35} ${ty - 5}, ${tx - 35} ${ty - 40}, ${tx} ${ty - 40} Z" fill="${c1}"/>
             <circle cx="${tx}" cy="${ty - 22.5}" r="7" fill="${c2}" />
-            <text x="${tx}" y="${ty + 18}" text-anchor="middle" font-size="16" font-family="Plus Jakarta Sans, sans-serif" font-weight="900" fill="${c3}" letter-spacing="0.5px" style="cursor:pointer;" onclick="openLogoColor(${caraIdx}, 1)">TU LOGO</text>
-            <text x="${tx}" y="${ty + 36}" text-anchor="middle" font-family="Plus Jakarta Sans, sans-serif" font-weight="700" fill="${c4}" opacity="0.8" style="cursor:pointer;" onclick="openLogoColor(${caraIdx}, 2)">AQUÍ</text>
+            <text x="${tx}" y="${ty + 18}" text-anchor="middle" font-size="16" font-family="Plus Jakarta Sans, sans-serif" font-weight="900" fill="${c3}" letter-spacing="0.5px">TU LOGO</text>
+            <text x="${tx}" y="${ty + 36}" text-anchor="middle" font-family="Plus Jakarta Sans, sans-serif" font-weight="700" fill="${c4}" opacity="0.8">AQUÍ</text>
           </g>
         `;
       }
@@ -1872,7 +2092,7 @@
         const fontSize2 = Math.min(dtfW_svg * 0.12, 10);
         const textY1 = ty + (dtfH_svg * 0.05);
         const textY2 = ty + (dtfH_svg * 0.25);
-        
+
         logosGroup += `
           <g transform="translate(0, ${dtfY - ty}) scale(${safetyScale})" transform-origin="${tx} ${ty}">
             <rect x="${tx - dtfW_svg / 2}" y="${ty - dtfH_svg / 2}" width="${dtfW_svg}" height="${dtfH_svg}" rx="8" fill="url(#dtfGrad)" filter="drop-shadow(0 4px 5px rgba(0,0,0,0.25))" />
@@ -1897,19 +2117,21 @@
       const strokeWidthSVG = gruesoCm * cmToSvg;
       const yAnchor = 25;
 
+      // peakY define el "techo" del dibujo para el ViewBox. 
+      // Lo calculamos siempre (aunque sea Troquel) para que el ZOOM sea el mismo.
       const peakY = yAnchor - visualH;
 
       let manijaSVG = "";
       let handleStitchesSVG = "";
       let maskSVG = "";
       let troquelInsideSVG = "";
-      
+
       if (isTroquel) {
         const holeW = 7.5 * cmToSvg;
         const holeH = 2.4 * cmToSvg;
         const holeX = (w - holeW) / 2;
         const holeY = 1.7 * cmToSvg;
-        
+
         maskSVG = `
       <mask id="bagMask-${tx}">
         <rect x="0" y="0" width="${w}" height="${h}" rx="6" fill="white" />
@@ -1932,10 +2154,10 @@
         <path d="M ${archX} ${yAnchor} C ${archX} ${yAnchor - archH}, ${archX + archW} ${yAnchor - archH}, ${archX + archW} ${yAnchor}" fill="none" stroke="${realHandleHex}" stroke-width="${strokeWidthSVG}" stroke-linecap="round" style="cursor:pointer;" onclick="openFloatingSwatches(event, 'handle')" />
         
         <!-- Texture Mask -->
-        <rect x="0" y="-${archH*1.5}" width="${w}" height="${archH*2}" fill="url(#cambrelNoise-${Math.round(tx)})" mask="url(#handleMask-${tx})" style="mix-blend-mode: multiply; pointer-events:none;" />
+        <rect x="0" y="-${archH * 1.5}" width="${w}" height="${archH * 2}" fill="url(#cambrelNoise-${Math.round(tx)})" mask="url(#handleMask-${tx})" style="mix-blend-mode: multiply; pointer-events:none;" />
       </g>
     `;
-    
+
         const stitchW = 2.2 * cmToSvg;
         const stitchH = 2.2 * cmToSvg;
         const scX = stitchW / 71.93;
@@ -1961,9 +2183,11 @@
     `;
       }
 
+      // Modern Flat Bag Design - Responsive ViewBox
       const vbX = -30;
-      const vbY = peakY - 20;
+      const vbY = peakY - 20; // Siempre relativo al peakY (techo máximo del dibujo)
       const vbW = w + 60;
+      // Alto del viewbox es el fondo de la bolsa (h + pad) menos el inicio (vbY)
       const vbH = h + 40 - vbY;
 
       // Pure SVG Geometric Cambrel Texture (Semillitas / Honeycomb)
@@ -1979,7 +2203,7 @@
       const sideSealStyle = `stroke="${shadowColor}" stroke-width="1.5" stroke-dasharray="4, 1.5" stroke-linecap="butt" opacity="0.6"`;
       const topSealStyleLight = `stroke="rgba(255,255,255,0.15)" stroke-width="3" stroke-dasharray="1, 2" stroke-linecap="butt" transform="translate(0, 1)"`;
       const sideSealStyleLight = `stroke="rgba(255,255,255,0.15)" stroke-width="1.5" stroke-dasharray="4, 1.5" stroke-linecap="butt" transform="translate(1, 0)"`;
-      
+
       const _cmToSvg = w / (Number(anchoCm) || 30);
       const top1 = 1.5 * _cmToSvg;
       const top2 = top1 + (2.8 * _cmToSvg);
@@ -2014,13 +2238,13 @@
     <!-- Subtle left edge light highlight -->
     <rect x="0" y="0" width="8" height="${h}" fill="rgba(255,255,255,0.12)" rx="3" filter="blur(2px)" mask="url(#bagMask-${tx})"/>
     <!-- Subtle right edge shadow -->
-    <rect x="${w-6}" y="0" width="6" height="${h}" fill="rgba(0,0,0,0.08)" rx="3" filter="blur(2px)" mask="url(#bagMask-${tx})" style="mix-blend-mode: multiply;" />
+    <rect x="${w - 6}" y="0" width="6" height="${h}" fill="rgba(0,0,0,0.08)" rx="3" filter="blur(2px)" mask="url(#bagMask-${tx})" style="mix-blend-mode: multiply;" />
     <!-- Bottom seam contour shadow -->
     <rect x="0" y="${h - 6}" width="${w}" height="6" fill="${shadowColor}" rx="2" filter="blur(1.5px)" mask="url(#bagMask-${tx})" style="mix-blend-mode: multiply;" />
   `;
 
       return `
-    <svg viewBox="${vbX} ${vbY} ${vbW} ${vbH}" xmlns="http://www.w3.org/2000/svg" style="width:100%; height:100%; filter: drop-shadow(0 8px 16px rgba(0,0,0,0.18)); max-height: 100%;">
+    <svg viewBox="${vbX} ${vbY} ${vbW} ${vbH}" xmlns="http://www.w3.org/2000/svg" style="width:100%; height:100%; filter: drop-shadow(0 15px 25px rgba(0,0,0,0.12)); max-height: 100%;">
       <defs>
         ${maskSVG}
         ${texturePattern}
@@ -2080,19 +2304,19 @@
       }
 
       if (!sourceGrid) return;
-      
+
       const popup = document.createElement('div');
       popup.id = 'floating-swatches';
       popup.className = 'swatchGroup';
       popup.style.position = 'fixed';
       popup.style.animation = 'popIn 0.25s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards';
       popup.style.transformOrigin = 'top center';
-      
+
       const popupWidth = 260;
       let leftPos = e.clientX - (popupWidth / 2);
       if (leftPos < 10) leftPos = 10;
       if (leftPos + popupWidth > window.innerWidth) leftPos = window.innerWidth - popupWidth - 10;
-      
+
       popup.style.top = (e.clientY + 15) + 'px';
       popup.style.left = leftPos + 'px';
       popup.style.zIndex = '9999';
@@ -2105,7 +2329,7 @@
       popup.style.display = 'flex';
       popup.style.flexWrap = 'wrap';
       popup.style.gap = '8px';
-      
+
       const buttons = sourceGrid.querySelectorAll('.swatchBtn, .swatch');
       buttons.forEach(btn => {
         const clone = btn.cloneNode(true);
@@ -2134,7 +2358,7 @@
         window.addEventListener('scroll', closePopup);
       }, 10);
     }
-    
+
     function getCalculatedLogoList() {
       const caras = Math.max(0, Math.min(2, n("caras")));
       const logoList = [];
@@ -2208,7 +2432,7 @@
       const fuelle = n("fuelle_cm");
       const bagType = v("bag_type");
       const caras = Math.max(0, Math.min(2, parseInt(document.getElementById("caras").value) || 0));
-      
+
       grid.classList.toggle("is-one-face", caras <= 1);
       grid.classList.toggle("two-faces", caras === 2);
       if (orderGrid) orderGrid.classList.toggle("is-one-face", caras <= 1);
@@ -2225,8 +2449,8 @@
         svgBox.className = "previewSvg";
         const handleHex = v("handle_color_hex") || fabricHex;
         const logosThisCara = fullLogoList.filter(l => l.cara === caraIdx);
-        
-        svgBox.innerHTML = generateModernBagSVG(fabricHex, logosThisCara, bagType, ancho, alto, showMeasures, document.getElementById("largo_arco_visual") ? Number(document.getElementById("largo_arco_visual").value) : 46, handleHex);
+
+        svgBox.innerHTML = generateModernBagSVG(fabricHex, logosThisCara, bagType, ancho, alto, showMeasures, document.getElementById("largo_arco_visual") ? Number(document.getElementById("largo_arco_visual").value) : 46, handleHex, caraIdx);
 
         wrap.appendChild(svgBox);
         return wrap;
@@ -2327,7 +2551,7 @@
       if (selection && selection.all) {
         // Mostrar solo bandas públicas, O la banda actual si el usuario cotizó específicamente esa cantidad oculta
         const visibleBands = selection.all.filter(band => band.is_public || (selection.chosen && band.code === selection.chosen.code));
-        
+
         visibleBands.forEach(band => {
           const row = document.createElement("div");
           row.className = "price-row";
@@ -2384,7 +2608,7 @@
           ancho_manijas_cm: bagType === "PLANA_TROQUEL" ? 0 : 3.5,
           dobles_cm: bagType === "PLANA_TROQUEL" ? 7 : 3,
           caras: n("caras"),
-          
+
           dtf_c1_active: document.getElementById("dtf_c1_active")?.checked || false,
           dtf_c1_w: n("dtf_c1_w") || 15,
           dtf_c1_h: n("dtf_c1_h") || 15,
@@ -2517,23 +2741,23 @@
     function smartInkToggle(fromCarasBtn = false, oldCaras = "0", fromBagColorChange = false) {
       const caras = n("caras");
       if (caras === 0) return;
-      
+
       const colorHex = (v("color_hex") || "").toUpperCase();
       const isWhiteBag = colorHex === "#FFFFFF";
       const defaultInk1 = isWhiteBag ? "#000000" : "#FFFFFF";
-      
+
       const c1 = document.getElementById("logo_c1_1");
       // SOLO forzamos blanco/negro en C1 si el usuario está cambiando la tela Y nunca ha tocado C1 a mano
-      if (c1 && fromBagColorChange && !userCustomizedC1Color) { 
-        c1.value = defaultInk1; 
+      if (c1 && fromBagColorChange && !userCustomizedC1Color) {
+        c1.value = defaultInk1;
       }
-      
+
       // Auto-configurar la cara 2 SOLO cuando se pasa de 0/1 a 2...
       // En otros casos (ej. cambiar tamaño o cambiar de bolsa blanca a negra) se respeta C2
       if (caras === 2 && fromCarasBtn && oldCaras !== "2") {
         const selectC2 = document.getElementById("tintas_c2");
         const c2_color = document.getElementById("logo_c2_1");
-        
+
         if (selectC2 && selectC2.value === "0") {
           selectC2.value = "1";
         }
@@ -2541,41 +2765,41 @@
           c2_color.value = "#FFD700";
         }
       }
-      
+
       if (typeof scheduleAutoQuote === "function") scheduleAutoQuote();
       if (typeof renderPreviewInstant === "function") renderPreviewInstant();
     }
-    
+
     function bindCarasChips() {
       const chips = document.querySelectorAll("#caras_chips .btn-chip");
       const input = document.getElementById("caras");
       if (!chips.length || !input) return;
-      
+
       chips.forEach(btn => {
         btn.addEventListener("click", () => {
           const oldVal = input.value;
           chips.forEach(c => c.classList.remove("active"));
           btn.classList.add("active");
           input.value = btn.dataset.val;
-          
+
           syncLogoControlsUI();
-          
+
           input.dispatchEvent(new Event("input", { bubbles: true }));
           input.dispatchEvent(new Event("change", { bubbles: true }));
-          
+
           if (oldVal !== btn.dataset.val && btn.dataset.val !== "0") {
             smartInkToggle(true, oldVal);
           }
         });
       });
-      
+
       const bagColorSelect = document.getElementById("color_hex");
       if (bagColorSelect) {
         bagColorSelect.addEventListener("change", () => {
-             if (n("caras") > 0) { smartInkToggle(false, "0", true); }
+          if (n("caras") > 0) { smartInkToggle(false, "0", true); }
         });
       }
-      
+
       const bagTypeSelect = document.getElementById("bag_type");
       if (bagTypeSelect) {
         bagTypeSelect.addEventListener("change", (e) => {
@@ -2589,22 +2813,22 @@
           }
         });
       }
-      
+
       // Listeners para marcar si el usuario toca los colores a mano
       const c1Listener = document.getElementById("logo_c1_1");
-      if(c1Listener) c1Listener.addEventListener("input", () => userCustomizedC1Color = true);
+      if (c1Listener) c1Listener.addEventListener("input", () => userCustomizedC1Color = true);
       const c2Listener = document.getElementById("logo_c2_1");
-      if(c2Listener) c2Listener.addEventListener("input", () => userCustomizedC2Color = true);
+      if (c2Listener) c2Listener.addEventListener("input", () => userCustomizedC2Color = true);
     }
 
     // Se removió duplicado
 
     function syncLogoControlsUI() {
       const numCaras = n("caras");
-      
+
       const s1 = document.getElementById("side_1_controls");
       if (s1) s1.style.display = (numCaras >= 1) ? "block" : "none";
-      
+
       if (numCaras >= 1) {
         const t1 = n("tintas_c1") || 0;
         const d1 = document.getElementById("dtf_c1_active")?.checked;
@@ -2612,7 +2836,7 @@
         const m1 = document.getElementById("dtf_c1_dims");
         if (c1) c1.style.display = (t1 > 0) ? "flex" : "none";
         if (m1) m1.style.display = d1 ? "block" : "none";
-        
+
         for (let i = 1; i <= 4; i++) {
           const w = document.getElementById(`wrap_c1_${i}`);
           if (w) w.style.display = (t1 >= i) ? "block" : "none";
@@ -2621,7 +2845,7 @@
 
       const s2 = document.getElementById("side_2_controls");
       if (s2) s2.style.display = (numCaras === 2) ? "block" : "none";
-      
+
       if (numCaras === 2) {
         const t2 = n("tintas_c2") || 0;
         const d2 = document.getElementById("dtf_c2_active")?.checked;
@@ -2629,7 +2853,7 @@
         const m2 = document.getElementById("dtf_c2_dims");
         if (c2) c2.style.display = (t2 > 0) ? "flex" : "none";
         if (m2) m2.style.display = d2 ? "block" : "none";
-        
+
         for (let i = 1; i <= 4; i++) {
           const w = document.getElementById(`wrap_c2_${i}`);
           if (w) w.style.display = (t2 >= i) ? "block" : "none";
@@ -2655,13 +2879,13 @@
           console.log("Initializing swatches for:", id);
           initColorSwatches(id);
         });
-        
+
         bindCarasChips();
         console.log("Chips bound");
-        
+
         syncLogoControlsUI();
         updatePreviewBackground(v("color_hex"));
-        
+
         // Listener para sincronización de colores
         if (colorSelect && handleSelect) {
           colorSelect.addEventListener("change", () => {
@@ -2671,7 +2895,7 @@
               handleSelect.dispatchEvent(new Event("change", { bubbles: true }));
             }
           });
-          
+
           handleSelect.addEventListener("change", (e) => {
             const syncCheck = document.getElementById("sync_handle_color");
             if (syncCheck && syncCheck.checked) {
@@ -2693,7 +2917,7 @@
 
         console.log("Triggering initial quote...");
         cotizarAuto();
-        
+
         const btn = document.getElementById("btnToggleFondo");
         if (btn) btn.style.opacity = gFondoHidden ? "0.5" : "1";
         console.log("Init complete");
