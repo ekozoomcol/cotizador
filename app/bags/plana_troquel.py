@@ -29,13 +29,13 @@ class PlanaTroquelCalculator(PlanaManijaCalculator):
         C2 = float(material.costo_por_m2)
         B2 = 1.6  
 
-        # Regla Global de Produccion Maxima
+        # Regla Global de Produccion Maxima (TROQUEL es significativamente más rapido al no llevar manijas)
         if (B5 + B6) < 40:
-            F4 = 8000
+            F4 = 12000
         elif (B5 + B6) < 60:
-            F4 = 7000
+            F4 = 10000
         else:
-            F4 = 6000
+            F4 = 8000
 
         # G4 = Nomina Diaria (global)
         G4 = float(config.nomina_diaria)

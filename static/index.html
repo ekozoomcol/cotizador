@@ -1806,7 +1806,6 @@
 
     function generateModernBagSVG(fabricHex, manualLogoList = [], bagType, anchoCm, altoCm, showMeasures = true, handleArcoLogico = 46, handleHex = null) {
       const isTroquel = (bagType === "PLANA_TROQUEL");
-      // Si es troquel, forzamos que no haya manija visible, aunque handleHex esté definido
       const realHandleHex = handleHex || fabricHex;
       const w = 240;
       const ratio = (altoCm && anchoCm) ? (Number(altoCm) / Number(anchoCm)) : 1.25;
@@ -1815,14 +1814,11 @@
       const isWhite = normalizeHex(fabricHex) === "#FFFFFF";
       const strokeColor = isWhite ? "rgba(0,0,0,0.12)" : "rgba(0,0,0,0.15)";
       const shadowColor = isWhite ? "rgba(0,0,0,0.06)" : "rgba(0,0,0,0.15)";
-      const highlightColor = "rgba(255,255,255,0.12)";
       
-      // Logo Text Setup
       const tx = w / 2;
       const ty = h / 2;
       let logosGroup = "";
       
-      // Medidas base para proporción
       const cmToSvg = w / (Number(anchoCm) || 30);
       
       const isSide2 = manualLogoList.length > 0 && manualLogoList[0] && !manualLogoList[0].showMeasures;
@@ -1831,7 +1827,7 @@
       const dtfLogo = manualLogoList.find(l => l.type === 'dtf');
       const hasDtf = !!dtfLogo;
       const seriScale = (hasSeri && hasDtf) ? 0.75 : 1.3;
-      const gap = 30; // Más espacio entre logos
+      const gap = 30;
 
       const dtfW_cm = dtfLogo ? Math.min(dtfLogo.width || 15, anchoCm * 0.85) : 0;
       const dtfH_cm = dtfLogo ? Math.min(dtfLogo.height || 15, altoCm * 0.6) : 0;
@@ -1841,7 +1837,6 @@
       const seriH_svg = hasSeri ? (80 * seriScale) : 0;
       let totalH = seriH_svg + (hasSeri && hasDtf ? gap : 0) + dtfH_svg;
       
-      // Escala de seguridad: Si los logos juntos superan el 80% del alto de la bolsa, reducimos todo.
       let safetyScale = 1.0;
       const maxHAllowed = h * 0.75;
       if (totalH > maxHAllowed) {
@@ -1850,6 +1845,7 @@
       }
 
       const startY = ty - (totalH / 2);
+      const caraIdx = manualLogoList.length > 0 ? manualLogoList[0].cara : 1;
 
       if (hasSeri) {
         const seriColors = manualLogoList.filter(l => l.type === 'serigrafia').map(l => l.color);
@@ -1864,8 +1860,8 @@
           <g transform="translate(0, ${seriY - ty}) scale(${seriScale * safetyScale})" transform-origin="${tx} ${ty}">
             <path d="M ${tx} ${ty - 40} C ${tx + 35} ${ty - 40}, ${tx + 35} ${ty - 5}, ${tx} ${ty - 5} C ${tx - 35} ${ty - 5}, ${tx - 35} ${ty - 40}, ${tx} ${ty - 40} Z" fill="${c1}"/>
             <circle cx="${tx}" cy="${ty - 22.5}" r="7" fill="${c2}" />
-            <text x="${tx}" y="${ty + 18}" text-anchor="middle" font-size="16" font-family="Plus Jakarta Sans, sans-serif" font-weight="900" fill="${c3}" letter-spacing="0.5px">TU LOGO</text>
-            <text x="${tx}" y="${ty + 36}" text-anchor="middle" font-family="Plus Jakarta Sans, sans-serif" font-weight="700" fill="${c4}" opacity="0.8">AQUÍ</text>
+            <text x="${tx}" y="${ty + 18}" text-anchor="middle" font-size="16" font-family="Plus Jakarta Sans, sans-serif" font-weight="900" fill="${c3}" letter-spacing="0.5px" style="cursor:pointer;" onclick="openLogoColor(${caraIdx}, 1)">TU LOGO</text>
+            <text x="${tx}" y="${ty + 36}" text-anchor="middle" font-family="Plus Jakarta Sans, sans-serif" font-weight="700" fill="${c4}" opacity="0.8" style="cursor:pointer;" onclick="openLogoColor(${caraIdx}, 2)">AQUÍ</text>
           </g>
         `;
       }
@@ -1901,33 +1897,43 @@
       const strokeWidthSVG = gruesoCm * cmToSvg;
       const yAnchor = 25;
 
-      // peakY define el "techo" del dibujo para el ViewBox. 
-      // Lo calculamos siempre (aunque sea Troquel) para que el ZOOM sea el mismo.
       const peakY = yAnchor - visualH;
 
       let manijaSVG = "";
       let handleStitchesSVG = "";
       let maskSVG = "";
+      let troquelInsideSVG = "";
       
       if (isTroquel) {
         const holeW = 7.5 * cmToSvg;
         const holeH = 2.4 * cmToSvg;
         const holeX = (w - holeW) / 2;
         const holeY = 1.7 * cmToSvg;
+        
         maskSVG = `
       <mask id="bagMask-${tx}">
         <rect x="0" y="0" width="${w}" height="${h}" rx="6" fill="white" />
         <rect x="${holeX}" y="${holeY}" width="${holeW}" height="${holeH}" rx="${holeH / 2}" fill="black" />
       </mask>
     `;
-        manijaSVG = `<rect x="${holeX}" y="${holeY}" width="${holeW}" height="${holeH}" rx="${holeH / 2}" fill="none" stroke="${strokeColor}" stroke-width="1.5" />`;
+        // Draw the inside of the hole (back fabric showing through with shadow)
+        troquelInsideSVG = ``;
+        manijaSVG = `<rect x="${holeX}" y="${holeY}" width="${holeW}" height="${holeH}" rx="${holeH / 2}" fill="none" stroke="${strokeColor}" stroke-width="1.5" style="cursor:pointer;" onclick="openFloatingSwatches(event, 'fabric')" />`;
       } else {
-        // Manija calculada por proporciones exactas en cm
         manijaSVG = `
-      <path d="M ${archX} ${yAnchor} C ${archX} ${yAnchor - archH}, ${archX + archW} ${yAnchor - archH}, ${archX + archW} ${yAnchor}" fill="none" stroke="${realHandleHex}" stroke-width="${strokeWidthSVG}" stroke-linecap="round" />
-      <path d="M ${archX} ${yAnchor} C ${archX} ${yAnchor - archH}, ${archX + archW} ${yAnchor - archH}, ${archX + archW} ${yAnchor}" fill="none" stroke="${strokeColor}" stroke-width="${strokeWidthSVG + 3}" stroke-linecap="round" opacity="0.1" style="mix-blend-mode: multiply;" />
-      <!-- Textura Cambrel para la Manija -->
-      <path d="M ${archX} ${yAnchor} C ${archX} ${yAnchor - archH}, ${archX + archW} ${yAnchor - archH}, ${archX + archW} ${yAnchor}" fill="none" stroke="url(#cambrelNoise-${Math.round(tx)})" stroke-width="${strokeWidthSVG}" stroke-linecap="round" style="mix-blend-mode: multiply;" />
+      <mask id="handleMask-${tx}">
+        <path d="M ${archX} ${yAnchor} C ${archX} ${yAnchor - archH}, ${archX + archW} ${yAnchor - archH}, ${archX + archW} ${yAnchor}" fill="none" stroke="white" stroke-width="${strokeWidthSVG}" stroke-linecap="round" />
+      </mask>
+      <g filter="drop-shadow(0 6px 8px rgba(0,0,0,0.15))">
+        <!-- El Delineado (Outline matching base handle color) -->
+        <path d="M ${archX} ${yAnchor} C ${archX} ${yAnchor - archH}, ${archX + archW} ${yAnchor - archH}, ${archX + archW} ${yAnchor}" fill="none" stroke="${realHandleHex}" stroke-width="${strokeWidthSVG + 1.5}" stroke-linecap="round" style="filter: brightness(0.85); cursor:pointer;" onclick="openFloatingSwatches(event, 'handle')" />
+        
+        <!-- The Main Solid Handle -->
+        <path d="M ${archX} ${yAnchor} C ${archX} ${yAnchor - archH}, ${archX + archW} ${yAnchor - archH}, ${archX + archW} ${yAnchor}" fill="none" stroke="${realHandleHex}" stroke-width="${strokeWidthSVG}" stroke-linecap="round" style="cursor:pointer;" onclick="openFloatingSwatches(event, 'handle')" />
+        
+        <!-- Texture Mask -->
+        <rect x="0" y="-${archH*1.5}" width="${w}" height="${archH*2}" fill="url(#cambrelNoise-${Math.round(tx)})" mask="url(#handleMask-${tx})" style="mix-blend-mode: multiply; pointer-events:none;" />
+      </g>
     `;
     
         const stitchW = 2.2 * cmToSvg;
@@ -1936,65 +1942,16 @@
         const scY = stitchH / 76.03;
         const leftX = archX - stitchW / 2;
         const rightX = archX + archW - stitchW / 2;
-        // Centrado entre las costuras superiores (1.5 + 4.5)/2 = 3.0 cm del borde
         const stitchY = (3.0 * cmToSvg) - (stitchH / 2);
 
         handleStitchesSVG = `
+          <!-- Stitch Left -->
           <g transform="translate(${leftX}, ${stitchY}) scale(${scX}, ${scY})" fill="${shadowColor}" stroke="${shadowColor}" stroke-width="0.6" stroke-linejoin="round" opacity="0.6">
-            <rect x="40.92" y="6.83" width="2.83" height="8.5"/>
-            <rect x="58.64" y="20.97" width="2.83" height="8.5" transform="translate(85.27 -34.84) rotate(90)"/>
-            <rect x="59.67" y="7.54" width="2.27" height="7.09" transform="translate(25.65 -39.75) rotate(45)"/>
-            <rect x="50.67" y="16.54" width="2.27" height="7.09" transform="translate(29.38 -30.75) rotate(45)"/>
-            <rect x="41.67" y="25.54" width="2.27" height="7.09" transform="translate(33.1 -21.75) rotate(45)"/>
-            <rect x="58.64" y="33.76" width="2.83" height="8.5" transform="translate(98.07 -22.04) rotate(90)"/>
-            <rect x="58.64" y="27.36" width="2.83" height="8.5" transform="translate(91.67 -28.44) rotate(90)"/>
-            <rect x="28.17" y="6.83" width="2.83" height="8.5" transform="translate(59.17 22.17) rotate(180)"/>
-            <rect x="10.45" y="20.97" width="2.83" height="8.5" transform="translate(37.09 13.35) rotate(90)"/>
-            <rect x="9.99" y="7.54" width="2.27" height="7.09" transform="translate(26.83 11.06) rotate(135)"/>
-            <rect x="18.99" y="16.54" width="2.27" height="7.09" transform="translate(48.56 20.06) rotate(135)"/>
-            <rect x="27.99" y="25.54" width="2.27" height="7.09" transform="translate(70.27 29.06) rotate(135)"/>
-            <rect x="10.45" y="33.76" width="2.83" height="8.5" transform="translate(49.88 26.15) rotate(90)"/>
-            <rect x="10.45" y="27.36" width="2.83" height="8.5" transform="translate(43.49 19.75) rotate(90)"/>
-            <rect x="40.92" y="60.69" width="2.83" height="8.5"/>
-            <rect x="58.64" y="46.56" width="2.83" height="8.5" transform="translate(9.24 110.87) rotate(-90)"/>
-            <rect x="59.67" y="61.4" width="2.27" height="7.09" transform="translate(-28.11 62.02) rotate(-45)"/>
-            <rect x="50.67" y="52.4" width="2.27" height="7.09" transform="translate(-24.39 53.02) rotate(-45)"/>
-            <rect x="41.67" y="43.41" width="2.27" height="7.09" transform="translate(-20.66 44.02) rotate(-45)"/>
-            <rect x="58.64" y="40.16" width="2.83" height="8.5" transform="translate(15.64 104.47) rotate(-90)"/>
-            <rect x="28.17" y="60.69" width="2.83" height="8.5" transform="translate(59.17 129.89) rotate(180)"/>
-            <rect x="10.45" y="46.56" width="2.83" height="8.5" transform="translate(-38.95 62.68) rotate(-90)"/>
-            <rect x="9.99" y="61.4" width="2.27" height="7.09" transform="translate(-26.93 118.73) rotate(-135)"/>
-            <rect x="18.99" y="52.4" width="2.27" height="7.09" transform="translate(-5.2 109.73) rotate(-135)"/>
-            <rect x="27.99" y="43.41" width="2.27" height="7.09" transform="translate(16.51 100.74) rotate(-135)"/>
-            <rect x="10.45" y="40.16" width="2.83" height="8.5" transform="translate(-32.55 56.28) rotate(-90)"/>
+            <rect x="40.92" y="6.83" width="2.83" height="8.5"/><rect x="58.64" y="20.97" width="2.83" height="8.5" transform="translate(85.27 -34.84) rotate(90)"/><rect x="59.67" y="7.54" width="2.27" height="7.09" transform="translate(25.65 -39.75) rotate(45)"/><rect x="50.67" y="16.54" width="2.27" height="7.09" transform="translate(29.38 -30.75) rotate(45)"/><rect x="41.67" y="25.54" width="2.27" height="7.09" transform="translate(33.1 -21.75) rotate(45)"/><rect x="58.64" y="33.76" width="2.83" height="8.5" transform="translate(98.07 -22.04) rotate(90)"/><rect x="58.64" y="27.36" width="2.83" height="8.5" transform="translate(91.67 -28.44) rotate(90)"/><rect x="28.17" y="6.83" width="2.83" height="8.5" transform="translate(59.17 22.17) rotate(180)"/><rect x="10.45" y="20.97" width="2.83" height="8.5" transform="translate(37.09 13.35) rotate(90)"/><rect x="9.99" y="7.54" width="2.27" height="7.09" transform="translate(26.83 11.06) rotate(135)"/><rect x="18.99" y="16.54" width="2.27" height="7.09" transform="translate(48.56 20.06) rotate(135)"/><rect x="27.99" y="25.54" width="2.27" height="7.09" transform="translate(70.27 29.06) rotate(135)"/><rect x="10.45" y="33.76" width="2.83" height="8.5" transform="translate(49.88 26.15) rotate(90)"/><rect x="10.45" y="27.36" width="2.83" height="8.5" transform="translate(43.49 19.75) rotate(90)"/><rect x="40.92" y="60.69" width="2.83" height="8.5"/><rect x="58.64" y="46.56" width="2.83" height="8.5" transform="translate(9.24 110.87) rotate(-90)"/><rect x="59.67" y="61.4" width="2.27" height="7.09" transform="translate(-28.11 62.02) rotate(-45)"/><rect x="50.67" y="52.4" width="2.27" height="7.09" transform="translate(-24.39 53.02) rotate(-45)"/><rect x="41.67" y="43.41" width="2.27" height="7.09" transform="translate(-20.66 44.02) rotate(-45)"/><rect x="58.64" y="40.16" width="2.83" height="8.5" transform="translate(15.64 104.47) rotate(-90)"/><rect x="28.17" y="60.69" width="2.83" height="8.5" transform="translate(59.17 129.89) rotate(180)"/><rect x="10.45" y="46.56" width="2.83" height="8.5" transform="translate(-38.95 62.68) rotate(-90)"/><rect x="9.99" y="61.4" width="2.27" height="7.09" transform="translate(-26.93 118.73) rotate(-135)"/><rect x="18.99" y="52.4" width="2.27" height="7.09" transform="translate(-5.2 109.73) rotate(-135)"/><rect x="27.99" y="43.41" width="2.27" height="7.09" transform="translate(16.51 100.74) rotate(-135)"/><rect x="10.45" y="40.16" width="2.83" height="8.5" transform="translate(-32.55 56.28) rotate(-90)"/>
           </g>
+          <!-- Stitch Right -->
           <g transform="translate(${rightX}, ${stitchY}) scale(${scX}, ${scY})" fill="${shadowColor}" stroke="${shadowColor}" stroke-width="0.6" stroke-linejoin="round" opacity="0.6">
-            <rect x="40.92" y="6.83" width="2.83" height="8.5"/>
-            <rect x="58.64" y="20.97" width="2.83" height="8.5" transform="translate(85.27 -34.84) rotate(90)"/>
-            <rect x="59.67" y="7.54" width="2.27" height="7.09" transform="translate(25.65 -39.75) rotate(45)"/>
-            <rect x="50.67" y="16.54" width="2.27" height="7.09" transform="translate(29.38 -30.75) rotate(45)"/>
-            <rect x="41.67" y="25.54" width="2.27" height="7.09" transform="translate(33.1 -21.75) rotate(45)"/>
-            <rect x="58.64" y="33.76" width="2.83" height="8.5" transform="translate(98.07 -22.04) rotate(90)"/>
-            <rect x="58.64" y="27.36" width="2.83" height="8.5" transform="translate(91.67 -28.44) rotate(90)"/>
-            <rect x="28.17" y="6.83" width="2.83" height="8.5" transform="translate(59.17 22.17) rotate(180)"/>
-            <rect x="10.45" y="20.97" width="2.83" height="8.5" transform="translate(37.09 13.35) rotate(90)"/>
-            <rect x="9.99" y="7.54" width="2.27" height="7.09" transform="translate(26.83 11.06) rotate(135)"/>
-            <rect x="18.99" y="16.54" width="2.27" height="7.09" transform="translate(48.56 20.06) rotate(135)"/>
-            <rect x="27.99" y="25.54" width="2.27" height="7.09" transform="translate(70.27 29.06) rotate(135)"/>
-            <rect x="10.45" y="33.76" width="2.83" height="8.5" transform="translate(49.88 26.15) rotate(90)"/>
-            <rect x="10.45" y="27.36" width="2.83" height="8.5" transform="translate(43.49 19.75) rotate(90)"/>
-            <rect x="40.92" y="60.69" width="2.83" height="8.5"/>
-            <rect x="58.64" y="46.56" width="2.83" height="8.5" transform="translate(9.24 110.87) rotate(-90)"/>
-            <rect x="59.67" y="61.4" width="2.27" height="7.09" transform="translate(-28.11 62.02) rotate(-45)"/>
-            <rect x="50.67" y="52.4" width="2.27" height="7.09" transform="translate(-24.39 53.02) rotate(-45)"/>
-            <rect x="41.67" y="43.41" width="2.27" height="7.09" transform="translate(-20.66 44.02) rotate(-45)"/>
-            <rect x="58.64" y="40.16" width="2.83" height="8.5" transform="translate(15.64 104.47) rotate(-90)"/>
-            <rect x="28.17" y="60.69" width="2.83" height="8.5" transform="translate(59.17 129.89) rotate(180)"/>
-            <rect x="10.45" y="46.56" width="2.83" height="8.5" transform="translate(-38.95 62.68) rotate(-90)"/>
-            <rect x="9.99" y="61.4" width="2.27" height="7.09" transform="translate(-26.93 118.73) rotate(-135)"/>
-            <rect x="18.99" y="52.4" width="2.27" height="7.09" transform="translate(-5.2 109.73) rotate(-135)"/>
-            <rect x="27.99" y="43.41" width="2.27" height="7.09" transform="translate(16.51 100.74) rotate(-135)"/>
-            <rect x="10.45" y="40.16" width="2.83" height="8.5" transform="translate(-32.55 56.28) rotate(-90)"/>
+            <rect x="40.92" y="6.83" width="2.83" height="8.5"/><rect x="58.64" y="20.97" width="2.83" height="8.5" transform="translate(85.27 -34.84) rotate(90)"/><rect x="59.67" y="7.54" width="2.27" height="7.09" transform="translate(25.65 -39.75) rotate(45)"/><rect x="50.67" y="16.54" width="2.27" height="7.09" transform="translate(29.38 -30.75) rotate(45)"/><rect x="41.67" y="25.54" width="2.27" height="7.09" transform="translate(33.1 -21.75) rotate(45)"/><rect x="58.64" y="33.76" width="2.83" height="8.5" transform="translate(98.07 -22.04) rotate(90)"/><rect x="58.64" y="27.36" width="2.83" height="8.5" transform="translate(91.67 -28.44) rotate(90)"/><rect x="28.17" y="6.83" width="2.83" height="8.5" transform="translate(59.17 22.17) rotate(180)"/><rect x="10.45" y="20.97" width="2.83" height="8.5" transform="translate(37.09 13.35) rotate(90)"/><rect x="9.99" y="7.54" width="2.27" height="7.09" transform="translate(26.83 11.06) rotate(135)"/><rect x="18.99" y="16.54" width="2.27" height="7.09" transform="translate(48.56 20.06) rotate(135)"/><rect x="27.99" y="25.54" width="2.27" height="7.09" transform="translate(70.27 29.06) rotate(135)"/><rect x="10.45" y="33.76" width="2.83" height="8.5" transform="translate(49.88 26.15) rotate(90)"/><rect x="10.45" y="27.36" width="2.83" height="8.5" transform="translate(43.49 19.75) rotate(90)"/><rect x="40.92" y="60.69" width="2.83" height="8.5"/><rect x="58.64" y="46.56" width="2.83" height="8.5" transform="translate(9.24 110.87) rotate(-90)"/><rect x="59.67" y="61.4" width="2.27" height="7.09" transform="translate(-28.11 62.02) rotate(-45)"/><rect x="50.67" y="52.4" width="2.27" height="7.09" transform="translate(-24.39 53.02) rotate(-45)"/><rect x="41.67" y="43.41" width="2.27" height="7.09" transform="translate(-20.66 44.02) rotate(-45)"/><rect x="58.64" y="40.16" width="2.83" height="8.5" transform="translate(15.64 104.47) rotate(-90)"/><rect x="28.17" y="60.69" width="2.83" height="8.5" transform="translate(59.17 129.89) rotate(180)"/><rect x="10.45" y="46.56" width="2.83" height="8.5" transform="translate(-38.95 62.68) rotate(-90)"/><rect x="9.99" y="61.4" width="2.27" height="7.09" transform="translate(-26.93 118.73) rotate(-135)"/><rect x="18.99" y="52.4" width="2.27" height="7.09" transform="translate(-5.2 109.73) rotate(-135)"/><rect x="27.99" y="43.41" width="2.27" height="7.09" transform="translate(16.51 100.74) rotate(-135)"/><rect x="10.45" y="40.16" width="2.83" height="8.5" transform="translate(-32.55 56.28) rotate(-90)"/>
           </g>
         `;
         maskSVG = `
@@ -2004,11 +1961,9 @@
     `;
       }
 
-      // Modern Flat Bag Design - Responsive ViewBox
       const vbX = -30;
-      const vbY = peakY - 20; // Siempre relativo al peakY (techo máximo del dibujo)
+      const vbY = peakY - 20;
       const vbW = w + 60;
-      // Alto del viewbox es el fondo de la bolsa (h + pad) menos el inicio (vbY)
       const vbH = h + 40 - vbY;
 
       // Pure SVG Geometric Cambrel Texture (Semillitas / Honeycomb)
@@ -2019,66 +1974,167 @@
         </pattern>
       `;
 
-      // Termosellado (puntos en bordes) usando proporciones en CM para realismo
-      const topSealStyle = `stroke="${shadowColor}" stroke-width="3" stroke-dasharray="1, 2" stroke-linecap="butt"`;
-      const sideSealStyle = `stroke="${shadowColor}" stroke-width="1" stroke-dasharray="4, 1.5" stroke-linecap="butt"`;
+      // Termosellado Embossing (shadow + specular)
+      const topSealStyle = `stroke="${shadowColor}" stroke-width="3" stroke-dasharray="1, 2" stroke-linecap="butt" opacity="0.6"`;
+      const sideSealStyle = `stroke="${shadowColor}" stroke-width="1.5" stroke-dasharray="4, 1.5" stroke-linecap="butt" opacity="0.6"`;
+      const topSealStyleLight = `stroke="rgba(255,255,255,0.15)" stroke-width="3" stroke-dasharray="1, 2" stroke-linecap="butt" transform="translate(0, 1)"`;
+      const sideSealStyleLight = `stroke="rgba(255,255,255,0.15)" stroke-width="1.5" stroke-dasharray="4, 1.5" stroke-linecap="butt" transform="translate(1, 0)"`;
       
       const _cmToSvg = w / (Number(anchoCm) || 30);
       const top1 = 1.5 * _cmToSvg;
-      const top2 = top1 + (3 * _cmToSvg);
+      const top2 = top1 + (2.8 * _cmToSvg);
 
       const sealedEdges = `
         <g mask="url(#bagMask-${tx})">
-          <!-- Left Sealing (Doble línea alinea horizontalmente con stroke-dashoffset) -->
-          <line x1="2.5" y1="0" x2="2.5" y2="${h}" ${sideSealStyle} opacity="0.6" />
-          <line x1="4.5" y1="0" x2="4.5" y2="${h}" ${sideSealStyle} stroke-dashoffset="-2.75" opacity="0.6" />
+          <!-- Left Sealing Shadows -->
+          <line x1="2.5" y1="0" x2="2.5" y2="${h}" ${sideSealStyle} />
+          <line x1="5.0" y1="0" x2="5.0" y2="${h}" ${sideSealStyle} stroke-dashoffset="-2.75" />
+          <!-- Left Sealing Lights (Bajo relieve) -->
+          <line x1="2.5" y1="0" x2="2.5" y2="${h}" ${sideSealStyleLight} />
+          <line x1="5.0" y1="0" x2="5.0" y2="${h}" ${sideSealStyleLight} stroke-dashoffset="-2.75" />
           
-          <!-- Right Sealing (Doble línea alinea horizontalmente con stroke-dashoffset) -->
-          <line x1="${w - 2.5}" y1="0" x2="${w - 2.5}" y2="${h}" ${sideSealStyle} opacity="0.6" />
-          <line x1="${w - 4.5}" y1="0" x2="${w - 4.5}" y2="${h}" ${sideSealStyle} stroke-dashoffset="-2.75" opacity="0.6" />
+          <!-- Right Sealing Shadows -->
+          <line x1="${w - 2.5}" y1="0" x2="${w - 2.5}" y2="${h}" ${sideSealStyle} />
+          <line x1="${w - 5.0}" y1="0" x2="${w - 5.0}" y2="${h}" ${sideSealStyle} stroke-dashoffset="-2.75" />
+          <!-- Right Sealing Lights -->
+          <line x1="${w - 2.5}" y1="0" x2="${w - 2.5}" y2="${h}" ${sideSealStyleLight} />
+          <line x1="${w - 5.0}" y1="0" x2="${w - 5.0}" y2="${h}" ${sideSealStyleLight} stroke-dashoffset="-2.75" />
           
-          <!-- Top Sealing 1 -->
-          <line x1="0" y1="${top1}" x2="${w}" y2="${top1}" ${topSealStyle} opacity="0.6" />
-          <!-- Top Sealing 2 -->
-          <line x1="0" y1="${top2}" x2="${w}" y2="${top2}" ${topSealStyle} opacity="0.6" />
+          <!-- Top Sealing Shadows -->
+          <line x1="0" y1="${top1}" x2="${w}" y2="${top1}" ${topSealStyle} />
+          <line x1="0" y1="${top2}" x2="${w}" y2="${top2}" ${topSealStyle} />
+          <!-- Top Sealing Lights -->
+          <line x1="0" y1="${top1}" x2="${w}" y2="${top1}" ${topSealStyleLight} />
+          <line x1="0" y1="${top2}" x2="${w}" y2="${top2}" ${topSealStyleLight} />
         </g>
       `;
 
       // Soft reflection/creases to make it look premium
       const creases = `
-    <!-- Left seam reflection -->
-    <rect x="0" y="0" width="10" height="${h}" fill="${highlightColor}" rx="4" mask="url(#bagMask-${tx})"/>
-    <!-- Bottom seam shadow -->
-    <rect x="0" y="${h - 10}" width="${w}" height="10" fill="${shadowColor}" rx="4" mask="url(#bagMask-${tx})"/>
+    <!-- Subtle left edge light highlight -->
+    <rect x="0" y="0" width="8" height="${h}" fill="rgba(255,255,255,0.12)" rx="3" filter="blur(2px)" mask="url(#bagMask-${tx})"/>
+    <!-- Subtle right edge shadow -->
+    <rect x="${w-6}" y="0" width="6" height="${h}" fill="rgba(0,0,0,0.08)" rx="3" filter="blur(2px)" mask="url(#bagMask-${tx})" style="mix-blend-mode: multiply;" />
+    <!-- Bottom seam contour shadow -->
+    <rect x="0" y="${h - 6}" width="${w}" height="6" fill="${shadowColor}" rx="2" filter="blur(1.5px)" mask="url(#bagMask-${tx})" style="mix-blend-mode: multiply;" />
   `;
 
       return `
-    <svg viewBox="${vbX} ${vbY} ${vbW} ${vbH}" xmlns="http://www.w3.org/2000/svg" style="width:100%; height:100%; filter: drop-shadow(0 15px 25px rgba(0,0,0,0.12)); max-height: 100%;">
+    <svg viewBox="${vbX} ${vbY} ${vbW} ${vbH}" xmlns="http://www.w3.org/2000/svg" style="width:100%; height:100%; filter: drop-shadow(0 8px 16px rgba(0,0,0,0.18)); max-height: 100%;">
       <defs>
         ${maskSVG}
         ${texturePattern}
         <linearGradient id="bagGrad-${tx}" x1="0%" y1="0%" x2="100%" y2="100%">
           <stop offset="0%" stop-color="${fabricHex}" />
-          <stop offset="100%" stop-color="${fabricHex}" stop-opacity="0.92" />
+          <stop offset="100%" stop-color="${fabricHex}" stop-opacity="0.9" />
         </linearGradient>
       </defs>
+      
+      <!-- Troquel Hole Inner Background -->
+      ${isTroquel ? troquelInsideSVG : ''}
+
       ${!isTroquel ? manijaSVG : ''}
+      
       <!-- Main Fabric with texture -->
-      <rect x="0" y="0" width="${w}" height="${h}" rx="6" fill="url(#bagGrad-${tx})" mask="url(#bagMask-${tx})" stroke="${strokeColor}" stroke-width="1" />
-      <!-- Geometric Seeds Overlay (Pores) -->
-      <rect x="0" y="0" width="${w}" height="${h}" rx="6" fill="url(#cambrelNoise-${Math.round(tx)})" mask="url(#bagMask-${tx})" style="mix-blend-mode: multiply;" />
+      <g stroke="${strokeColor}" stroke-width="1.5">
+        <rect x="0" y="0" width="${w}" height="${h}" rx="6" fill="url(#bagGrad-${tx})" mask="url(#bagMask-${tx})" style="cursor:pointer;" onclick="openFloatingSwatches(event, 'fabric')" />
+        <!-- Geometric Seeds Overlay (Pores) -->
+        <rect x="0" y="0" width="${w}" height="${h}" rx="6" fill="url(#cambrelNoise-${Math.round(tx)})" mask="url(#bagMask-${tx})" style="mix-blend-mode: multiply; pointer-events:none;" />
+      </g>
       
       ${sealedEdges}
-      ${handleStitchesSVG}
+      ${!isTroquel ? handleStitchesSVG : ''}
       ${creases}
+      
       <!-- Printed Logo Effect -->
-      <g style="opacity: 0.9; filter: contrast(1.05) brightness(1.05);">
+      <g style="opacity: 0.95; filter: contrast(1.02) brightness(1.02) drop-shadow(0 1px 1px rgba(0,0,0,0.08));">
         ${logosGroup}
       </g>
     </svg>
   `;
     }
 
+
+    function openLogoColor(caraIdx, tintaNum) {
+      const adv = document.querySelector('.adv');
+      if (adv && !adv.hasAttribute('open')) adv.setAttribute('open', '');
+      const input = document.getElementById('logo_c' + caraIdx + '_' + tintaNum);
+      if (input) input.click();
+    }
+
+    function openFloatingSwatches(e, type) {
+      e.stopPropagation();
+      let existing = document.getElementById('floating-swatches');
+      if (existing) existing.remove();
+
+      let sourceGrid;
+      if (type === 'fabric') {
+        sourceGrid = document.getElementById('swatches_color_hex');
+      } else {
+        sourceGrid = document.getElementById('swatches_handle_color_hex');
+        const syncCheck = document.getElementById('sync_handle_color');
+        if (syncCheck && syncCheck.checked) {
+          syncCheck.checked = false;
+          syncCheck.dispatchEvent(new Event('change'));
+        }
+      }
+
+      if (!sourceGrid) return;
+      
+      const popup = document.createElement('div');
+      popup.id = 'floating-swatches';
+      popup.className = 'swatchGroup';
+      popup.style.position = 'fixed';
+      popup.style.animation = 'popIn 0.25s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards';
+      popup.style.transformOrigin = 'top center';
+      
+      const popupWidth = 260;
+      let leftPos = e.clientX - (popupWidth / 2);
+      if (leftPos < 10) leftPos = 10;
+      if (leftPos + popupWidth > window.innerWidth) leftPos = window.innerWidth - popupWidth - 10;
+      
+      popup.style.top = (e.clientY + 15) + 'px';
+      popup.style.left = leftPos + 'px';
+      popup.style.zIndex = '9999';
+      popup.style.background = '#fff';
+      popup.style.padding = '12px';
+      popup.style.borderRadius = '16px';
+      popup.style.boxShadow = '0 10px 25px rgba(0,0,0,0.2)';
+      popup.style.border = '2px solid #e2e8f0';
+      popup.style.maxWidth = popupWidth + 'px';
+      popup.style.display = 'flex';
+      popup.style.flexWrap = 'wrap';
+      popup.style.gap = '8px';
+      
+      const buttons = sourceGrid.querySelectorAll('.swatchBtn, .swatch');
+      buttons.forEach(btn => {
+        const clone = btn.cloneNode(true);
+        clone.onclick = (ev) => {
+          ev.stopPropagation();
+          btn.click();
+          popup.remove();
+        };
+        // Ensure swatch size is good for touch
+        clone.style.width = '24px';
+        clone.style.height = '24px';
+        popup.appendChild(clone);
+      });
+
+      document.body.appendChild(popup);
+
+      setTimeout(() => {
+        const closePopup = (ev) => {
+          if (!popup.contains(ev.target)) {
+            popup.remove();
+            document.removeEventListener('click', closePopup);
+            window.removeEventListener('scroll', closePopup);
+          }
+        };
+        document.addEventListener('click', closePopup);
+        window.addEventListener('scroll', closePopup);
+      }, 10);
+    }
+    
     function getCalculatedLogoList() {
       const caras = Math.max(0, Math.min(2, n("caras")));
       const logoList = [];
@@ -2323,10 +2379,10 @@
           ancho_cm: ancho,
           alto_cm: alto,
           fuelle_cm: n("fuelle_cm"),
-          manija1_cm: n("manija1_cm"),
-          manija2_cm: n("manija2_cm"),
-          ancho_manijas_cm: n("ancho_manijas_cm"),
-          dobles_cm: n("dobles_cm"),
+          manija1_cm: bagType === "PLANA_TROQUEL" ? 0 : (n("largo_arco_visual") || 46),
+          manija2_cm: bagType === "PLANA_TROQUEL" ? 0 : (n("largo_arco_visual") || 46),
+          ancho_manijas_cm: bagType === "PLANA_TROQUEL" ? 0 : 3.5,
+          dobles_cm: bagType === "PLANA_TROQUEL" ? 7 : 3,
           caras: n("caras"),
           
           dtf_c1_active: document.getElementById("dtf_c1_active")?.checked || false,
